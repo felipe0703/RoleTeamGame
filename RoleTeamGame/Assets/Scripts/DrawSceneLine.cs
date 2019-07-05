@@ -6,58 +6,26 @@ public class DrawSceneLine : MonoBehaviour
 {
 
     public Transform from;
-    public Transform[] toRight;
-    public Transform[] toUp;
-    public Transform[] toLeft;
-    public Transform[] toDown;
-    public Transform target;
-    public Transform target2;
+    public Transform[] target;
+    public Color color;
 
     private void OnDrawGizmos()
     {
-        if (from != null && toRight != null && toUp != null && toLeft != null && toDown != null)
+        if (from != null )
         {
+            //  FROM
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(from.position, 0.2f);
-            //  RIGHT
-            for (int i = 0; i < toRight.Length; i++)
+
+            // TARGETS
+            Gizmos.color = new Color(color.r, color.g, color.b);
+            for (int i = 0; i < target.Length; i++)
             {
-                Gizmos.DrawLine(from.position, toRight[i].position);                
-                Gizmos.DrawSphere(toRight[i].position, 0.2f);
-            }
-
-
-            // UP
-            for (int i = 0; i < toUp.Length; i++)
-            {
-                Gizmos.DrawLine(from.position, toUp[i].position);
-                Gizmos.DrawSphere(toUp[i].position, 0.2f);
-            }
-
-
-            // LEFT
-            for (int i = 0; i < toLeft.Length; i++)
-            {
-                Gizmos.DrawLine(from.position, toLeft[i].position);
-                Gizmos.DrawSphere(toLeft[i].position, 0.2f);
-            }
-
-
-            // DOWN
-            for (int i = 0; i < toDown.Length; i++)
-            {
-                Gizmos.DrawLine(from.position, toDown[i].position);
-                Gizmos.DrawSphere(toDown[i].position, 0.2f);
+                Gizmos.DrawLine(from.position, target[i].position);
+                Gizmos.DrawSphere(target[i].position, 0.3f);
             }
             
 
-            // TARGET
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(target.position, 0.3f);
-
-            // TARGET
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(target2.position, 0.3f);
         }    
     }
     

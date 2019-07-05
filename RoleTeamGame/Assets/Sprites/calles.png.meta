@@ -1,9 +1,13 @@
 fileFormatVersion: 2
-guid: cee6650edb7f1c144b289a281cbece94
+guid: 32344601ea8d29c4582c07d7c8787b93
 TextureImporter:
   fileIDToRecycleName:
-    21300000: personajespx_0
-    21300002: personajespx_1
+    21300000: calles_0
+    21300002: calles_1
+    21300004: calles_2
+    21300006: calles_3
+    21300008: calles_4
+    21300010: calles_5
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -33,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -47,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,13 +101,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: personajespx_0
+      name: calles_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 12
-        width: 38
-        height: 56
+        x: 0
+        y: 712
+        width: 250
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,19 +115,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6dd835d7eec944b4990d5abe7960618a
+      spriteID: cfaaa5e887cbe34428bb43b00c2022bf
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personajespx_1
+      name: calles_1
       rect:
         serializedVersion: 2
-        x: 85
-        y: 12
-        width: 33
-        height: 56
+        x: 350
+        y: 712
+        width: 250
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,7 +135,87 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a4222d99284baf4cbef7f384c17cd0e
+      spriteID: 9298177397dc78c4f86f3f487fc7ccab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calles_2
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 962
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7a5763dae8a6ce4d9c5ada255fbf1a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calles_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 130
+        width: 250
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad9671f7d36b5c4f96e9e0ed4d72264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calles_4
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 130
+        width: 250
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8abe0669991b8684587618f0a834f4b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calles_5
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 587
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e74f4a9db163dd499250c01fc07c7ca
       vertices: []
       indices: 
       edges: []
@@ -139,7 +223,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e3aa686ba734d074a8b1e5a4487409ed
+    spriteID: 9772d67b8c2868b4c814aec2284041a5
     vertices: []
     indices: 
     edges: []

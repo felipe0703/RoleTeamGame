@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //      SINGLETON
         if(sharedInstance == null)
         {
             sharedInstance = this;
@@ -23,14 +24,10 @@ public class BoardManager : MonoBehaviour
         }
 
         Vector2 offset = currenteEdifice.GetComponent<BoxCollider2D>().size;
+        Debug.Log(offset);
         CreateInitialBoard(offset);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 
     private void CreateInitialBoard(Vector2 offset)
@@ -46,11 +43,11 @@ public class BoardManager : MonoBehaviour
         {
             for (int y = 0; y < ySize; y++)
             {
-                GameObject newEdifice = Instantiate(
-                    currenteEdifice,
-                    new Vector3(startX + (offset.x*x) , startY + (offset.y*y) , 0),
+                GameObject newEdifice = Instantiate(currenteEdifice,
+                    new Vector3(startX + (offset.x*x*2), startY + (offset.y*y*2), 0),
                     currenteEdifice.transform.rotation
                     );
+
                 // Formato al nombre de los objetos
                 newEdifice.name = string.Format("Edifice[{0}][{1}]", x, y);
 

@@ -8,30 +8,27 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public Transform target;
     public Transform target2;
-    public Transform[] targetRight;
-    public Transform[] targetUp;
-    public Transform[] targetLeft;
-    public Transform[] targetDown;
 
-    bool left, leftUp, leftDown = false;
-    bool inTarget = false;
-
+    Transform[] targets;
+    
     public float speed;
     public GameObject panelMove;
 
     // VARIABLES PRIVADAS
-    bool move = false;
+    bool moveTarget1, moveTarget2 = false;
     
-    // COMPONENTES
-
 
     // Start is called before the first frame update
     void Start()
     {
-        if (targetDown != null)
+        if (target != null && target2 != null)
         {
             target.parent = null;
+            target2.parent = null;
+            targets = target.GetComponentsInChildren<Transform>();
         }
+        panelMove.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -39,92 +36,101 @@ public class PlayerController : MonoBehaviour
     {
         float fixedSpeed = speed * Time.deltaTime;
 
-        if (move)
+        if (moveTarget1)
         {
-            MovePlayer(fixedSpeed);
+            MovePlayer(fixedSpeed,target.position);
+        }
+        if (moveTarget2)
+        {
+            MovePlayer(fixedSpeed, target2.position);
         }
 
-        if(transform.position == target2.position)
+        if(transform.position == target.position)
         {
-            move = false;
+            moveTarget1 = false;
+            moveTarget2 = true;
+        }       
+
+        if (transform.position == target2.position)
+        {
+            moveTarget2 = false;
+            target.position = transform.position;
         }
+
+
     }
 
 
     //  MOVE
-
-    void MovePlayer(float fixedSpeed)
+    void MovePlayer(float fixedSpeed, Vector3 targetPosition)
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, fixedSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, fixedSpeed);
+    }      
 
-        if(target.position == transform.position)
-        {
-            if (left)
-            {
-                target2.position = targetLeft[1].position;
-
-            }
-            if (leftUp)
-            {
-                target2.position = targetLeft[2].position;
-            }
-            if (leftDown)
-            {
-                target2.position = targetLeft[3].position;
-            }
-        }
-
-
+    // LEFT
+    public void MoveLeftPlayer()
+    {        
+        target.position = targets[4].position;
+        moveTarget1 = true;
+        target2.position = targets[4].position;
+        HidePanelMove();
     }
-    //  DOWN
-    public void MoveDownPlayer()
+
+    public void MoveLeftUp()
     {
-        target.position = targetDown[0].position;
-        move = true;
-        panelMove.SetActive(false);
+        target.position = targets[4].position;
+        moveTarget1 = true;
+        target2.position = targets[1].position;
+        HidePanelMove();
     }
+
+    public void MoveLeftDown()
+    {
+        target.position = targets[4].position;
+        moveTarget1 = true;
+        target2.position = targets[3].position;
+        HidePanelMove();
+    }
+
     //  RIGHT
     public void MoveRightPlayer()
     {
-        target.position = targetRight[1].position;
-        move = true;
-        panelMove.SetActive(false);
+        target.position = targets[2].position;
+        moveTarget1 = true;
+        target2.position = targets[2].position;
+        HidePanelMove();
     }
-    //  UP
-    public void MoveUpPlayer()
+    public void MoveRightUpPlayer()
     {
-        target.position = targetUp[1].position;
-        move = true;
-        panelMove.SetActive(false);
+        target.position = targets[2].position;
+        moveTarget1 = true;
+        target2.position = targets[1].position;
+        HidePanelMove();
+    }
+    public void MoveRightDownPlayer()
+    {
+        target.position = targets[2].position;
+        moveTarget1 = true;
+        target2.position = targets[3].position;
+        HidePanelMove();
     }
 
 
-    // LEFT
-    void MoveLeftPlayer()
-    {
-        target.position = targetLeft[0].position;
-        target2.position = targetLeft[1].position;
-        //move = true;
-    }
 
-    public void MoveLeftLef()
-    {
-        left = true;
-        MoveLeftPlayer();
-    }
-    public void MoveLeftUp()
-    {
-        leftUp = true;
-        MoveLeftPlayer();
-    }
-    public void MoveLeftDown()
-    {
-        leftDown = true;
-    }
 
     public void ShowMove()
     {
         panelMove.SetActive(true);
     }
+    void HidePanelMove()
+    {
+        panelMove.SetActive(false);
+    }
 
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(target2.position, 0.5f);
+    }
 }
