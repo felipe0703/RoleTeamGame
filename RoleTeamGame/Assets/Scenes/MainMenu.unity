@@ -696,7 +696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.313873, y: -22.30304}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2122932713
@@ -739,8 +739,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1103706782653531243, guid: 2a0ce500b0f410f44bd1c80cf10ebaed,
-          type: 3}
+      - m_Target: {fileID: 2146469189}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -790,3 +789,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122932711}
   m_CullTransparentMesh: 0
+--- !u!114 &2146469189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1103706782653531243, guid: 2a0ce500b0f410f44bd1c80cf10ebaed,
+    type: 3}
+  m_PrefabInstance: {fileID: 768690614}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b473389fe5311f4cb9cf38f365aea5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
