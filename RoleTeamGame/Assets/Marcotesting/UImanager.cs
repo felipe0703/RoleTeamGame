@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UImanager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public RectTransform boton1,boton2,boton3; 
 

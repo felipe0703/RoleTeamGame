@@ -573,7 +573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2101005240}
   target2: {fileID: 149856118}
-  speed: 3
+  speed: 5
   panelMove: {fileID: 321454596}
 --- !u!1 &249466501
 GameObject:
