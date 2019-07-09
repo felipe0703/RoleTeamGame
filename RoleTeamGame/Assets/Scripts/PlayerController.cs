@@ -13,22 +13,35 @@ public class PlayerController : MonoBehaviour
     
     public float speed;
     public GameObject panelMove;
+    public GameObject[] panelButtonsMove;
 
     // VARIABLES PRIVADAS
     bool moveTarget1, moveTarget2 = false;
+    [SerializeField]
+    bool edificeUp, edificeRight, edificeDown, edificeLeft = false;
+    float distanceEdifice = 8f;
+    [SerializeField] private LayerMask whatIsEdifice;
+
+    //  POSICIONES DEL JUGADOR AL INICIAR
+    int[] positionA = { 0, 100 };
+    int[] positionB = { 10, 30, 50, 70, 90 };
     
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Posicionamiento del player de forma aleatoria
+        int i1 = Random.Range(0, 2);
+        int i2 = Random.Range(0, 5);
+        transform.localPosition = new Vector3(positionA[i1], positionB[i2], 0);
+
         if (target != null && target2 != null)
         {
             target.parent = null;
             target2.parent = null;
             targets = target.GetComponentsInChildren<Transform>();
         }
-        panelMove.SetActive(false);
 
+        panelMove.SetActive(false);
     }
 
     // Update is called once per frame
@@ -60,6 +73,41 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //  TEST
+    public void Test()
+    {
+      
+    }
+
+    void DetectEdifice()
+    {
+        edificeUp = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.up, distanceEdifice, whatIsEdifice);
+        edificeRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, distanceEdifice, whatIsEdifice);
+        edificeDown = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, distanceEdifice, whatIsEdifice);
+        edificeLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, distanceEdifice, whatIsEdifice);
+        /*Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.up * distanceEdifice, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.right * distanceEdifice, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.down * distanceEdifice, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.left * distanceEdifice, Color.red);*/
+
+        if (!edificeUp)
+        {
+            panelButtonsMove[0].SetActive(true);
+        }
+        if (!edificeRight)
+        {
+            panelButtonsMove[1].SetActive(true);
+        }
+        if (!edificeDown)
+        {
+            panelButtonsMove[2].SetActive(true);
+        }
+        if (!edificeLeft)
+        {
+            panelButtonsMove[3].SetActive(true);
+        }       
+        
+    }
 
     //  MOVE
     void MovePlayer(float fixedSpeed, Vector3 targetPosition)
@@ -115,16 +163,67 @@ public class PlayerController : MonoBehaviour
         HidePanelMove();
     }
 
+    //  UP
+    public void MoveUpPlayer()
+    {
+        target.position = targets[1].position;
+        moveTarget1 = true;
+        target2.position = targets[1].position;
+        HidePanelMove();
+    }
+    public void MoveUpRightPlayer()
+    {
+        target.position = targets[1].position;
+        moveTarget1 = true;
+        target2.position = targets[2].position;
+        HidePanelMove();
+    }
+    public void MoveUpLeftPlayer()
+    {
+        target.position = targets[1].position;
+        moveTarget1 = true;
+        target2.position = targets[4].position;
+        HidePanelMove();
+    }
+
+    // DOWN
+    public void MoveDownPlayer()
+    {
+        target.position = targets[3].position;
+        moveTarget1 = true;
+        target2.position = targets[3].position;
+        HidePanelMove();
+    }
+    public void MoveDownRightPlayer()
+    {
+        target.position = targets[3].position;
+        moveTarget1 = true;
+        target2.position = targets[2].position;
+        HidePanelMove();
+    }
+    public void MoveDownLeftPlayer()
+    {
+        target.position = targets[3].position;
+        moveTarget1 = true;
+        target2.position = targets[4].position;
+        HidePanelMove();
+    }
+
 
 
 
     public void ShowMove()
     {
         panelMove.SetActive(true);
+        DetectEdifice();
     }
     void HidePanelMove()
     {
         panelMove.SetActive(false);
+        for (int i = 0; i < panelButtonsMove.Length; i++)
+        {
+            panelButtonsMove[i].SetActive(false);
+        }
     }
 
 
