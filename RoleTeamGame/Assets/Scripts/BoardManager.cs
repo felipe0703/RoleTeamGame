@@ -94,12 +94,12 @@ public class BoardManager : MonoBehaviour
                    
                     if (x % 2 == 0 && y % 2 != 0)           //  HORIZONTALES
                     {
-                        sprite = streetList[0];
+                        sprite = streetList[Random.Range(0,2)];
                         newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
                     }
                     else if(x % 2 != 0 && y % 2 == 0)       //  CALLES VERTICALES
                     {
-                        sprite = streetList[Random.Range(1, 3)];
+                        sprite = streetList[Random.Range(2, 4)];
                         newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
                     }
                     else if (x % 2 != 0 && y % 2 != 0)      //  INTERCEPCIÓN CALLES CALLES 
