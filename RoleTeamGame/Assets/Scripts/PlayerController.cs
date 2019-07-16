@@ -85,10 +85,6 @@ public class PlayerController : MonoBehaviour
         edificeRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, distanceEdifice, whatIsEdifice);
         edificeDown = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, distanceEdifice, whatIsEdifice);
         edificeLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, distanceEdifice, whatIsEdifice);
-        /*Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.up * distanceEdifice, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.right * distanceEdifice, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.down * distanceEdifice, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector3.left * distanceEdifice, Color.red);*/
 
         if (!edificeUp)
         {
@@ -227,9 +223,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawSphere(target2.position, 0.5f);
-    }
+    }*/
 }
