@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public GameObject panelMove;
     public GameObject[] panelButtonsMove;
 
+
     // VARIABLES PRIVADAS
     bool moveTarget1, moveTarget2 = false;
     [SerializeField]
@@ -22,13 +23,26 @@ public class PlayerController : MonoBehaviour
     float distanceEdifice = 8f;
     [SerializeField] private LayerMask whatIsEdifice;
 
+    //  COMPONENTES
+    //GameController controller;
+
     //  POSICIONES DEL JUGADOR AL INICIAR
     int[] positionA = { 0, 100 };
     int[] positionB = { 10, 30, 50, 70, 90 };
-    
+
+    // para detectar los caramelos adyacentes
+    private Vector2[] adjacentDirections = new Vector2[]
+    {
+        Vector2.up,
+        Vector2.down,
+        Vector2.left,
+        Vector2.right
+    };
 
     void Start()
     {
+        //controller = GameObject.Find("GameController").GetComponent<GameController>();
+
         // Posicionamiento del player de forma aleatoria
         int i1 = Random.Range(0, 2);
         int i2 = Random.Range(0, 5);
@@ -53,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayer(fixedSpeed,target.position);
         }
+
         if (moveTarget2)
         {
             MovePlayer(fixedSpeed, target2.position);
@@ -68,16 +83,13 @@ public class PlayerController : MonoBehaviour
         {
             moveTarget2 = false;
             target.position = transform.position;
+            if(GameController.sharedInstance.numbersActions == GameController.sharedInstance.maxNumbersActions)
+            {
+                GameController.sharedInstance.ShowPanelEndTurn();
+            }
         }
-
-
     }
 
-    //  TEST
-    public void Test()
-    {
-      
-    }
 
     void DetectEdifice()
     {
@@ -85,6 +97,12 @@ public class PlayerController : MonoBehaviour
         edificeRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, distanceEdifice, whatIsEdifice);
         edificeDown = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, distanceEdifice, whatIsEdifice);
         edificeLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, distanceEdifice, whatIsEdifice);
+
+      /*  Debug.Log(GetNeighbor(adjacentDirections[0]).name);
+        Debug.Log(GetNeighbor(adjacentDirections[1]).name);
+        Debug.Log(GetNeighbor(adjacentDirections[2]).name);
+        Debug.Log(GetNeighbor(adjacentDirections[3]).name);*/
+
 
         if (!edificeUp)
         {
@@ -105,104 +123,102 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    // obtengo el vecino
+    private GameObject GetNeighbor(Vector2 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction);
+        if (hit.collider != null)
+        {
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     //  MOVE
     void MovePlayer(float fixedSpeed, Vector3 targetPosition)
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, fixedSpeed);
     }      
 
+    void InAllMovements(Vector3 targetPosition)
+    {
+        target.position = targetPosition;
+        moveTarget1 = true;                
+        GameController.sharedInstance.AddActions();
+        HidePanelMove();
+    } 
+
     // LEFT
     public void MoveLeftPlayer()
-    {        
-        target.position = targets[4].position;
-        moveTarget1 = true;
+    { 
+        InAllMovements(targets[4].position);
         target2.position = targets[4].position;
-        HidePanelMove();
     }
 
     public void MoveLeftUp()
     {
-        target.position = targets[4].position;
-        moveTarget1 = true;
+        InAllMovements(targets[4].position);
         target2.position = targets[1].position;
-        HidePanelMove();
     }
 
     public void MoveLeftDown()
     {
-        target.position = targets[4].position;
-        moveTarget1 = true;
+        InAllMovements(targets[4].position);
         target2.position = targets[3].position;
-        HidePanelMove();
     }
 
     //  RIGHT
     public void MoveRightPlayer()
     {
-        target.position = targets[2].position;
-        moveTarget1 = true;
+        InAllMovements(targets[2].position);
         target2.position = targets[2].position;
-        HidePanelMove();
     }
     public void MoveRightUpPlayer()
     {
-        target.position = targets[2].position;
-        moveTarget1 = true;
+        InAllMovements(targets[2].position);
         target2.position = targets[1].position;
-        HidePanelMove();
     }
     public void MoveRightDownPlayer()
     {
-        target.position = targets[2].position;
-        moveTarget1 = true;
+        InAllMovements(targets[2].position);
         target2.position = targets[3].position;
-        HidePanelMove();
     }
 
     //  UP
     public void MoveUpPlayer()
     {
-        target.position = targets[1].position;
-        moveTarget1 = true;
+        InAllMovements(targets[1].position);
         target2.position = targets[1].position;
-        HidePanelMove();
     }
     public void MoveUpRightPlayer()
     {
-        target.position = targets[1].position;
-        moveTarget1 = true;
+        InAllMovements(targets[1].position);
         target2.position = targets[2].position;
-        HidePanelMove();
     }
     public void MoveUpLeftPlayer()
     {
-        target.position = targets[1].position;
-        moveTarget1 = true;
+        InAllMovements(targets[1].position);
         target2.position = targets[4].position;
-        HidePanelMove();
     }
 
     // DOWN
     public void MoveDownPlayer()
     {
-        target.position = targets[3].position;
-        moveTarget1 = true;
+        InAllMovements(targets[3].position);
         target2.position = targets[3].position;
-        HidePanelMove();
     }
     public void MoveDownRightPlayer()
     {
-        target.position = targets[3].position;
-        moveTarget1 = true;
+        InAllMovements(targets[3].position);
         target2.position = targets[2].position;
-        HidePanelMove();
     }
     public void MoveDownLeftPlayer()
     {
-        target.position = targets[3].position;
-        moveTarget1 = true;
+        InAllMovements(targets[3].position);
         target2.position = targets[4].position;
-        HidePanelMove();
     }
 
 
@@ -223,9 +239,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawSphere(target2.position, 0.5f);
-    }*/
+    }
 }

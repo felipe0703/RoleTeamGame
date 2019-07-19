@@ -9,7 +9,7 @@ public class BoardManager : MonoBehaviour
     public int xSize, ySize;                                //  tamaño del tablero
 
     public GameObject currenteEdifice;                      //  prefabs del edificio    
-    public List<Sprite> prefabs = new List<Sprite>();       //  lista de edificios   
+    public List<GameObject> prefabs = new List<GameObject>();       //  lista de edificios   
     private GameObject[,] edifices;                         // arreglo de edificios    
 
     public GameObject currentStreet;
@@ -52,6 +52,7 @@ public class BoardManager : MonoBehaviour
         float startY = this.transform.position.y;
 
         Sprite sprite = null;
+        GameObject edifice;
 
        // int idX = -1;
 
@@ -62,6 +63,10 @@ public class BoardManager : MonoBehaviour
             {
                 if(x % 2 == 0 && y % 2 == 0)
                 {
+                    //TODO:  COLOCAR LOS SPRITES EN LA LISTA, CREAR PREFABS MEJOR
+                    edifice = prefabs[Random.Range(0, prefabs.Count)];
+                    currenteEdifice = edifice;
+
                     //  GENERACIÓN EDIFICIOS
                     GameObject newEdifice = Instantiate(currenteEdifice,
                         new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),
@@ -71,8 +76,7 @@ public class BoardManager : MonoBehaviour
                     // Formato al nombre de los objetos
                     newEdifice.name = string.Format("Edifice[{0}][{1}]", x, y);
 
-                    sprite = prefabs[Random.Range(0, prefabs.Count)];
-                    newEdifice.GetComponent<SpriteRenderer>().sprite = sprite;
+                    
 
                     newEdifice.transform.parent = GameObject.Find("Edifices").transform;
                     edifices[x, y] = newEdifice;
@@ -109,7 +113,6 @@ public class BoardManager : MonoBehaviour
                     }  
                 }else if(x == xSize - 1)
                 {
-                    Debug.Log("rio");
                     //  GENERACIÓN RIO
                     GameObject newRiver = Instantiate(currentRiver,
                         new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),

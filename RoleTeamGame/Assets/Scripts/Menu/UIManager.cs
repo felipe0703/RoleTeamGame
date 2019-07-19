@@ -6,12 +6,14 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
-    public RectTransform boton1; 
+    public RectTransform botonStart;
+    public RectTransform title;
 
     // Start is called before the first frame update
     void Start()
     {
-        boton1.DOAnchorPosX(0, 0.5f);
+        title.DOAnchorPosY(160f , 0.5f);
+        botonStart.DOAnchorPosX(0, 0.5f);
     }
 
 }
