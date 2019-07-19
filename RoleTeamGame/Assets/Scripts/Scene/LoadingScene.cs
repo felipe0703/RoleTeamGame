@@ -37,7 +37,7 @@ public class LoadingScene : MonoBehaviour
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
 
             //Actualizamos la barra de carga y texto
-            Debug.Log( progress);
+            //Debug.Log( progress);
             yield return null;
         }
     }
