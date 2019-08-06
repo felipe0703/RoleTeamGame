@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public Transform target;
     public Transform target2;
+    public int MyTurn = 1;
 
     Transform[] targets;
     
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     //  POSICIONES DEL JUGADOR AL INICIAR
     int[] positionA = { 0, 100 };
     int[] positionB = { 10, 30, 50, 70, 90 };
+
+
 
     // para detectar los caramelos adyacentes
     private Vector2[] adjacentDirections = new Vector2[]
@@ -85,6 +88,7 @@ public class PlayerController : MonoBehaviour
             target.position = transform.position;
             if(GameController.sharedInstance.numbersActions == GameController.sharedInstance.maxNumbersActions)
             {
+                TurnSystemManager.sharedInstance.turn++;
                 GameController.sharedInstance.ShowPanelEndTurn();
             }
         }
