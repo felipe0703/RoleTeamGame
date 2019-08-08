@@ -13,19 +13,14 @@ public class PlayerController : MonoBehaviour
     Transform[] targets;
     
     public float speed;
-    public GameObject panelMove;
-    public GameObject[] panelButtonsMove;
 
 
-    // VARIABLES PRIVADAS
-    bool moveTarget1, moveTarget2 = false;
-    [SerializeField]
-    bool edificeUp, edificeRight, edificeDown, edificeLeft = false;
+    // VARIABLES PRIVADAS    
     float distanceEdifice = 8f;
-    [SerializeField] private LayerMask whatIsEdifice;
+    bool moveTarget1, moveTarget2 = false;
+
 
     //  COMPONENTES
-    //GameController controller;
 
     //  POSICIONES DEL JUGADOR AL INICIAR
     int[] positionA = { 0, 100 };
@@ -37,14 +32,13 @@ public class PlayerController : MonoBehaviour
     private Vector2[] adjacentDirections = new Vector2[]
     {
         Vector2.up,
+        Vector2.right,
         Vector2.down,
-        Vector2.left,
-        Vector2.right
+        Vector2.left
     };
 
     void Start()
     {
-        //controller = GameObject.Find("GameController").GetComponent<GameController>();
 
         // Posicionamiento del player de forma aleatoria
         int i1 = Random.Range(0, 2);
@@ -58,7 +52,7 @@ public class PlayerController : MonoBehaviour
             targets = target.GetComponentsInChildren<Transform>();
         }
 
-        panelMove.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -95,37 +89,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void DetectEdifice()
-    {
-        edificeUp = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.up, distanceEdifice, whatIsEdifice);
-        edificeRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, distanceEdifice, whatIsEdifice);
-        edificeDown = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, distanceEdifice, whatIsEdifice);
-        edificeLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, distanceEdifice, whatIsEdifice);
-
-      /*  Debug.Log(GetNeighbor(adjacentDirections[0]).name);
-        Debug.Log(GetNeighbor(adjacentDirections[1]).name);
-        Debug.Log(GetNeighbor(adjacentDirections[2]).name);
-        Debug.Log(GetNeighbor(adjacentDirections[3]).name);*/
-
-
-        if (!edificeUp)
-        {
-            panelButtonsMove[0].SetActive(true);
-        }
-        if (!edificeRight)
-        {
-            panelButtonsMove[1].SetActive(true);
-        }
-        if (!edificeDown)
-        {
-            panelButtonsMove[2].SetActive(true);
-        }
-        if (!edificeLeft)
-        {
-            panelButtonsMove[3].SetActive(true);
-        }       
-        
-    }
+    
 
     // obtengo el vecino
     private GameObject GetNeighbor(Vector2 direction)
@@ -141,6 +105,69 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DetectEdificeToMove()
+    {
+
+        //TODO: MODIFICAR EL BORDE PARA QUE NO TENGA QUE PREGUNTAR TODO EL RATO SI ES NULL
+
+        if ((GetNeighbor(adjacentDirections[0]) != null && GetNeighbor(adjacentDirections[0]).tag == "Edifice") || (GetNeighbor(adjacentDirections[2]) != null && GetNeighbor(adjacentDirections[2]).tag == "Edifice"))
+        {
+            //Debug.Log(GetNeighbor(adjacentDirections[0]).name);
+
+            if ((GetNeighbor(adjacentDirections[1]) != null && GetNeighbor(adjacentDirections[1]).tag == "Street"))
+            {
+                UIManagerGame.sharedInstance.panelButtonsMove[1].SetActive(true);
+            }
+
+            if ((GetNeighbor(adjacentDirections[3]) != null && GetNeighbor(adjacentDirections[3]).tag == "Street"))
+            {
+                UIManagerGame.sharedInstance.panelButtonsMove[3].SetActive(true);
+            }
+        }
+
+        if ((GetNeighbor(adjacentDirections[1]) != null && GetNeighbor(adjacentDirections[1]).tag == "Edifice") || (GetNeighbor(adjacentDirections[3]) != null && GetNeighbor(adjacentDirections[3]).tag == "Edifice"))
+        {
+            //Debug.Log(GetNeighbor(adjacentDirections[1]).name);
+
+            if ((GetNeighbor(adjacentDirections[0]) != null && GetNeighbor(adjacentDirections[0]).tag == "Street"))
+            {
+                UIManagerGame.sharedInstance.panelButtonsMove[0].SetActive(true);
+            }
+
+            if ((GetNeighbor(adjacentDirections[2]) != null && GetNeighbor(adjacentDirections[2]).tag == "Street"))
+            {
+                UIManagerGame.sharedInstance.panelButtonsMove[2].SetActive(true);
+            }
+        }
+    }
+
+    public void DetectEdificeToInspect()
+    {
+        GameObject edifice;
+
+        for (int i = 0; i < adjacentDirections.Length; i++)
+        {
+            if (GetNeighbor(adjacentDirections[i]) != null && GetNeighbor(adjacentDirections[i]).tag == "Edifice")
+            {
+                edifice = GetNeighbor(adjacentDirections[i]);
+                edifice.GetComponent<Edifice>().btn.SetActive(true);
+            }
+        }       
+    }
+    public void HideAllButtonsInspect()
+    {
+        GameObject edifice;
+
+        for (int i = 0; i < adjacentDirections.Length; i++)
+        {
+            if (GetNeighbor(adjacentDirections[i]) != null && GetNeighbor(adjacentDirections[i]).tag == "Edifice")
+            {
+                edifice = GetNeighbor(adjacentDirections[i]);
+                edifice.GetComponent<Edifice>().btn.SetActive(false);
+            }
+        }
+    }
+
     //  MOVE
     void MovePlayer(float fixedSpeed, Vector3 targetPosition)
     {
@@ -152,7 +179,8 @@ public class PlayerController : MonoBehaviour
         target.position = targetPosition;
         moveTarget1 = true;                
         GameController.sharedInstance.AddActions();
-        HidePanelMove();
+        UIManagerGame.sharedInstance.HidePanelMove();
+        UIManagerGame.sharedInstance.HideButtonsActions();
     } 
 
     // LEFT
@@ -224,24 +252,6 @@ public class PlayerController : MonoBehaviour
         InAllMovements(targets[3].position);
         target2.position = targets[4].position;
     }
-
-
-
-
-    public void ShowMove()
-    {
-        panelMove.SetActive(true);
-        DetectEdifice();
-    }
-    void HidePanelMove()
-    {
-        panelMove.SetActive(false);
-        for (int i = 0; i < panelButtonsMove.Length; i++)
-        {
-            panelButtonsMove[i].SetActive(false);
-        }
-    }
-
 
     private void OnDrawGizmos()
     {

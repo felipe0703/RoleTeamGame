@@ -28,6 +28,6 @@ public class TurnSystemManager : MonoBehaviour
         {
             turn = 1;
         }
-        Debug.Log(turn);
+       // Debug.Log(turn);
     }
 }
