@@ -31,6 +31,7 @@ public class UIManagerGame : MonoBehaviour
     {
         panelButtons.SetActive(true);
     }
+
     public void HideButtonsActions()
     {
         panelButtons.SetActive(false);

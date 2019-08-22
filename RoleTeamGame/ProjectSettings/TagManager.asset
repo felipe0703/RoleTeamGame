@@ -7,6 +7,7 @@ TagManager:
   - Edifice
   - River
   - Street
+  - Border
   layers:
   - Default
   - TransparentFX

@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿
+#region Namespaces
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+#endregion // Namespace
 
 public class GameController : MonoBehaviour
 {
+    // ########################################
+    // Variables
+    // ########################################
+
+    #region Variables
     public static GameController sharedInstance;
     public int maxNumbersActions = 2;
 
@@ -26,8 +34,14 @@ public class GameController : MonoBehaviour
     public GameObject panelEndTurn;
     public GameObject buttonShowActions;
     public Canvas canvas;
-    
 
+    #endregion // Variables
+
+    // ########################################
+    // MonoBehaviour Functions
+    // ########################################
+
+    #region MonoBehaviour
     void Start()
     {
         //      SINGLETON
@@ -62,7 +76,13 @@ public class GameController : MonoBehaviour
             ActualizarReloj(tiempoAMostrarEnSegundos);
         }
     }
+    #endregion // MonoBehaviour
 
+    // ########################################
+    // Funciones de Acciones Contador
+    // ########################################
+
+    #region Acciones
     //   AGREGAR ACCION USADA
     public void AddActions()
     {
@@ -83,6 +103,8 @@ public class GameController : MonoBehaviour
         numbersActions--;
         textNumbersActions.text = numbersActions.ToString() + " / " + maxNumbersActions.ToString();
     }
+    #endregion //Acciones
+
 
     //  MOSTRAR PANEL AL TERMINAR EL TURNO
     public void ShowPanelEndTurn()
@@ -91,6 +113,11 @@ public class GameController : MonoBehaviour
         panelEndTurn.SetActive(true);   
     }
 
+    // ########################################
+    // función de manejo del tiempo
+    // ########################################
+
+    #region Timer
     //  TIMER
     public void ActualizarReloj(float tiempoEnSegundos)
     {
@@ -156,5 +183,5 @@ public class GameController : MonoBehaviour
         tiempoAMostrarEnSegundos = tiempoInicial;
         ActualizarReloj(tiempoAMostrarEnSegundos);
     }
-
+    #endregion //TIMER
 }
