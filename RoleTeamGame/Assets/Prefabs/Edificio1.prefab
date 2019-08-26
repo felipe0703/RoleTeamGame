@@ -501,6 +501,7 @@ MonoBehaviour:
   id: 2
   btn: {fileID: 5083276783727491312}
   panelInfo: {fileID: 1314969775676048402}
+  level1: {fileID: 1269206426785804760}
 --- !u!1001 &7592707869618905924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -568,11 +569,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8701965004762993308, guid: c785301fa4e25f444978193fba9961f5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8701965005456676349, guid: c785301fa4e25f444978193fba9961f5,
         type: 3}
       propertyPath: m_IsActive
@@ -583,7 +579,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 715310347304074550, guid: c785301fa4e25f444978193fba9961f5,
+    - target: {fileID: 8701965004762993308, guid: c785301fa4e25f444978193fba9961f5,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -593,11 +589,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 715310347304074550, guid: c785301fa4e25f444978193fba9961f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c785301fa4e25f444978193fba9961f5, type: 3}
 --- !u!4 &1269206427487685551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8701965005001156843, guid: c785301fa4e25f444978193fba9961f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7592707869618905924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1269206426785804760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701965004762993308, guid: c785301fa4e25f444978193fba9961f5,
     type: 3}
   m_PrefabInstance: {fileID: 7592707869618905924}
   m_PrefabAsset: {fileID: 0}
