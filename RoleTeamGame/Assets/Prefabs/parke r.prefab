@@ -427,6 +427,7 @@ MonoBehaviour:
   id: 3
   btn: {fileID: 1991026233983458774}
   panelInfo: {fileID: 466756395843199319}
+  level1: {fileID: 3874570998147671870}
 --- !u!1 &7840927670327323585
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +574,12 @@ PrefabInstance:
 --- !u!4 &3874570997980028233 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8701965005001156843, guid: f753832c246a08948840a8bc324b88d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5550311446163240354}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3874570998147671870 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701965004762993308, guid: f753832c246a08948840a8bc324b88d7,
     type: 3}
   m_PrefabInstance: {fileID: 5550311446163240354}
   m_PrefabAsset: {fileID: 0}

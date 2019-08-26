@@ -17,9 +17,15 @@ public class BoardManager : MonoBehaviour
 
     public int xSize, ySize;                                //  tamaño del tablero
 
-    public GameObject currenteEdifice;                      //  prefabs del edificio    
-    public List<GameObject> prefabs = new List<GameObject>();       //  lista de edificios   
-    private GameObject[,] edifices;                         // arreglo de edificios    
+    public GameObject currenteEdifice;                              //  prefabs del edificio    
+    public List<GameObject> prefabs = new List<GameObject>();       //  lista de edificios que puedes instanciar
+    private List<GameObject> allEdifices = new List<GameObject>();  // Lista con todos los edificios generados en el tablero
+    public GameObject[,] edifices;                                  // arreglo de edificios    
+    private List<GameObject> centralEdifices = new List<GameObject>();// Edificios Centrales del tablero
+
+    public int maxHouse = 12;
+    public int maxEdifice = 18;
+    public int maxPark = 6;
 
     [Space(10)]
     public GameObject currentStreet;
@@ -66,10 +72,10 @@ public class BoardManager : MonoBehaviour
     #region GeneraTablero
     private void CreateInitialBoard(Vector2 offset)
     {
-        xSize = xSize * 2 + 5;
-        ySize = ySize * 2 + 5;
+        int xSizeBoard = xSize * 2 + 5;
+        int ySizeBoard = ySize * 2 + 5;
 
-        edifices = new GameObject[xSize, ySize];
+        //  TODO: REVISAR UTILIDAD Y TAMAÑOS DE LOS ARREGLOS
         streets = new GameObject[xSize, ySize];
         rivers = new GameObject[xSize, ySize];
         borders = new GameObject[xSize, ySize];
@@ -81,19 +87,42 @@ public class BoardManager : MonoBehaviour
         Sprite sprite = null;
         GameObject edifice;
 
-        // int idX = -1;
+        int idX = -1;
+        int contHouse = 0;
+        int contEdifice = 0;
+        int contPark = 0;
 
         //  BUCLES QUE POSICIONA LOS EDIFICIOS, RIÓS Y CALLES
-        for (int x = 0; x < xSize; x++)
+        for (int x = 0; x < xSizeBoard; x++)
         {
-            for (int y = 0; y < ySize; y++)
+            for (int y = 0; y < ySizeBoard; y++)
             {
-                if(x > 1 && x < xSize - 2 && y > 1 && y < ySize - 2)
+                if(x > 1 && x < xSizeBoard - 2 && y > 1 && y < ySizeBoard - 2)
                 {
                     if (x % 2 != 0 && y % 2 != 0)
-                    {
-                        //TODO:  COLOCAR LOS SPRITES EN LA LISTA, CREAR PREFABS MEJOR
-                        edifice = prefabs[Random.Range(0, prefabs.Count)];
+                    {            
+                        do
+                        {
+                            edifice = prefabs[Random.Range(0, prefabs.Count)];
+                            idX = edifice.GetComponent<Edifice>().id;
+
+                        } while (   (idX == 1 && contHouse > maxHouse - 1) 
+                                ||  (idX == 2 && contEdifice > maxEdifice - 1) 
+                                ||  (idX == 3 && contPark > maxPark - 1));
+
+                        if(idX == 1)
+                        {
+                            contHouse++;
+                        }
+                        if (idX == 2)
+                        {
+                            contEdifice++;
+                        }
+                        if (idX == 3)
+                        {
+                            contPark++;
+                        }
+
                         currenteEdifice = edifice;
 
                         //  GENERACIÓN EDIFICIOS
@@ -104,11 +133,10 @@ public class BoardManager : MonoBehaviour
 
                         // Formato al nombre de los objetos
                         newEdifice.name = string.Format("Edifice[{0}][{1}]", x, y);
-
-
-
-                        newEdifice.transform.parent = GameObject.Find("Edifices").transform;
-                        edifices[x, y] = newEdifice;
+                        // Lo agrega como hijo de Edifices para tener un orden
+                        newEdifice.transform.parent = GameObject.Find("Edifices").transform;    
+                        // agrega todos los edificios, para poder acceder después a ellos
+                        allEdifices.Add(newEdifice);
                     }
                     else 
                     {
@@ -122,7 +150,7 @@ public class BoardManager : MonoBehaviour
                         newStreet.name = string.Format("Street[{0}][{1}]", x, y);
 
                         newStreet.transform.parent = GameObject.Find("Streets").transform;
-                        streets[x, y] = newStreet;
+                        //streets[x, y] = newStreet;
 
 
                         if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
@@ -146,7 +174,7 @@ public class BoardManager : MonoBehaviour
                 
 
 
-                else if (x >= xSize - 2 )
+                else if (x >= xSizeBoard - 2 )
                 {
                     //  GENERACIÓN RIO
                     GameObject newRiver = Instantiate(currentRiver,
@@ -161,11 +189,11 @@ public class BoardManager : MonoBehaviour
                     newRiver.GetComponent<SpriteRenderer>().sprite = sprite;
 
                     newRiver.transform.parent = GameObject.Find("Rivers").transform;
-                    rivers[x, y] = newRiver;
+                    //rivers[x, y] = newRiver;
                 }
 
 
-                else if (x <= 1 || y <= 1 || y >= ySize - 2 )
+                else if (x <= 1 || y <= 1 || y >= ySizeBoard - 2 )
                 {
                     //  GENERACIÓN BORDER
                     GameObject newBorder = Instantiate(currentBorder,
@@ -181,12 +209,56 @@ public class BoardManager : MonoBehaviour
 
                     newBorder.transform.parent = GameObject.Find("Borders").transform;
 
-                    borders[x, y] = newBorder;
+                    //borders[x, y] = newBorder;
                 }
             }
+
+            
         }
+
+
+        SaveEdificesInMatrix();
+        FireStart();
     }
     #endregion
 
+    public void SaveEdificesInMatrix()
+    {
+        int cont = 0;
+        edifices = new GameObject[xSize, ySize];
 
+        for (int i = 0; i < xSize; i++)
+        {
+            for (int j = 0; j < ySize; j++)
+            {
+                edifices[i, j] = allEdifices[cont];
+                cont++;
+            }
+        }
+    }
+
+    // Inicia el fuego de forma aleatorio en uno de los edificios centrales
+    public void FireStart()
+    {
+        int xSizeHalf = xSize / 2;
+        int ySizeHalf = ySize / 2;
+
+        // Obtención de edificios centrales
+        for (int i = xSizeHalf - 1 ; i < xSizeHalf + 1; i++)
+        {
+            for (int j = ySizeHalf - 1; j < ySizeHalf + 1; j++)
+            {
+                centralEdifices.Add(edifices[i, j]);
+            }
+        }
+
+        GameObject edifice;
+
+        // Obtener el edificio donde iniciará el fuego
+        edifice = centralEdifices[Random.Range(0, centralEdifices.Count)];
+
+        //Iniciar fuego
+        edifice.GetComponent<Edifice>().FireStart();
+
+    }
 }
