@@ -10,7 +10,6 @@ public class Edifice : MonoBehaviour
 
     public GameObject level1;
 
-
     public void IsSelected()
     {
         panelInfo.SetActive(true);
@@ -21,4 +20,6 @@ public class Edifice : MonoBehaviour
     {
         level1.SetActive(true);
     }
+
 }
+ 

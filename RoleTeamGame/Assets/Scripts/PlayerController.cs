@@ -129,34 +129,154 @@ public class PlayerController : MonoBehaviour
     {
 
         //TODO:CUANDO TENGA UN BORDER O RIO QUE NO MUESTRE BOTONES
+        //  EDIFICIOS A LA DERECHA E IZQUIERDA
+        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" && GetNeighbor(adjacentDirections[3]).tag == "Edifice")
+        {          
 
-        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" || GetNeighbor(adjacentDirections[2]).tag == "Edifice")
-        {
-            //Debug.Log(GetNeighbor(adjacentDirections[0]).name);
-
-            if (GetNeighbor(adjacentDirections[1]).tag == "Street")
+            // HAY BORDE ARRIBA
+            if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isBorder)
             {
-                UIManagerGame.sharedInstance.panelButtonsMove[1].SetActive(true);
-            }
-
-            if (GetNeighbor(adjacentDirections[3]).tag == "Street")
+                UIManagerGame.sharedInstance.down.SetActive(true);
+            }// HAY BORDE ABAJO
+            else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isBorder)
             {
-                UIManagerGame.sharedInstance.panelButtonsMove[3].SetActive(true);
+                UIManagerGame.sharedInstance.up.SetActive(true);
             }
+            else
+            {
+                UIManagerGame.sharedInstance.up.SetActive(true);
+                UIManagerGame.sharedInstance.down.SetActive(true);
+            }
+            UIManagerGame.sharedInstance.upRight.SetActive(true);
+            UIManagerGame.sharedInstance.upLeft.SetActive(true);
+            UIManagerGame.sharedInstance.downRight.SetActive(true);
+            UIManagerGame.sharedInstance.downLeft.SetActive(true);
         }
 
-        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" || GetNeighbor(adjacentDirections[3]).tag == "Edifice")
+        // EDIFICIOS ARRIBA Y ABAJO
+        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" && GetNeighbor(adjacentDirections[2]).tag == "Edifice")
         {
-            //Debug.Log(GetNeighbor(adjacentDirections[1]).name);
-
-            if (GetNeighbor(adjacentDirections[0]).tag == "Street")
+            // HAY BORDE DERECHA
+            if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isBorder)
             {
-                UIManagerGame.sharedInstance.panelButtonsMove[0].SetActive(true);
+                UIManagerGame.sharedInstance.left.SetActive(true);
+            }// HAY BORDE IZQUIERDA
+            else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isBorder)
+            {
+                UIManagerGame.sharedInstance.right.SetActive(true);
             }
-
-            if (GetNeighbor(adjacentDirections[2]).tag == "Street")
+            else
             {
-                UIManagerGame.sharedInstance.panelButtonsMove[2].SetActive(true);
+                UIManagerGame.sharedInstance.right.SetActive(true);
+                UIManagerGame.sharedInstance.left.SetActive(true);
+            }
+            UIManagerGame.sharedInstance.rightUp.SetActive(true);
+            UIManagerGame.sharedInstance.rightDown.SetActive(true);
+            UIManagerGame.sharedInstance.leftUp.SetActive(true);
+            UIManagerGame.sharedInstance.leftDown.SetActive(true);
+        }
+
+
+        //EDIFICIO A LA DERECHA
+        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" )
+        {
+            // BOSQUE A LA IZQUIERDA
+            if(GetNeighbor(adjacentDirections[3]).tag == "Border")
+            {
+                // si tengo una esquina arriba
+                if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.down.SetActive(true);
+                }// si tengo una esquina abajo
+                else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.up.SetActive(true);
+                }
+                else
+                {
+                    UIManagerGame.sharedInstance.up.SetActive(true);
+                    UIManagerGame.sharedInstance.down.SetActive(true);
+                }
+
+                UIManagerGame.sharedInstance.downRight.SetActive(true);
+                UIManagerGame.sharedInstance.upRight.SetActive(true);
+            }
+        }
+        
+        //EDIFICIO A LA IZQUIEDA
+        if (GetNeighbor(adjacentDirections[3]).tag == "Edifice" )
+        {
+            // AGUA A LA DERECHA
+            if(GetNeighbor(adjacentDirections[1]).tag == "River")
+            {
+                // si tengo una esquina arriba
+                if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.down.SetActive(true);
+                }// si tengo una esquina abajo
+                else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.up.SetActive(true);
+                }
+                else
+                {
+                    UIManagerGame.sharedInstance.up.SetActive(true);
+                    UIManagerGame.sharedInstance.down.SetActive(true);
+                }
+
+                UIManagerGame.sharedInstance.downLeft.SetActive(true);
+                UIManagerGame.sharedInstance.upLeft.SetActive(true);
+            }
+        } 
+        
+        //EDIFICIO ABAJO
+        if (GetNeighbor(adjacentDirections[2]).tag == "Edifice" )
+        {
+            // BORDE ARRIBA
+            if(GetNeighbor(adjacentDirections[0]).tag == "Border")
+            {
+                // si tengo una esquina derecha
+                if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.left.SetActive(true);
+                }// si tengo una esquina izquierda
+                else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.right.SetActive(true);
+                }
+                else
+                {
+                    UIManagerGame.sharedInstance.right.SetActive(true);
+                    UIManagerGame.sharedInstance.left.SetActive(true);
+                }
+
+                UIManagerGame.sharedInstance.rightDown.SetActive(true);
+                UIManagerGame.sharedInstance.leftDown.SetActive(true);
+            }
+        } 
+        
+        //EDIFICIO ARRIBA
+        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" )
+        {
+            // BORDE ABAJO
+            if(GetNeighbor(adjacentDirections[2]).tag == "Border")
+            {
+                // si tengo una esquina derecha
+                if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.left.SetActive(true);
+                }// si tengo una esquina izquierda
+                else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isCorner)
+                {
+                    UIManagerGame.sharedInstance.right.SetActive(true);
+                }
+                else
+                {
+                    UIManagerGame.sharedInstance.right.SetActive(true);
+                    UIManagerGame.sharedInstance.left.SetActive(true);
+                }
+                UIManagerGame.sharedInstance.rightUp.SetActive(true);
+                UIManagerGame.sharedInstance.leftUp.SetActive(true);
             }
         }
     }
