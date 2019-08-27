@@ -1,20 +1,49 @@
-﻿using System.Collections;
+﻿
+#region Namespaces
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+#endregion //Namespaces
+
 
 public class UIManagerGame : MonoBehaviour
 {
+    // ########################################
+    // Variables
+    // ########################################
+
+    #region Variables
     public static UIManagerGame sharedInstance;
 
-
     public GameObject panelButtons;
-    public GameObject panelMove;
+    public GameObject buttons;
     public GameObject panelUI;
-    public GameObject[] panelButtonsMove;
+   // public GameObject[] panelButtonsMove;
 
+    public GameObject up;
+    public GameObject right;
+    public GameObject down;
+    public GameObject left;
+    public GameObject upRight;
+    public GameObject upLeft;
+    public GameObject downRight;
+    public GameObject downLeft;
+    public GameObject rightUp;
+    public GameObject rightDown;
+    public GameObject leftUp;
+    public GameObject leftDown;
+
+    #endregion
+
+    // ########################################
+    // Funciones MonoBehaviour 
+    // ########################################
+
+    #region MonoBehaviour
     private void Start()
     {
-        if(sharedInstance == null)
+        if (sharedInstance == null)
         {
             sharedInstance = this;
         }
@@ -23,9 +52,8 @@ public class UIManagerGame : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
-
+    #endregion
+         
     // BUTTONS
     public void ShowButtonsActions()
     {
@@ -41,26 +69,35 @@ public class UIManagerGame : MonoBehaviour
     // PANEL MOVE
     public void ShowPanelMove()
     {
-        panelMove.SetActive(true);
+        buttons.SetActive(true);
         HidePanelUI();
         HideButtonsActions();
     }
 
     public void HidePanelMove()
     {
-        panelMove.SetActive(false);
+        buttons.SetActive(false);
         ShowPanelUI();
         ShowButtonsActions();
-        HideAllPanelMove();
+        HideAllButtonsMove();
     }
 
-    public void HideAllPanelMove()
+    public void HideAllButtonsMove()
     {
-        for (int i = 0; i < panelButtonsMove.Length; i++)
-        {
-            panelButtonsMove[i].SetActive(false);
-        }
+        up.SetActive(false);
+        down.SetActive(false);
+        right.SetActive(false);
+        left.SetActive(false);
+        rightUp.SetActive(false);
+        rightDown.SetActive(false);
+        leftUp.SetActive(false);
+        leftDown.SetActive(false);
+        upRight.SetActive(false);
+        upLeft.SetActive(false);
+        downRight.SetActive(false);
+        downLeft.SetActive(false);
     }
+
     //  PANEL UI
     public void ShowPanelUI()
     {

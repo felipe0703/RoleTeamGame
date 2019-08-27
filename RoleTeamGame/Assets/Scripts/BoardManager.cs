@@ -91,7 +91,7 @@ public class BoardManager : MonoBehaviour
         int contHouse = 0;
         int contEdifice = 0;
         int contPark = 0;
-
+    
         //  BUCLES QUE POSICIONA LOS EDIFICIOS, RIÓS Y CALLES
         for (int x = 0; x < xSizeBoard; x++)
         {
@@ -99,7 +99,7 @@ public class BoardManager : MonoBehaviour
             {
                 if(x > 1 && x < xSizeBoard - 2 && y > 1 && y < ySizeBoard - 2)
                 {
-                    if (x % 2 != 0 && y % 2 != 0)
+                    if (x > 2 && x % 2 != 0 && y % 2 != 0)
                     {            
                         do
                         {
@@ -152,6 +152,9 @@ public class BoardManager : MonoBehaviour
                         newStreet.transform.parent = GameObject.Find("Streets").transform;
                         //streets[x, y] = newStreet;
 
+                        currentStreet.GetComponent<Street>().isBorder = false;
+                        currentStreet.GetComponent<Street>().isCorner = false;                        
+
 
                         if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
                         {
@@ -162,12 +165,31 @@ public class BoardManager : MonoBehaviour
                         {
                             sprite = streetList[Random.Range(2, 4)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
+
+                            
                         }
                         else if (x % 2 == 0 && y % 2 == 0)      //  INTERCEPCIÓN CALLES CALLES 
                         {
                             sprite = streetList[Random.Range(4, 6)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
+                            
                         }
+                        
+                        // la calle esta en los borde
+                        if (x == 2 || y == 2 || x == xSizeBoard - 3 || y == ySizeBoard - 3)
+                        {
+                            newStreet.GetComponent<Street>().isBorder = true;                           
+                        }
+
+                        // la calle es una esquina
+                        if ((x == 2 && y == 2) || 
+                            (x == xSizeBoard - 3 && y == ySizeBoard - 3) ||
+                            (x == 2 && y == ySizeBoard - 3) ||
+                            (x == xSizeBoard - 3 && y == 2))
+                        {
+                            newStreet.GetComponent<Street>().isCorner = true;
+                        }
+
 
                     }
                 }
