@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
         Vector2.left
     };
 
+    private Animator animator;
+    private Vector2 animDir = Vector2.zero;
+    private Vector2 animDir2 = Vector2.zero;
+
     #endregion
 
     // ########################################
@@ -53,7 +57,7 @@ public class PlayerController : MonoBehaviour
     #region MonoBehaviour
     void Start()
     {
-
+        animator = GetComponent<Animator>();
         // Posicionamiento del player de forma aleatoria
         // TODO: QUE EL POSICIONAMIENTO DE UN JUGADOR NO SEA IGUAL A OTRO JUGADOR
         int i1 = Random.Range(0, 2);
@@ -77,11 +81,17 @@ public class PlayerController : MonoBehaviour
 
         if (moveTarget1)
         {
+            animator.SetBool("PlayerMoving",true);
+            animator.SetFloat("MoveX",animDir.x);
+            animator.SetFloat("MoveY",animDir.y);
             MovePlayer(fixedSpeed,target.position);
         }
 
         if (moveTarget2)
         {
+            animator.SetBool("PlayerMoving",true);
+            animator.SetFloat("MoveX",animDir2.x);
+            animator.SetFloat("MoveY",animDir2.y);
             MovePlayer(fixedSpeed, target2.position);
         }
 
@@ -89,11 +99,13 @@ public class PlayerController : MonoBehaviour
         {
             moveTarget1 = false;
             moveTarget2 = true;
-        }       
+            //SwitchAnim2();
+        }
 
         if (transform.position == target2.position)
         {
             moveTarget2 = false;
+            StopAnim();
             target.position = transform.position;
             if(GameController.sharedInstance.numbersActions == GameController.sharedInstance.maxNumbersActions)
             {
@@ -334,18 +346,24 @@ public class PlayerController : MonoBehaviour
     { 
         InAllMovements(targets[4].position);
         target2.position = targets[4].position;
+        SetDirectionAnim1(-1,0);
+        SetDirectionAnim2(-1,0);
     }
 
     public void MoveLeftUp()
     {
         InAllMovements(targets[4].position);
         target2.position = targets[1].position;
+        SetDirectionAnim1(-1,0);
+        SetDirectionAnim2(0,1);
     }
 
     public void MoveLeftDown()
     {
         InAllMovements(targets[4].position);
         target2.position = targets[3].position;
+        SetDirectionAnim1(-1,0);
+        SetDirectionAnim2(0,-1);
     }
 
     //  RIGHT
@@ -353,16 +371,22 @@ public class PlayerController : MonoBehaviour
     {
         InAllMovements(targets[2].position);
         target2.position = targets[2].position;
+        SetDirectionAnim1(1,0);
+        SetDirectionAnim2(1,0);
     }
     public void MoveRightUpPlayer()
     {
         InAllMovements(targets[2].position);
         target2.position = targets[1].position;
+        SetDirectionAnim1(1,0);
+        SetDirectionAnim2(0,1);
     }
     public void MoveRightDownPlayer()
     {
         InAllMovements(targets[2].position);
         target2.position = targets[3].position;
+        SetDirectionAnim1(1,0);
+        SetDirectionAnim2(0,-1);
     }
 
     //  UP
@@ -370,16 +394,22 @@ public class PlayerController : MonoBehaviour
     {
         InAllMovements(targets[1].position);
         target2.position = targets[1].position;
+        SetDirectionAnim1(0,1);
+        SetDirectionAnim2(0,1);
     }
     public void MoveUpRightPlayer()
     {
         InAllMovements(targets[1].position);
         target2.position = targets[2].position;
+        SetDirectionAnim1(0,1);
+        SetDirectionAnim2(1,0);
     }
     public void MoveUpLeftPlayer()
     {
         InAllMovements(targets[1].position);
         target2.position = targets[4].position;
+        SetDirectionAnim1(0,1);
+        SetDirectionAnim2(-1,0);
     }
 
     // DOWN
@@ -387,16 +417,22 @@ public class PlayerController : MonoBehaviour
     {
         InAllMovements(targets[3].position);
         target2.position = targets[3].position;
+        SetDirectionAnim1(0,-1);
+        SetDirectionAnim2(0,-1);
     }
     public void MoveDownRightPlayer()
     {
         InAllMovements(targets[3].position);
         target2.position = targets[2].position;
+        SetDirectionAnim1(0,-1);
+        SetDirectionAnim2(1,0);
     }
     public void MoveDownLeftPlayer()
     {
         InAllMovements(targets[3].position);
         target2.position = targets[4].position;
+        SetDirectionAnim1(0,-1);
+        SetDirectionAnim2(-1,0);
     }
     #endregion // Movements
 
@@ -404,5 +440,21 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawSphere(target2.position, 0.5f);
+    }
+
+    private void SetDirectionAnim1(float x, float y){
+        animDir = new Vector2(x,y);
+    }
+
+    private void SetDirectionAnim2(float x, float y){
+        animDir2 = new Vector2(x,y);
+    }
+
+    private void StopAnim(){
+        animator.SetBool("PlayerMoving",false);
+        animator.SetFloat("MoveX",0);
+        animator.SetFloat("MoveY",0);
+        animator.SetFloat("LastMoveX",animDir2.x);
+        animator.SetFloat("LastMoveY",animDir2.y);
     }
 }

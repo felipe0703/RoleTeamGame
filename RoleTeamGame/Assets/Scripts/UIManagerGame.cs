@@ -33,6 +33,8 @@ public class UIManagerGame : MonoBehaviour
     public GameObject rightDown;
     public GameObject leftUp;
     public GameObject leftDown;
+    public GUIAnimFREE boton;
+    private bool showingPanel = false;
 
     #endregion
 
@@ -80,6 +82,21 @@ public class UIManagerGame : MonoBehaviour
         ShowPanelUI();
         ShowButtonsActions();
         HideAllButtonsMove();
+    }
+
+    public void TogglePanel(){
+        if(!boton.gameObject.activeSelf){
+            boton.gameObject.SetActive(true);
+            boton.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
+            showingPanel = true;
+        }
+        else{
+            if(showingPanel)
+                boton.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
+            else
+                boton.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
+            showingPanel = !showingPanel;
+        }
     }
 
     public void HideAllButtonsMove()
