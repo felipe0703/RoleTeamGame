@@ -99,7 +99,6 @@ public class PlayerController : MonoBehaviour
         {
             moveTarget1 = false;
             moveTarget2 = true;
-            //SwitchAnim2();
         }
 
         if (transform.position == target2.position)
