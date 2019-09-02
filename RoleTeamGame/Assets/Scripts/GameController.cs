@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
 
     #region Variables
     public static GameController sharedInstance;
-    public int maxNumbersActions = 2;
+    public int maxNumbersActions = 4;
 
     //  Variables Públicas
     [Tooltip("Tiempo inicial en segundo")] public int tiempoInicial;
@@ -34,6 +34,13 @@ public class GameController : MonoBehaviour
     public GameObject panelEndTurn;
     public GameObject buttonShowActions;
     public Canvas canvas;
+
+    // HABITANTES DE EDIFICIOS    
+    public int totalPopulation = 90;
+    public int totalDisabledPerson = 40;
+    public int totalPerson = 30;
+    public int totalPet = 20;
+
 
     #endregion // Variables
 
@@ -55,8 +62,10 @@ public class GameController : MonoBehaviour
         }
 
         //  ACTIONS
+        numbersActions = maxNumbersActions;
         textNumbersActions.text = numbersActions.ToString() + " / " + maxNumbersActions.ToString();
         
+
         //  TIMER
         escalaDeTiempoInicial = escalaDeTiempo;         //  Establecer la escala de tiempo original      
         tiempoAMostrarEnSegundos = tiempoInicial;       //  Inicializamos la variables que acumular

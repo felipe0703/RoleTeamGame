@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     
     public float speed;
 
+    // live
+    public GameObject[] actions;
+
 
     // VARIABLES PRIVADAS    
     float distanceEdifice = 8f;
@@ -95,7 +98,8 @@ public class PlayerController : MonoBehaviour
         {
             moveTarget2 = false;
             target.position = transform.position;
-            if(GameController.sharedInstance.numbersActions == GameController.sharedInstance.maxNumbersActions)
+            //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
+            if(GameController.sharedInstance.numbersActions == 0)
             {
                 TurnSystemManager.sharedInstance.turn++;
                 GameController.sharedInstance.ShowPanelEndTurn();
@@ -323,8 +327,8 @@ public class PlayerController : MonoBehaviour
     void InAllMovements(Vector3 targetPosition)
     {
         target.position = targetPosition;
-        moveTarget1 = true;                
-        GameController.sharedInstance.AddActions();
+        moveTarget1 = true;
+        UpdateNumberOfActions();
         UIManagerGame.sharedInstance.HidePanelMove();
         UIManagerGame.sharedInstance.HideButtonsActions();
     } 
@@ -405,4 +409,12 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawSphere(target2.position, 0.5f);
     }
+
+    public void UpdateNumberOfActions()
+    {
+        GameController.sharedInstance.SubtractActions();
+        int i = GameController.sharedInstance.numbersActions;
+        actions[i].SetActive(false);
+    }
+
 }

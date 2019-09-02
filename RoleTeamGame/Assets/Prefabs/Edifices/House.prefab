@@ -112,9 +112,9 @@ GameObject:
   - component: {fileID: 6358325242065098372}
   - component: {fileID: 2044808547884309333}
   - component: {fileID: 7504240244574639496}
-  - component: {fileID: 6571495378818422835}
+  - component: {fileID: 5053020835679784002}
   m_Layer: 8
-  m_Name: House 2
+  m_Name: House
   m_TagString: Edifice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 81222e708c1c3264fabfd3c37cd4916f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a23ae3128a08b98448921691ffe3e967, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -224,13 +224,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   btn: {fileID: 5754388286522569143}
-  panelInfo: {fileID: 6643254659900335327}
   level1: {fileID: 1547845846}
+  contPopulation: 0
+  contDisabledPerson: 0
+  contPerson: 0
+  contPet: 0
+  maxFire: 3
   clips:
   - {fileID: 8300000, guid: 0d59f1ae8311e2f44b5453bb4f716dd1, type: 3}
   - {fileID: 8300000, guid: 24496d7b35e99554b85a911d16ad980b, type: 3}
   - {fileID: 8300000, guid: 0ecbab50e88d6724eb3640a3bc7c443f, type: 3}
---- !u!82 &6571495378818422835
+--- !u!82 &5053020835679784002
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
