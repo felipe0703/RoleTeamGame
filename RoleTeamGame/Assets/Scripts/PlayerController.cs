@@ -26,8 +26,11 @@ public class PlayerController : MonoBehaviour
     float distanceEdifice = 8f;
     bool moveTarget1, moveTarget2 = false;
 
+    GameManager gm;
 
     //  COMPONENTES
+
+
 
     //  POSICIONES DEL JUGADOR AL INICIAR
     int[] positionA = { 20, 140 };
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 animDir = Vector2.zero;
     private Vector2 animDir2 = Vector2.zero;
 
+
     #endregion
 
     // ########################################
@@ -55,8 +59,15 @@ public class PlayerController : MonoBehaviour
     // ########################################
 
     #region MonoBehaviour
+
+    private void Awake()
+    {
+    }
+
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
+
         animator = GetComponent<Animator>();
         // Posicionamiento del player de forma aleatoria
         // TODO: QUE EL POSICIONAMIENTO DE UN JUGADOR NO SEA IGUAL A OTRO JUGADOR
@@ -70,6 +81,7 @@ public class PlayerController : MonoBehaviour
             target2.parent = null;
             targets = target.GetComponentsInChildren<Transform>();
         }
+
 
 
     }
@@ -325,6 +337,9 @@ public class PlayerController : MonoBehaviour
     // ########################################
 
     #region Movements
+
+
+
     //  MOVE
     void MovePlayer(float fixedSpeed, Vector3 targetPosition)
     {
@@ -434,6 +449,18 @@ public class PlayerController : MonoBehaviour
         SetDirectionAnim2(-1,0);
     }
     #endregion // Movements
+
+    #region Audio
+
+    void PlayStepSound()
+    {
+        gm.PlayOneStepSound();
+    }
+
+
+
+    #endregion
+
 
     private void OnDrawGizmos()
     {

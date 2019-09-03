@@ -7,7 +7,6 @@ using UnityEngine;
 public class MenuSoundControl : MonoBehaviour
 {
     public AudioClip[] clips;
-    private int clipIndex = 0;
     private AudioSource mnuAudio;
 
     void Start()
