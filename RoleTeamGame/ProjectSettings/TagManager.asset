@@ -9,6 +9,7 @@ TagManager:
   - Street
   - Border
   - GM
+  - Sonido
   layers:
   - Default
   - TransparentFX

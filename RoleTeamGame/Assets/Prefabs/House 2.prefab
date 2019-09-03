@@ -230,6 +230,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0d59f1ae8311e2f44b5453bb4f716dd1, type: 3}
   - {fileID: 8300000, guid: 24496d7b35e99554b85a911d16ad980b, type: 3}
   - {fileID: 8300000, guid: 0ecbab50e88d6724eb3640a3bc7c443f, type: 3}
+  - {fileID: 8300000, guid: 070dc1abee0156444ba6e3dbdc538592, type: 3}
 --- !u!82 &6571495378818422835
 AudioSource:
   m_ObjectHideFlags: 0
@@ -535,6 +536,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7504240244574639496}
         m_MethodName: IsSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7504240244574639496}
+        m_MethodName: PlayClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

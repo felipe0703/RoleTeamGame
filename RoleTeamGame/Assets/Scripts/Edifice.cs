@@ -61,5 +61,10 @@ public class Edifice : MonoBehaviour
         level1.SetActive(true);
     }
 
+    public void PlayClickSound()
+    {
+        edificeAudio.PlayOneShot(clips[3]);
+    }
+
 }
  
