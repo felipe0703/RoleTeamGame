@@ -2,11 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Estados del fuego en los edificios
+public enum FireState
+{
+    level0,
+    level1,
+    level2,
+    level3
+}
+
 public class Edifice : MonoBehaviour
 {
     public int id;
     public GameObject btn;
     public GameObject level1;
+    public GameObject level2;
+    public GameObject level3;
 
     public int contPopulation;
     public int contDisabledPerson;
@@ -126,10 +137,43 @@ public class Edifice : MonoBehaviour
         btn.SetActive(false);
     }
 
+
+
+
     public void FireStart()
     {
         level1.SetActive(true);
     }
 
+
+    public void StartFireLevel1()
+    {
+        SetFireState(FireState.level1);
+    }
+    public void StartFireLevel2()
+    {
+        SetFireState(FireState.level2);
+    }
+    public void StartFireLevel3()
+    {
+        SetFireState(FireState.level3);
+    }
+
+
+    void SetFireState(FireState newFireState)
+    {
+        if(newFireState == FireState.level1)
+        {
+            level1.SetActive(true);
+        }
+        if (newFireState == FireState.level2)
+        {
+           // level1.SetActive(true);
+        }
+        if (newFireState == FireState.level3)
+        {
+            //level1.SetActive(true);
+        }
+    }
 }
  

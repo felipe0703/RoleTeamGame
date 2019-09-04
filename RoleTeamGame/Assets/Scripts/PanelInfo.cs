@@ -7,9 +7,6 @@ public class PanelInfo : MonoBehaviour
 {
     public Image imageEdifice;
     public Image[] habitants;
-    public GameObject prefabDisabledPerson;
-    public GameObject prefabPerson;
-    public GameObject prefabPet;
 
 
     public void FillInformation(GameObject edifice)
@@ -28,28 +25,24 @@ public class PanelInfo : MonoBehaviour
 
         for (int i = 0; i < habitants.Length; i++)
         {
-            habitants[i].GetComponent<Image>().enabled = false;
+            habitants[i].color = new Color(.85f, .85f,  .85f, .3f);
         }
 
         for (int i = 0; i < habitants.Length; i++)
         {
             if (disabledPerson > 0)
             {
-                //TODO: ver si me conviene tener los prefabs en el gamecontroller
-                habitants[i].GetComponent<Image>().enabled = true;
-                habitants[i].sprite = prefabDisabledPerson.GetComponent<Image>().sprite;
+                habitants[i].color = new Color(1f, 1f, 1f, 1f);
                 disabledPerson--;
             }
             else if (person > 0 && i > 2)
             {
-                habitants[i].sprite = prefabPerson.GetComponent<Image>().sprite;
-                habitants[i].GetComponent<Image>().enabled = true;
+                habitants[i].color = new Color(1f, 1f, 1f, 1f);
                 person--;
             }
             else if (pet > 0 && i > 5)
             {
-                habitants[i].sprite = prefabPet.GetComponent<Image>().sprite;
-                habitants[i].GetComponent<Image>().enabled = true;
+                habitants[i].color = new Color(1f, 1f, 1f, 1f);
                 pet--;
             }
         }
