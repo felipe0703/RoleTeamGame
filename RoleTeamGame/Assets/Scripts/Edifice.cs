@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿#region Namespace
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#endregion //Namespace
 
+#region FireState
 // Estados del fuego en los edificios
 public enum FireState
 {
@@ -10,9 +13,16 @@ public enum FireState
     level2,
     level3
 }
+#endregion //FireState
+
 
 public class Edifice : MonoBehaviour
 {
+    // ########################################
+    // Variables
+    // ########################################
+
+    #region Variables
     public int id;
     public GameObject btn;
     public GameObject level1;
@@ -25,10 +35,19 @@ public class Edifice : MonoBehaviour
     public int contPet;
 
     public int maxFire;
+    public int contFire;
 
     //AUDIO
     private AudioSource edificeAudio;
     public AudioClip[] clips;
+
+    #endregion // Variables
+
+    // ########################################
+    // Funciones MonoBehaviour 
+    // ########################################
+
+    #region MonoBehaviour
 
     public void Start()
     {
@@ -69,7 +88,6 @@ public class Edifice : MonoBehaviour
                 do
                 {
                     int numRandom = Random.Range(1, 4);
-
                     // TODO: confirmar si hay del habitante que salio si no intentar sacar otro
                     if (numRandom == 1 && disabledPerson > 0 )
                     {
@@ -92,12 +110,9 @@ public class Edifice : MonoBehaviour
                         i--;
                     }
 
-
-                } while (i > 0);
-                              
+                } while (i > 0);                              
             }
         }      
-
     }
 
     public void Update()
@@ -107,8 +122,6 @@ public class Edifice : MonoBehaviour
         {
             edificeAudio.clip = clips[0];
         }
-        /*  Como no hay más nivel de fuego que el 1 no me puedo referir a los demas
-
         if (level2.activeSelf)
         {
             edificeAudio.clip = clips[1];
@@ -117,18 +130,21 @@ public class Edifice : MonoBehaviour
         {
             edificeAudio.clip = clips[2];
         }
-        if (level4.activeSelf)
-        {
-            edificeAudio.clip = clips[2];
-
-        }
-        */
 
         if (!edificeAudio.isPlaying)
         {
             edificeAudio.Play();
         }
     }
+
+    #endregion // Monobehaviour
+
+
+    // ########################################
+    // Funciones IsSelected y Audio
+    // ########################################
+
+    #region IsSelected/Audio
 
     public void IsSelected()
     {
@@ -137,19 +153,17 @@ public class Edifice : MonoBehaviour
         btn.SetActive(false);
     }
 
-
-
-
-    public void FireStart()
-    {
-        level1.SetActive(true);
-    }
-
     public void PlayClickSound()
     {
         edificeAudio.PlayOneShot(clips[3]);
     }
+    #endregion // Audio
 
+    // ########################################
+    // Funciones Estados del fuego
+    // ########################################
+
+    #region FireState
 
     public void StartFireLevel1()
     {
@@ -166,19 +180,22 @@ public class Edifice : MonoBehaviour
 
 
     void SetFireState(FireState newFireState)
-    {
+    { 
+    //TODO: cambiar el color de los sprite cuando se comience a quemar
         if(newFireState == FireState.level1)
         {
             level1.SetActive(true);
         }
         if (newFireState == FireState.level2)
         {
-           // level1.SetActive(true);
+           level2.SetActive(true);
         }
         if (newFireState == FireState.level3)
         {
-            //level1.SetActive(true);
+            level3.SetActive(true);
+            contFire = 3;
         }
     }
+    #endregion //FireState
+
 }
- 

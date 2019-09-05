@@ -7,6 +7,7 @@ public class PanelInfo : MonoBehaviour
 {
     public Image imageEdifice;
     public Image[] habitants;
+    public Image[] fires;
 
 
     public void FillInformation(GameObject edifice)
@@ -51,6 +52,20 @@ public class PanelInfo : MonoBehaviour
 
     void FillFire(GameObject edifice)
     {
+        int contFire = edifice.GetComponent<Edifice>().contFire;
 
+        for (int i = 0; i < fires.Length; i++)
+        {
+            fires[i].color = new Color(.85f, .85f, .85f, .3f);
+        }
+
+        for (int i = 0; i < fires.Length; i++)
+        {
+            if(contFire > 0)
+            {
+                fires[i].color = new Color(1f, 1f, 1f, 1f);
+                contFire--;
+            }
+        }
     }
 }

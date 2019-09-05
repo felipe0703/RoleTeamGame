@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
     public GameObject panelEndTurn;
     public GameObject buttonShowActions;
     public Canvas canvas;
+    TurnSystemManager turnSystem;
 
     // HABITANTES DE EDIFICIOS    
     public int totalPopulation = 90;
@@ -60,7 +61,7 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        
         //  ACTIONS
         numbersActions = maxNumbersActions;
         textNumbersActions.text = numbersActions.ToString() + " / " + maxNumbersActions.ToString();
@@ -70,6 +71,8 @@ public class GameController : MonoBehaviour
         escalaDeTiempoInicial = escalaDeTiempo;         //  Establecer la escala de tiempo original      
         tiempoAMostrarEnSegundos = tiempoInicial;       //  Inicializamos la variables que acumular
         ActualizarReloj(tiempoInicial);
+        turnSystem = GameObject.FindGameObjectWithTag("TurnSystem").GetComponent<TurnSystemManager>();
+        turnSystem.StartTurnPlayer1();
     }
 
 
@@ -84,6 +87,7 @@ public class GameController : MonoBehaviour
             tiempoAMostrarEnSegundos += tiempoDelFrameConTimeScale;
             ActualizarReloj(tiempoAMostrarEnSegundos);
         }
+
     }
     #endregion // MonoBehaviour
 
@@ -193,4 +197,11 @@ public class GameController : MonoBehaviour
         ActualizarReloj(tiempoAMostrarEnSegundos);
     }
     #endregion //TIMER
+
+    // ########################################
+    // función de avance del fuego
+    // ########################################
+
+
+
 }

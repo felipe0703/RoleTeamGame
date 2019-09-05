@@ -225,6 +225,8 @@ MonoBehaviour:
   id: 1
   btn: {fileID: 5754388286522569143}
   level1: {fileID: 1547845846}
+  level2: {fileID: 723685163}
+  level3: {fileID: 111478711}
   contPopulation: 0
   contDisabledPerson: 0
   contPerson: 0
@@ -720,6 +722,18 @@ Transform:
 --- !u!1 &1547845846 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8701965004762993308, guid: d1a09e906a204ea4b9839e58bfc64419,
+    type: 3}
+  m_PrefabInstance: {fileID: 8701965005362631242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &723685163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701965006086315361, guid: d1a09e906a204ea4b9839e58bfc64419,
+    type: 3}
+  m_PrefabInstance: {fileID: 8701965005362631242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &111478711 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701965005456676349, guid: d1a09e906a204ea4b9839e58bfc64419,
     type: 3}
   m_PrefabInstance: {fileID: 8701965005362631242}
   m_PrefabAsset: {fileID: 0}

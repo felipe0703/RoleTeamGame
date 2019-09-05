@@ -4,7 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 #endregion  //Namespace
 
-
+#region DirectionOfTheWind
+public enum DirectionOfTheWind
+{
+    north,
+    east,
+    south,
+    west
+}
+#endregion // DirectionOfTheWind
 
 public class BoardManager : MonoBehaviour
 {
@@ -14,18 +22,20 @@ public class BoardManager : MonoBehaviour
 
     #region Variables
     public static BoardManager sharedInstance;              //  singleton    
+    public DirectionOfTheWind currentDirectionWind = DirectionOfTheWind.west;
 
     public int xSize, ySize;                                //  tamaño del tablero
 
     public GameObject currenteEdifice;                              //  prefabs del edificio    
     public List<GameObject> prefabs = new List<GameObject>();       //  lista de edificios que puedes instanciar
-    private List<GameObject> allEdifices = new List<GameObject>();  // Lista con todos los edificios generados en el tablero
+    public List<GameObject> allEdifices = new List<GameObject>();  // Lista con todos los edificios generados en el tablero
     public GameObject[,] edifices;                                  // arreglo de edificios    
     private List<GameObject> centralEdifices = new List<GameObject>();// Edificios Centrales del tablero
 
     public int maxHouse = 12;
     public int maxEdifice = 18;
     public int maxPark = 6;
+
 
     [Space(10)]
     public GameObject currentStreet;
@@ -36,6 +46,7 @@ public class BoardManager : MonoBehaviour
     public GameObject currentRiver;
     public List<Sprite> riverList = new List<Sprite>();
     private GameObject[,] rivers;
+
 
     [Space(10)]
     public GameObject currentBorder;
@@ -91,26 +102,26 @@ public class BoardManager : MonoBehaviour
         int contHouse = 0;
         int contEdifice = 0;
         int contPark = 0;
-    
+
         //  BUCLES QUE POSICIONA LOS EDIFICIOS, RIÓS Y CALLES
         for (int x = 0; x < xSizeBoard; x++)
         {
             for (int y = 0; y < ySizeBoard; y++)
             {
-                if(x > 1 && x < xSizeBoard - 2 && y > 1 && y < ySizeBoard - 2)
+                if (x > 1 && x < xSizeBoard - 2 && y > 1 && y < ySizeBoard - 2)
                 {
                     if (x > 2 && x % 2 != 0 && y % 2 != 0)
-                    {            
+                    {
                         do
                         {
                             edifice = prefabs[Random.Range(0, prefabs.Count)];
                             idX = edifice.GetComponent<Edifice>().id;
 
-                        } while (   (idX == 1 && contHouse > maxHouse - 1) 
-                                ||  (idX == 2 && contEdifice > maxEdifice - 1) 
-                                ||  (idX == 3 && contPark > maxPark - 1));
+                        } while ((idX == 1 && contHouse > maxHouse - 1)
+                                || (idX == 2 && contEdifice > maxEdifice - 1)
+                                || (idX == 3 && contPark > maxPark - 1));
 
-                        if(idX == 1)
+                        if (idX == 1)
                         {
                             contHouse++;
                         }
@@ -134,11 +145,11 @@ public class BoardManager : MonoBehaviour
                         // Formato al nombre de los objetos
                         newEdifice.name = string.Format("Edifice[{0}][{1}]", x, y);
                         // Lo agrega como hijo de Edifices para tener un orden
-                        newEdifice.transform.parent = GameObject.Find("Edifices").transform;    
+                        newEdifice.transform.parent = GameObject.Find("Edifices").transform;
                         // agrega todos los edificios, para poder acceder después a ellos
                         allEdifices.Add(newEdifice);
                     }
-                    else 
+                    else
                     {
                         //  GENERACIÓN CALLES
                         GameObject newStreet = Instantiate(currentStreet,
@@ -153,7 +164,7 @@ public class BoardManager : MonoBehaviour
                         //streets[x, y] = newStreet;
 
                         currentStreet.GetComponent<Street>().isBorder = false;
-                        currentStreet.GetComponent<Street>().isCorner = false;                        
+                        currentStreet.GetComponent<Street>().isCorner = false;
 
 
                         if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
@@ -166,23 +177,23 @@ public class BoardManager : MonoBehaviour
                             sprite = streetList[Random.Range(2, 4)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
 
-                            
+
                         }
                         else if (x % 2 == 0 && y % 2 == 0)      //  INTERCEPCIÓN CALLES CALLES 
                         {
                             sprite = streetList[Random.Range(4, 6)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
-                            
+
                         }
-                        
+
                         // la calle esta en los borde
                         if (x == 2 || y == 2 || x == xSizeBoard - 3 || y == ySizeBoard - 3)
                         {
-                            newStreet.GetComponent<Street>().isBorder = true;                           
+                            newStreet.GetComponent<Street>().isBorder = true;
                         }
 
                         // la calle es una esquina
-                        if ((x == 2 && y == 2) || 
+                        if ((x == 2 && y == 2) ||
                             (x == xSizeBoard - 3 && y == ySizeBoard - 3) ||
                             (x == 2 && y == ySizeBoard - 3) ||
                             (x == xSizeBoard - 3 && y == 2))
@@ -193,10 +204,10 @@ public class BoardManager : MonoBehaviour
 
                     }
                 }
-                
 
 
-                else if (x >= xSizeBoard - 2 )
+
+                else if (x >= xSizeBoard - 2)
                 {
                     //  GENERACIÓN RIO
                     GameObject newRiver = Instantiate(currentRiver,
@@ -215,7 +226,7 @@ public class BoardManager : MonoBehaviour
                 }
 
 
-                else if (x <= 1 || y <= 1 || y >= ySizeBoard - 2 )
+                else if (x <= 1 || y <= 1 || y >= ySizeBoard - 2)
                 {
                     //  GENERACIÓN BORDER
                     GameObject newBorder = Instantiate(currentBorder,
@@ -234,16 +245,17 @@ public class BoardManager : MonoBehaviour
                     //borders[x, y] = newBorder;
                 }
             }
-
-            
         }
-
-
         SaveEdificesInMatrix();
         FireStart();
     }
     #endregion
 
+    // ####################################################
+    // FUNCIONES COMPLEMENTARIAS EN LA CREACION DEL TABLERO
+    // ####################################################
+
+    #region FireStart/SaveEdifice
     public void SaveEdificesInMatrix()
     {
         int cont = 0;
@@ -281,6 +293,88 @@ public class BoardManager : MonoBehaviour
 
         //Iniciar fuego
         edifice.GetComponent<Edifice>().StartFireLevel3();
+    }
+    #endregion
 
+    // ####################################################
+    // FUNCIONES DIRECCIONES DEL VIENTO
+    // ####################################################
+
+    #region DirectionWind
+    //TODO: Generar funciones que selecciones direcciones del viento en forma aleatoria
+    // girar en 90 grados el viento actual, 3 posibilidades: 
+    // me mantengo, giro 90 a la derecha o 90 a la izquierda
+
+
+
+    public void WindNorth()
+    {
+        SetDirectionWind(DirectionOfTheWind.north);
+    }
+    public void WindSouth()
+    {
+        SetDirectionWind(DirectionOfTheWind.south);
+    }
+    public void WindEast()
+    {
+        SetDirectionWind(DirectionOfTheWind.east);
+    }
+    public void WindWest()
+    {
+        SetDirectionWind(DirectionOfTheWind.west);
+    }
+
+    void SetDirectionWind(DirectionOfTheWind newDirectionWind)
+    {
+        if (newDirectionWind == DirectionOfTheWind.north)
+        {
+            Debug.Log("viento hacia el norte");
+            currentDirectionWind = DirectionOfTheWind.north;
+        }
+
+        if (newDirectionWind == DirectionOfTheWind.south)
+        {
+            Debug.Log("viento hacia el sur");
+            currentDirectionWind = DirectionOfTheWind.south;
+        }
+
+        if (newDirectionWind == DirectionOfTheWind.north)
+        {
+            Debug.Log("viento hacia el este");
+            currentDirectionWind = DirectionOfTheWind.east;
+        }
+
+        if (newDirectionWind == DirectionOfTheWind.west)
+        {
+            Debug.Log("viento hacia el oeste");
+            currentDirectionWind = DirectionOfTheWind.west;
+        }
+    }
+    #endregion // DirectionWind
+
+    // ####################################################
+    // FUNCIONES AVANCE DEL FUEGO
+    // ####################################################
+    
+    public void IncreaseFire()
+    {
+        GameObject edifice;
+        int contFire;
+        int maxFire;
+        for (int i = 0; i < allEdifices.Count; i++)
+        {
+            edifice = allEdifices[i];            
+            contFire = edifice.GetComponent<Edifice>().contFire;
+            maxFire = edifice.GetComponent<Edifice>().maxFire;
+
+            if(contFire > 0 && contFire < maxFire)
+            {
+                edifice.GetComponent<Edifice>().contFire++;
+            }
+            else
+            {
+                Debug.Log("no sube fuego");
+            }
+        }
     }
 }

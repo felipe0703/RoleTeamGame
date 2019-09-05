@@ -17,13 +17,11 @@ public class PlayerController : MonoBehaviour
     public Transform target2;
     public int MyTurn = 1;
 
-    Transform[] targets;
-    
+    Transform[] targets;    
     public float speed;
 
     // live
     public GameObject[] actions;
-
 
     // VARIABLES PRIVADAS    
     float distanceEdifice = 8f;
@@ -31,17 +29,11 @@ public class PlayerController : MonoBehaviour
 
     GameManager gm;
 
-    //  COMPONENTES
-
-
-
     //  POSICIONES DEL JUGADOR AL INICIAR
     int[] positionA = { 20, 140 };
     int[] positionB = { 30, 50, 70, 90, 110, 130 };
 
-
-
-    // para detectar los caramelos adyacentes
+    //Detectar los edificios adyacentes
     private Vector2[] adjacentDirections = new Vector2[]
     {
         Vector2.up,
@@ -50,9 +42,13 @@ public class PlayerController : MonoBehaviour
         Vector2.left
     };
 
+    // Animacion
     private Animator animator;
     private Vector2 animDir = Vector2.zero;
     private Vector2 animDir2 = Vector2.zero;
+
+    //Sistema de turno
+    public bool myTurn = true;
 
 
     #endregion
@@ -122,10 +118,10 @@ public class PlayerController : MonoBehaviour
             StopAnim();
             target.position = transform.position;
             //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
-            if(GameController.sharedInstance.numbersActions == 0)
+            if(GameController.sharedInstance.numbersActions == 0 && myTurn)
             {
-                TurnSystemManager.sharedInstance.turn++;
-                GameController.sharedInstance.ShowPanelEndTurn();
+                myTurn = false;
+                TurnSystemManager.sharedInstance.StartTurnFire();
             }
         }
     }
