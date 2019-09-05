@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: b226a18fffbdc734f86df88e8ce0443f
+guid: 92de719d376f2fb4dbf02d26484aa807
 TextureImporter:
   fileIDToRecycleName:
-    21300000: flechas_0
-    21300002: flechas_1
-    21300004: flechas_2
-    21300006: flechas_3
-    21300008: flechas_4
-    21300010: flechas_5
+    21300000: IMG_0334_0
+    21300002: IMG_0334_1
+    21300004: IMG_0334_2
+    21300006: IMG_0334_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -101,13 +99,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flechas_0
+      name: IMG_0334_0
       rect:
         serializedVersion: 2
-        x: 70
-        y: 498
-        width: 231
-        height: 207
+        x: 123
+        y: 774
+        width: 480
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,19 +113,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b154d4f76552094a96decab1f800eb4
+      spriteID: ad73db22d31af2c43afc5aa49ef011cd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flechas_1
+      name: IMG_0334_1
       rect:
         serializedVersion: 2
-        x: 408
-        y: 631
-        width: 186
-        height: 180
+        x: 650
+        y: 776
+        width: 480
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,19 +133,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 848d7dac613c5b8489ef837c5dc52a06
+      spriteID: 3ec6e95ffdbbac74395285b563b2dcbe
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flechas_2
+      name: IMG_0334_2
       rect:
         serializedVersion: 2
-        x: 688
-        y: 498
-        width: 228
-        height: 207
+        x: 135
+        y: 215
+        width: 480
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,19 +153,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67b15437d7b2bf746a3b89480a4b8a09
+      spriteID: c0af027cffd45434b994892ab6eedce5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flechas_3
+      name: IMG_0334_3
       rect:
         serializedVersion: 2
-        x: 72
-        y: 176
-        width: 229
-        height: 205
+        x: 679
+        y: 240
+        width: 480
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,47 +173,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff39893886dd8164ab6fecc07045e3ed
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flechas_4
-      rect:
-        serializedVersion: 2
-        x: 408
-        y: 16
-        width: 186
-        height: 179
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8efa31f73e66f7458ea3e9e156d7688
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flechas_5
-      rect:
-        serializedVersion: 2
-        x: 688
-        y: 176
-        width: 234
-        height: 205
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 315f955f41b86d64097e89c1eabaa42f
+      spriteID: b9d72402f283a474eaaefb7706aa3045
       vertices: []
       indices: 
       edges: []
@@ -223,7 +181,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 9a69865891eca8c44b8be254d0cf5499
+    spriteID: 6788ba3b99dcf964d920d8b72caa2f85
     vertices: []
     indices: 
     edges: []

@@ -19,6 +19,7 @@ public class UIManagerGame : MonoBehaviour
     public GameObject panelButtons;
     public GameObject buttons;
     public GameObject panelUI;
+    public GameObject panelInfo;
    // public GameObject[] panelButtonsMove;
 
     public GameObject up;
@@ -124,5 +125,15 @@ public class UIManagerGame : MonoBehaviour
     public void HidePanelUI()
     {
         panelUI.SetActive(false);
+    }
+
+    public void ShowPanelInfo()
+    {
+        panelInfo.SetActive(true);
+    }
+
+    public void HidePanelInfo()
+    {
+        panelInfo.SetActive(false);
     }
 }

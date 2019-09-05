@@ -122,6 +122,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   btn: {fileID: 8798786295971523351}
+  level1: {fileID: 0}
+  contPopulation: 0
+  contDisabledPerson: 0
+  contPerson: 0
+  contPet: 0
+  maxFire: 4
+  clips: []
 --- !u!1 &6716235300633880178
 GameObject:
   m_ObjectHideFlags: 0

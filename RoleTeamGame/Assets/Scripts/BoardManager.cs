@@ -280,7 +280,7 @@ public class BoardManager : MonoBehaviour
         edifice = centralEdifices[Random.Range(0, centralEdifices.Count)];
 
         //Iniciar fuego
-        edifice.GetComponent<Edifice>().FireStart();
+        edifice.GetComponent<Edifice>().StartFireLevel3();
 
     }
 }

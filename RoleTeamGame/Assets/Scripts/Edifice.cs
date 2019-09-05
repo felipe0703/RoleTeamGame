@@ -2,13 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Estados del fuego en los edificios
+public enum FireState
+{
+    level0,
+    level1,
+    level2,
+    level3
+}
+
 public class Edifice : MonoBehaviour
 {
     public int id;
     public GameObject btn;
-    public GameObject panelInfo;
-
     public GameObject level1;
+    public GameObject level2;
+    public GameObject level3;
+
+    public int contPopulation;
+    public int contDisabledPerson;
+    public int contPerson;
+    public int contPet;
+
+    public int maxFire;
 
     //AUDIO
     private AudioSource edificeAudio;
@@ -17,6 +33,70 @@ public class Edifice : MonoBehaviour
     public void Start()
     {
         edificeAudio = gameObject.GetComponent<AudioSource>();
+
+        
+        int disabledPerson = GameController.sharedInstance.totalDisabledPerson;
+        int person = GameController.sharedInstance.totalPerson;
+        int pet = GameController.sharedInstance.totalPet;
+        int population = disabledPerson + person + pet;
+
+        //TODO: ANTES DE GENERAR EL NUMERO RANDOM PREGUNTE SI AUN QUEDAN PERSONAS DISPONIBLES
+
+        // PREGUNTAR POR CADA HABITANTE
+        if (population > 0)
+        {
+
+            int maxPopulationInEdifice = 0;
+
+            if(population >= 3)
+            {
+                maxPopulationInEdifice = 3;
+            }else if(population == 2)
+            {
+                maxPopulationInEdifice = 2;
+            }
+            else
+            {
+                maxPopulationInEdifice = 1;
+            }
+
+            //TODO: ver si hay edificios sin personas
+            contPopulation = Random.Range(1, maxPopulationInEdifice + 1);
+
+            if(contPopulation > 0)
+            {
+                int i = contPopulation;
+                do
+                {
+                    int numRandom = Random.Range(1, 4);
+
+                    // TODO: confirmar si hay del habitante que salio si no intentar sacar otro
+                    if (numRandom == 1 && disabledPerson > 0 )
+                    {
+                        contDisabledPerson++;
+                        GameController.sharedInstance.totalDisabledPerson--;
+                        i--;
+                    }
+
+                    if (numRandom == 2 && person > 0)
+                    {
+                        contPerson++;
+                        GameController.sharedInstance.totalPerson--;
+                        i--;
+                    }
+
+                    if (numRandom == 3 && pet > 0)
+                    {
+                        contPet++;
+                        GameController.sharedInstance.totalPet--;
+                        i--;
+                    }
+
+
+                } while (i > 0);
+                              
+            }
+        }      
 
     }
 
@@ -52,9 +132,13 @@ public class Edifice : MonoBehaviour
 
     public void IsSelected()
     {
-        panelInfo.SetActive(true);
+        UIManagerGame.sharedInstance.ShowPanelInfo();
+        UIManagerGame.sharedInstance.panelInfo.GetComponent<PanelInfo>().FillInformation(gameObject);
         btn.SetActive(false);
     }
+
+
+
 
     public void FireStart()
     {
@@ -66,5 +150,35 @@ public class Edifice : MonoBehaviour
         edificeAudio.PlayOneShot(clips[3]);
     }
 
+
+    public void StartFireLevel1()
+    {
+        SetFireState(FireState.level1);
+    }
+    public void StartFireLevel2()
+    {
+        SetFireState(FireState.level2);
+    }
+    public void StartFireLevel3()
+    {
+        SetFireState(FireState.level3);
+    }
+
+
+    void SetFireState(FireState newFireState)
+    {
+        if(newFireState == FireState.level1)
+        {
+            level1.SetActive(true);
+        }
+        if (newFireState == FireState.level2)
+        {
+           // level1.SetActive(true);
+        }
+        if (newFireState == FireState.level3)
+        {
+            //level1.SetActive(true);
+        }
+    }
 }
  

@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: b226a18fffbdc734f86df88e8ce0443f
+guid: 2dde6dd742cbde542bbdf24fd6012b94
 TextureImporter:
   fileIDToRecycleName:
-    21300000: flechas_0
-    21300002: flechas_1
-    21300004: flechas_2
-    21300006: flechas_3
-    21300008: flechas_4
-    21300010: flechas_5
+    21300000: botones de la esquina _0
+    21300002: botones de la esquina _1
+    21300004: botones de la esquina _2
+    21300006: botones de la esquina _3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -101,13 +99,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flechas_0
+      name: botones de la esquina _0
       rect:
         serializedVersion: 2
-        x: 70
-        y: 498
-        width: 231
-        height: 207
+        x: 217
+        y: 412
+        width: 206
+        height: 208
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,19 +113,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b154d4f76552094a96decab1f800eb4
+      spriteID: 34ccb34356e1d374291fdc6eb9b6bd72
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flechas_1
+      name: botones de la esquina _1
       rect:
         serializedVersion: 2
-        x: 408
-        y: 631
-        width: 186
-        height: 180
+        x: 716
+        y: 516
+        width: 156
+        height: 102
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,19 +133,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 848d7dac613c5b8489ef837c5dc52a06
+      spriteID: f3b5810f5bc318b4a8fd0cfd6dc26e97
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flechas_2
+      name: botones de la esquina _2
       rect:
         serializedVersion: 2
-        x: 688
-        y: 498
-        width: 228
-        height: 207
+        x: 228
+        y: 193
+        width: 196
+        height: 114
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,19 +153,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67b15437d7b2bf746a3b89480a4b8a09
+      spriteID: 91def2a8e7242a540bd9beb89780b834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flechas_3
+      name: botones de la esquina _3
       rect:
         serializedVersion: 2
-        x: 72
-        y: 176
-        width: 229
-        height: 205
+        x: 782
+        y: 195
+        width: 77
+        height: 90
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,47 +173,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff39893886dd8164ab6fecc07045e3ed
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flechas_4
-      rect:
-        serializedVersion: 2
-        x: 408
-        y: 16
-        width: 186
-        height: 179
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8efa31f73e66f7458ea3e9e156d7688
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flechas_5
-      rect:
-        serializedVersion: 2
-        x: 688
-        y: 176
-        width: 234
-        height: 205
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 315f955f41b86d64097e89c1eabaa42f
+      spriteID: 319d83c50c3d57a49a8f8ec2f0e18e62
       vertices: []
       indices: 
       edges: []
@@ -223,7 +181,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 9a69865891eca8c44b8be254d0cf5499
+    spriteID: 32b662b1b097bbc469b131dc9b21a110
     vertices: []
     indices: 
     edges: []
