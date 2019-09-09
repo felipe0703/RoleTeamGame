@@ -31,7 +31,6 @@ public class GameController : MonoBehaviour
 
     //  COMPONENTES
     public TextMeshProUGUI textTimer;
-    public TextMeshProUGUI textNumbersActions;
     public GameObject panelEndTurn;
     public GameObject buttonShowActions;
     public Canvas canvas;
@@ -64,14 +63,15 @@ public class GameController : MonoBehaviour
         }
         
         //  ACTIONS
-        numbersActions = maxNumbersActions;
-        textNumbersActions.text = numbersActions.ToString() + " / " + maxNumbersActions.ToString();
+       // numbersActions = maxNumbersActions;
+        numbersActions = GameManager.sharedInstance.maxNumbersActions;
         
 
         //  TIMER
-        escalaDeTiempoInicial = escalaDeTiempo;         //  Establecer la escala de tiempo original      
-        tiempoAMostrarEnSegundos = tiempoInicial;       //  Inicializamos la variables que acumular
+        escalaDeTiempoInicial = escalaDeTiempo;         //  Establecer la escala de tiempo original    
+        tiempoAMostrarEnSegundos = GameManager.sharedInstance.timeTurn;       //  Inicializamos la variables que acumular
         ActualizarReloj(tiempoInicial);
+
         turnSystem = GameObject.FindGameObjectWithTag("TurnSystem").GetComponent<TurnSystemManager>();
         turnSystem.StartTurnPlayer1();
     }
@@ -108,14 +108,19 @@ public class GameController : MonoBehaviour
         {
             numbersActions++;
         }        
-        textNumbersActions.text = numbersActions.ToString() + " / " + maxNumbersActions.ToString();
     }
 
     //  RESTAR ACCION
     public void SubtractActions()
     {
-        numbersActions--;
-        textNumbersActions.text = numbersActions.ToString() + " / " + maxNumbersActions.ToString();
+        if(numbersActions <= 0)
+        {
+            numbersActions = 0;
+        }
+        else
+        {
+            numbersActions--;
+        }        
     }
     #endregion //Acciones
 
@@ -172,7 +177,6 @@ public class GameController : MonoBehaviour
             textoDelReloj = segundos.ToString("00");
         }
 
-
         //  Actualizar el elemento de text de UI con la cadena de caracteres
         textTimer.text = textoDelReloj;
     }
@@ -204,9 +208,4 @@ public class GameController : MonoBehaviour
         ActualizarReloj(tiempoAMostrarEnSegundos);
     }
     #endregion //TIMER
-
-   
-
-
-
 }

@@ -497,7 +497,8 @@ public class PlayerController : MonoBehaviour
 
     public void ActiveActions()
     {
-        for (int i = 0; i < actions.Length; i++)
+        int maxActions = GameManager.sharedInstance.maxNumbersActions;
+        for (int i = 0; i < maxActions; i++)
         {
             actions[i].SetActive(true);
         }

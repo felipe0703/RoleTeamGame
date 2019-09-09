@@ -6,8 +6,11 @@ using UnityEngine;
 
 public enum GameState
 {
+    welcome,
     login,
     mainMenu,
+    settingGame,
+    game,
     turnPlayer1
 }
 public class GameManager : MonoBehaviour
@@ -17,8 +20,13 @@ public class GameManager : MonoBehaviour
     // ########################################
 
     #region Variables
-    public GameState currentGameState = GameState.login;
+    public GameState currentGameState = GameState.welcome;
     public static GameManager sharedInstance;
+
+    // SETTINGS
+    public int maxNumbersActions;
+    public int timeTurn;
+
 
     // AUDIO
     AudioSource audioSource;
@@ -36,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     #region MonoBehaviour
 
-    void Start()
+    void Awake()
     {
         // SINGLETON
         if (sharedInstance == null)
@@ -48,6 +56,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -81,7 +90,11 @@ public class GameManager : MonoBehaviour
 
     #region GameState
 
-    public void Login()
+    public void Welcome()
+    {
+        SetGameState(GameState.welcome);
+    }
+     public void Login()
     {
         SetGameState(GameState.login);
     }
@@ -90,15 +103,48 @@ public class GameManager : MonoBehaviour
     {
         SetGameState(GameState.mainMenu);
     }
-
-    void SetGameState(GameState newGameState)
+    public void GoToSettingGame()
     {
-        if (newGameState == GameState.login)
+        SetGameState(GameState.settingGame);
+    }
+    public void GoToGame()
+    {
+        SetGameState(GameState.game);
+    }
+
+    private void SetGameState(GameState newGameState)
+    {
+        Debug.Log(newGameState);
+        if (newGameState == GameState.welcome)
+        {
+            //  TODO: colocar logica del login
+            currentGameState = GameState.welcome;
+
+        }
+        else if (newGameState == GameState.login)
         {
             //  TODO: colocar logica del login
             currentGameState = GameState.login;
 
         }
+        else if (newGameState == GameState.mainMenu)
+        {
+            //  TODO: colocar logica del login
+            currentGameState = GameState.mainMenu;
+
+        }
+        else if (newGameState == GameState.settingGame)
+        {
+            //  TODO: colocar logica del login
+            currentGameState = GameState.settingGame;
+        }
+        else if (newGameState == GameState.game)
+        {
+            //  TODO: colocar logica del login
+            currentGameState = GameState.game;
+
+        }
+        this.currentGameState = newGameState;
     }
     #endregion // GameState
 }

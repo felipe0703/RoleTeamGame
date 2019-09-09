@@ -70,7 +70,7 @@ public class TurnSystemManager : MonoBehaviour
    //     Debug.Log("Turno jugador: 1");
             currentTurnGame = TurnGame.player1;
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            GameController.sharedInstance.numbersActions = GameController.sharedInstance.maxNumbersActions;
+            GameController.sharedInstance.numbersActions = GameManager.sharedInstance.maxNumbersActions;
             controller.ActiveActions();
             controller.myTurn = true;
             GameController.sharedInstance.HidePanelEndTurn();

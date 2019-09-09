@@ -184,19 +184,19 @@ public class BoardManager : MonoBehaviour
 
                         if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
                         {
-                            sprite = streetList[Random.Range(0, 2)];
+                            sprite = streetList[Random.Range(0, 1)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
                         }
                         else if (x % 2 == 0 && y % 2 != 0)       //  CALLES VERTICALES
                         {
-                            sprite = streetList[Random.Range(2, 4)];
+                            sprite = streetList[Random.Range(1, 3)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
 
 
                         }
                         else if (x % 2 == 0 && y % 2 == 0)      //  INTERCEPCIÓN CALLES CALLES 
                         {
-                            sprite = streetList[Random.Range(4, 6)];
+                            sprite = streetList[Random.Range(3, 4)];
                             newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
 
                         }
@@ -309,7 +309,7 @@ public class BoardManager : MonoBehaviour
         //Iniciar fuego
         edifice.GetComponent<Edifice>().StartFireLevel3();
     }
-    #endregion
+    #endregion // FireStart/SaveEdifice
 
     // ####################################################
     // FUNCIONES DIRECCIONES DEL VIENTO
