@@ -24,6 +24,8 @@ public class BoardManager : MonoBehaviour
     public static BoardManager sharedInstance;              //  singleton    
     public DirectionOfTheWind currentDirectionWind = DirectionOfTheWind.west;
 
+    int directionWind;
+
     public int xSize, ySize;                                //  tamaño del tablero
 
     public GameObject currenteEdifice;                              //  prefabs del edificio    
@@ -52,6 +54,17 @@ public class BoardManager : MonoBehaviour
     public GameObject currentBorder;
     public List<Sprite> borderList = new List<Sprite>();
     private GameObject[,] borders;
+
+    //Detectar los edificios adyacentes
+    private Vector2[] adjacentDirections = new Vector2[]
+    {
+        Vector2.up,
+        Vector2.right,
+        Vector2.down,
+        Vector2.left
+    };
+
+    public List<GameObject> neighborsEdifices = new List<GameObject>(); // listado con los edificios vecinos al fuego
     #endregion //Variables
 
     // ########################################
@@ -73,6 +86,7 @@ public class BoardManager : MonoBehaviour
 
         Vector2 offset = currenteEdifice.GetComponent<BoxCollider2D>().size; // obtengo el tamaño del edificio
         CreateInitialBoard(offset); //  inicio el tablero
+        directionWind = 3;
     }
     #endregion //MonoBehaviour
 
@@ -102,6 +116,7 @@ public class BoardManager : MonoBehaviour
         int contHouse = 0;
         int contEdifice = 0;
         int contPark = 0;
+
 
         //  BUCLES QUE POSICIONA LOS EDIFICIOS, RIÓS Y CALLES
         for (int x = 0; x < xSizeBoard; x++)
@@ -305,6 +320,46 @@ public class BoardManager : MonoBehaviour
     // girar en 90 grados el viento actual, 3 posibilidades: 
     // me mantengo, giro 90 a la derecha o 90 a la izquierda
 
+    public void WindGeneration()
+    {
+        int[] groupDirection = new int[3];
+        int[] group1 = { 0, 2 };
+        int[] group2 = { 1, 3 };
+
+        if(directionWind == 0 || directionWind == 2)
+        {
+            groupDirection[0] = directionWind;
+            groupDirection[1] = group2[0];
+            groupDirection[2] = group2[1];
+        }
+        else if(directionWind == 1 || directionWind == 3)
+        {
+            groupDirection[0] = directionWind;
+            groupDirection[1] = group1[0];
+            groupDirection[2] = group1[1];
+        }        
+
+        int i = Random.Range(0, 3);
+
+        directionWind = groupDirection[i];
+
+        if(directionWind == 0)
+        {
+            WindNorth();
+        }
+        else if(directionWind == 1)
+        {
+            WindEast();
+        }
+        else if(directionWind == 2)
+        {
+            WindSouth();
+        }
+        else if(directionWind == 3)
+        {
+            WindWest();
+        }
+    }
 
 
     public void WindNorth()
@@ -330,24 +385,28 @@ public class BoardManager : MonoBehaviour
         {
             Debug.Log("viento hacia el norte");
             currentDirectionWind = DirectionOfTheWind.north;
+            directionWind = 0;
         }
 
         if (newDirectionWind == DirectionOfTheWind.south)
         {
             Debug.Log("viento hacia el sur");
             currentDirectionWind = DirectionOfTheWind.south;
+            directionWind = 2;
         }
 
-        if (newDirectionWind == DirectionOfTheWind.north)
+        if (newDirectionWind == DirectionOfTheWind.east)
         {
             Debug.Log("viento hacia el este");
             currentDirectionWind = DirectionOfTheWind.east;
+            directionWind = 1;
         }
 
         if (newDirectionWind == DirectionOfTheWind.west)
         {
-            Debug.Log("viento hacia el oeste");
+//            Debug.Log("viento hacia el oeste");
             currentDirectionWind = DirectionOfTheWind.west;
+            directionWind = 3;
         }
     }
     #endregion // DirectionWind
@@ -355,12 +414,14 @@ public class BoardManager : MonoBehaviour
     // ####################################################
     // FUNCIONES AVANCE DEL FUEGO
     // ####################################################
-    
+
+    #region FunctionsFire
     public void IncreaseFire()
     {
         GameObject edifice;
         int contFire;
         int maxFire;
+
         for (int i = 0; i < allEdifices.Count; i++)
         {
             edifice = allEdifices[i];            
@@ -370,11 +431,51 @@ public class BoardManager : MonoBehaviour
             if(contFire > 0 && contFire < maxFire)
             {
                 edifice.GetComponent<Edifice>().contFire++;
-            }
-            else
-            {
-                Debug.Log("no sube fuego");
+                Debug.Log("Incremento del fuego " + edifice.name);
             }
         }
     }
+
+    public void EdificeNeighborWithFire()
+    {
+        GameObject edifice;
+        GameObject neighborEdifice;
+        int contFire;
+
+        neighborsEdifices.Clear();
+        for (int i = 0; i < allEdifices.Count; i++)
+        {
+            edifice = allEdifices[i];
+            contFire = edifice.GetComponent<Edifice>().contFire;
+
+            if (contFire > 0)
+            {
+ //               Debug.Log("edificio con fuego");
+                neighborEdifice = edifice.GetComponent<Edifice>().GetNeighborEdifice(adjacentDirections[directionWind]);
+
+                if (neighborEdifice != null && neighborEdifice.GetComponent<Edifice>().contFire == 0)
+                {
+                    neighborsEdifices.Add(neighborEdifice);
+                }                
+            }
+        }
+        IncreaseFireNeighborEdifice();
+    }
+
+    public void IncreaseFireNeighborEdifice()
+    {
+        GameObject edifice;
+
+        //TODO: Aumentar el fuego en todos los edificios de la lista neighborEdifices
+        for (int i = 0; i < neighborsEdifices.Count; i++)
+        {
+            edifice = neighborsEdifices[i];
+
+            edifice.GetComponent<Edifice>().contFire++;
+            edifice.GetComponent<Edifice>().StartFireLevel1();
+            Debug.Log("Incremento del fuego edificio vecino " + edifice.name);
+        }
+    }  
+
+    #endregion // FunctionFire
 }

@@ -37,6 +37,8 @@ public class Edifice : MonoBehaviour
     public int maxFire;
     public int contFire;
 
+    public bool isInspected = false;
+
     //AUDIO
     private AudioSource edificeAudio;
     public AudioClip[] clips;
@@ -135,6 +137,17 @@ public class Edifice : MonoBehaviour
         {
             edificeAudio.Play();
         }
+
+        if(contFire == 1)
+        {
+            StartFireLevel1();
+        }else if(contFire == 2)
+        {
+            StartFireLevel2();
+        }else if(contFire == 3)
+        {
+            StartFireLevel3();
+        }
     }
 
     #endregion // Monobehaviour
@@ -150,7 +163,11 @@ public class Edifice : MonoBehaviour
     {
         UIManagerGame.sharedInstance.ShowPanelInfo();
         UIManagerGame.sharedInstance.panelInfo.GetComponent<PanelInfo>().FillInformation(gameObject);
-        btn.SetActive(false);
+        PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        controller.UpdateNumberOfActions();
+        controller.HideAllButtonsInspect();
+        UIManagerGame.sharedInstance.ShowPanelUI();
+        isInspected = true;
     }
 
     public void PlayClickSound()
@@ -198,4 +215,16 @@ public class Edifice : MonoBehaviour
     }
     #endregion //FireState
 
+    public GameObject GetNeighborEdifice(Vector2 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction,30f,LayerMask.GetMask("Edifice"));
+        if (hit.collider != null)
+        {
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

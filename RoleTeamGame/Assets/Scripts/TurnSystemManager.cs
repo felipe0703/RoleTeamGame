@@ -34,7 +34,10 @@ public class TurnSystemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            BoardManager.sharedInstance.WindGeneration();
+        }
     }
 
     #region TurnFire
@@ -64,8 +67,13 @@ public class TurnSystemManager : MonoBehaviour
 
         if (newTurnGame == TurnGame.player1)
         {
-            Debug.Log("Turno jugador: 1");
+   //     Debug.Log("Turno jugador: 1");
             currentTurnGame = TurnGame.player1;
+            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            GameController.sharedInstance.numbersActions = GameController.sharedInstance.maxNumbersActions;
+            controller.ActiveActions();
+            controller.myTurn = true;
+            GameController.sharedInstance.HidePanelEndTurn();
         }
 
         if (newTurnGame == TurnGame.player2)
@@ -76,10 +84,13 @@ public class TurnSystemManager : MonoBehaviour
 
         if (newTurnGame == TurnGame.fire)
         {
-            Debug.Log("Turno Fuego");
+    //     Debug.Log("Turno Fuego");
             currentTurnGame = TurnGame.fire;
             GameController.sharedInstance.ShowPanelEndTurn();
             BoardManager.sharedInstance.IncreaseFire();
+            BoardManager.sharedInstance.WindGeneration();
+            BoardManager.sharedInstance.EdificeNeighborWithFire();
+            StartTurnPlayer1();
         }
     }
 

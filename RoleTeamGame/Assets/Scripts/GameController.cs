@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
     //  Variables Públicas
     [Tooltip("Tiempo inicial en segundo")] public int tiempoInicial;
     [Tooltip("Escala del tiempo del Reloj")][Range(-10f, 10f)]  public float escalaDeTiempo = 1;
-    [HideInInspector] public int numbersActions = 0;
+    //[HideInInspector]
+    public int numbersActions = 0;
 
     //  Variables Privadas   
     private float tiempoDelFrameConTimeScale = 0f;
@@ -126,6 +127,12 @@ public class GameController : MonoBehaviour
         panelEndTurn.SetActive(true);   
     }
 
+    public void HidePanelEndTurn()
+    {
+        canvas.sortingOrder = 10;
+        panelEndTurn.SetActive(false);
+    }
+
     // ########################################
     // función de manejo del tiempo
     // ########################################
@@ -198,9 +205,7 @@ public class GameController : MonoBehaviour
     }
     #endregion //TIMER
 
-    // ########################################
-    // función de avance del fuego
-    // ########################################
+   
 
 
 

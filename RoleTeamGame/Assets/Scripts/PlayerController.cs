@@ -313,10 +313,14 @@ public class PlayerController : MonoBehaviour
             if (GetNeighbor(adjacentDirections[i]).tag == "Edifice")
             {
                 edifice = GetNeighbor(adjacentDirections[i]);
-                edifice.GetComponent<Edifice>().btn.SetActive(true);
+                if (!edifice.GetComponent<Edifice>().isInspected)
+                {
+                    edifice.GetComponent<Edifice>().btn.SetActive(true);
+                }
             }
         }       
     }
+
     public void HideAllButtonsInspect()
     {
         GameObject edifice;
@@ -489,5 +493,13 @@ public class PlayerController : MonoBehaviour
         GameController.sharedInstance.SubtractActions();
         int i = GameController.sharedInstance.numbersActions;
         actions[i].SetActive(false);
+    }
+
+    public void ActiveActions()
+    {
+        for (int i = 0; i < actions.Length; i++)
+        {
+            actions[i].SetActive(true);
+        }
     }
 }
