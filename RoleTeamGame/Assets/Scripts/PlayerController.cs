@@ -316,6 +316,8 @@ public class PlayerController : MonoBehaviour
                 if (!edifice.GetComponent<Edifice>().isInspected)
                 {
                     edifice.GetComponent<Edifice>().btn.SetActive(true);
+                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+
                 }
             }
         }       
@@ -331,6 +333,7 @@ public class PlayerController : MonoBehaviour
             {
                 edifice = GetNeighbor(adjacentDirections[i]);
                 edifice.GetComponent<Edifice>().btn.SetActive(false);
+                edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             }
         }
     }

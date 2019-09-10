@@ -41,6 +41,7 @@ public class ManagerSettingTheGame : MonoBehaviour
     // Funciones de Tiempo/Acciones
     // ########################################
 
+    #region Time/Action
     public void SetTimeTurn(int option)
     {
         int time = 0;
@@ -81,4 +82,5 @@ public class ManagerSettingTheGame : MonoBehaviour
 
         GameManager.sharedInstance.maxNumbersActions = action;
     }
+    #endregion  //time/actions
 }

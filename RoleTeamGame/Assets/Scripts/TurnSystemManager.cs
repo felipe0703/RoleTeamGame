@@ -29,6 +29,8 @@ public class TurnSystemManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        //modo desarrollador
+        StartTurnPlayer1();
     }
 
     // Update is called once per frame

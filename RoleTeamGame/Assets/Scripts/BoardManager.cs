@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 #endregion  //Namespace
 
 #region DirectionOfTheWind
@@ -25,6 +26,7 @@ public class BoardManager : MonoBehaviour
     public DirectionOfTheWind currentDirectionWind = DirectionOfTheWind.west;
 
     int directionWind;
+    public Image arrowDirectionWind;
 
     public int xSize, ySize;                                //  tamaño del tablero
 
@@ -473,7 +475,7 @@ public class BoardManager : MonoBehaviour
 
             edifice.GetComponent<Edifice>().contFire++;
             edifice.GetComponent<Edifice>().StartFireLevel1();
-            Debug.Log("Incremento del fuego edificio vecino " + edifice.name);
+            //Debug.Log("Incremento del fuego edificio vecino " + edifice.name);
         }
     }  
 

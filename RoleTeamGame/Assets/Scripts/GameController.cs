@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
         }
         
         //  ACTIONS
-       // numbersActions = maxNumbersActions;
+      //( numbersActions = maxNumbersActions;
         numbersActions = GameManager.sharedInstance.maxNumbersActions;
         
 

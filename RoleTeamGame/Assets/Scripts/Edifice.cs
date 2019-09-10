@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 #endregion //Namespace
 
 #region FireState
@@ -28,6 +29,9 @@ public class Edifice : MonoBehaviour
     public GameObject level1;
     public GameObject level2;
     public GameObject level3;
+
+    public Image[] habitants;
+    public Sprite[] imageHabitants;
 
     public int contPopulation;
     public int contDisabledPerson;
@@ -161,8 +165,9 @@ public class Edifice : MonoBehaviour
 
     public void IsSelected()
     {
-        UIManagerGame.sharedInstance.ShowPanelInfo();
-        UIManagerGame.sharedInstance.panelInfo.GetComponent<PanelInfo>().FillInformation(gameObject);
+        //UIManagerGame.sharedInstance.ShowPanelInfo();
+        //UIManagerGame.sharedInstance.panelInfo.GetComponent<PanelInfo>().FillInformation(gameObject);
+        FillHabitant();
         PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         controller.UpdateNumberOfActions();
         controller.HideAllButtonsInspect();
@@ -175,6 +180,38 @@ public class Edifice : MonoBehaviour
         edificeAudio.PlayOneShot(clips[3]);
     }
     #endregion // Audio
+
+    void FillHabitant()
+    {
+        int disabledPerson = contDisabledPerson;
+        int person = contPerson;
+        int pet = contPet;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if(disabledPerson > 0)
+            {
+                habitants[i].enabled = true;
+                habitants[i].sprite = imageHabitants[0];
+                disabledPerson--;
+            }else if(person > 0)
+            {
+                habitants[i].enabled = true;
+                habitants[i].sprite = imageHabitants[1];
+
+                person--;
+            }else if(pet > 0)
+            {
+                habitants[i].enabled = true;
+                habitants[i].sprite = imageHabitants[2];
+                pet--;
+            }
+
+            habitants[i].preserveAspect = true;
+        }
+    }
+
+
 
     // ########################################
     // Funciones Estados del fuego
@@ -227,4 +264,6 @@ public class Edifice : MonoBehaviour
             return null;
         }
     }
+
+
 }

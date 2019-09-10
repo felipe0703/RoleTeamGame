@@ -92,8 +92,11 @@ public class UIManagerGame : MonoBehaviour
             showingPanel = true;
         }
         else{
-            if(showingPanel)
+            if (showingPanel)
+            {
                 boton.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
+                ShowPanelUI();
+            }
             else
                 boton.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
             showingPanel = !showingPanel;
@@ -127,6 +130,7 @@ public class UIManagerGame : MonoBehaviour
         panelUI.SetActive(false);
     }
 
+    //TODO: eliminar ya que no se usara un panel par amostrar la info
     public void ShowPanelInfo()
     {
         panelInfo.SetActive(true);

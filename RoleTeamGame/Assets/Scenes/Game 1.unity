@@ -8091,7 +8091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29eca9de211ba0449341bc4ee8374c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTurnGame: 1
+  currentTurnGame: 0
   turnLimit: 3
 --- !u!4 &1852238260
 Transform:
@@ -9530,13 +9530,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3302059196082601140, guid: 26a4427eb9263bc45903194fc57e406d,
         type: 3}
-      propertyPath: timeTurn
+      propertyPath: maxNumbersActions
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3302059196082601140, guid: 26a4427eb9263bc45903194fc57e406d,
-        type: 3}
-      propertyPath: currentGameState
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a4427eb9263bc45903194fc57e406d, type: 3}

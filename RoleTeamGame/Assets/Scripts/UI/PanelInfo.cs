@@ -1,15 +1,30 @@
-﻿using System.Collections;
+﻿#region Namespace
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+#endregion //Namespace
 
 public class PanelInfo : MonoBehaviour
 {
+    // ########################################
+    // Variables
+    // ########################################
+
+    #region Variables
+
     public Image imageEdifice;
     public Image[] habitants;
     public Image[] fires;
 
+    #endregion //Variables
 
+    // ########################################
+    // Fire Functions
+    // ########################################
+
+    #region FireFunction
+    
     public void FillInformation(GameObject edifice)
     {
         imageEdifice.sprite = edifice.GetComponent<SpriteRenderer>().sprite;
@@ -68,4 +83,5 @@ public class PanelInfo : MonoBehaviour
             }
         }
     }
+    #endregion //FireFunction
 }
