@@ -26,11 +26,13 @@ public class Edifice : MonoBehaviour
     #region Variables
     public int id;
     public GameObject btn;
+
+
     public GameObject level1;
     public GameObject level2;
     public GameObject level3;
 
-    public Image[] habitants;
+    public Button[] habitants;
     public Sprite[] imageHabitants;
 
     public int contPopulation;
@@ -175,11 +177,25 @@ public class Edifice : MonoBehaviour
         isInspected = true;
     }
 
+    public void IsSelectedTakeOut(int id)
+    {
+        if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
+        {
+            Debug.Log("persona coja");
+        }else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
+        {
+            Debug.Log("persona");
+        }
+        else if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
+        {
+            Debug.Log("Mascota");
+        }
+    }
     public void PlayClickSound()
     {
         edificeAudio.PlayOneShot(clips[3]);
     }
-    #endregion // Audio
+    
 
     void FillHabitant()
     {
@@ -191,26 +207,30 @@ public class Edifice : MonoBehaviour
         {
             if(disabledPerson > 0)
             {
-                habitants[i].enabled = true;
-                habitants[i].sprite = imageHabitants[0];
+                habitants[i].image.enabled = true;
+                habitants[i].image.sprite = imageHabitants[0];
+                habitants[i].GetComponent<ButtonHabitant>().idHabitant = 0;
                 disabledPerson--;
             }else if(person > 0)
             {
-                habitants[i].enabled = true;
-                habitants[i].sprite = imageHabitants[1];
-
+                habitants[i].image.enabled = true;
+                habitants[i].image.sprite = imageHabitants[1];
+                habitants[i].GetComponent<ButtonHabitant>().idHabitant = 1;
                 person--;
             }else if(pet > 0)
             {
-                habitants[i].enabled = true;
-                habitants[i].sprite = imageHabitants[2];
+                habitants[i].image.enabled = true;
+                habitants[i].image.sprite = imageHabitants[2];
+                habitants[i].GetComponent<ButtonHabitant>().idHabitant = 2;
                 pet--;
             }
 
-            habitants[i].preserveAspect = true;
+           // habitants[i].preserveAspect = true;
         }
     }
 
+
+    #endregion // Audio
 
 
     // ########################################

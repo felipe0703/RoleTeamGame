@@ -337,6 +337,39 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    // detecta si tenemos algun edificio a los lados y activa el boton del edificio
+    public void DetectEdificeTakeOutHabitant()
+    {
+        GameObject edifice;
+
+        for (int i = 0; i < adjacentDirections.Length; i++)
+        {
+            if (GetNeighbor(adjacentDirections[i]).tag == "Edifice")
+            {
+                edifice = GetNeighbor(adjacentDirections[i]);
+
+                if (edifice.GetComponent<Edifice>().isInspected) // el edificio fue inspeccionado 
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
+                        {
+                            edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                        }
+                    }
+                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+
+                }
+                else
+                {
+                    Debug.Log("no hay personas que salvar");
+                }
+            }
+        }
+    }
+
+
     #endregion //DetectEdifices
 
     // ########################################
