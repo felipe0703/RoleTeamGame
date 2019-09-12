@@ -43,7 +43,7 @@ public class BoardManager : MonoBehaviour
 
     [Space(10)]
     public GameObject currentStreet;
-    public List<Sprite> streetList = new List<Sprite>();
+    public List<GameObject> streetList = new List<GameObject>();
     private GameObject[,] streets;
 
     [Space(10)]
@@ -113,6 +113,7 @@ public class BoardManager : MonoBehaviour
 
         Sprite sprite = null;
         GameObject edifice;
+        GameObject street;
 
         int idX = -1;
         int contHouse = 0;
@@ -167,7 +168,28 @@ public class BoardManager : MonoBehaviour
                         allEdifices.Add(newEdifice);
                     }
                     else
-                    {
+                    {                   
+
+
+                        if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
+                        {
+                            currentStreet = streetList[Random.Range(0, 1)];
+                           // newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
+                        }
+                        else if (x % 2 == 0 && y % 2 != 0)       //  CALLES VERTICALES
+                        {
+                            currentStreet = streetList[Random.Range(1, 3)];
+                           // newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
+
+
+                        }
+                        else if (x % 2 == 0 && y % 2 == 0)      //  INTERCEPCIÓN CALLES CALLES 
+                        {
+                            currentStreet = streetList[Random.Range(3, 4)];
+                           // newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
+
+                        }
+
                         //  GENERACIÓN CALLES
                         GameObject newStreet = Instantiate(currentStreet,
                             new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),
@@ -183,26 +205,6 @@ public class BoardManager : MonoBehaviour
                         currentStreet.GetComponent<Street>().isBorder = false;
                         currentStreet.GetComponent<Street>().isCorner = false;
 
-
-                        if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
-                        {
-                            sprite = streetList[Random.Range(0, 1)];
-                            newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
-                        }
-                        else if (x % 2 == 0 && y % 2 != 0)       //  CALLES VERTICALES
-                        {
-                            sprite = streetList[Random.Range(1, 3)];
-                            newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
-
-
-                        }
-                        else if (x % 2 == 0 && y % 2 == 0)      //  INTERCEPCIÓN CALLES CALLES 
-                        {
-                            sprite = streetList[Random.Range(3, 4)];
-                            newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
-
-                        }
-
                         // la calle esta en los borde
                         if (x == 2 || y == 2 || x == xSizeBoard - 3 || y == ySizeBoard - 3)
                         {
@@ -217,8 +219,6 @@ public class BoardManager : MonoBehaviour
                         {
                             newStreet.GetComponent<Street>().isCorner = true;
                         }
-
-
                     }
                 }
 

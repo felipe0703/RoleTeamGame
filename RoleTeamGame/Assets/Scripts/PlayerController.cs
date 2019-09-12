@@ -355,11 +355,11 @@ public class PlayerController : MonoBehaviour
                     {
                         if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
                         {
-                            edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                            edifice.GetComponent<Edifice>().habitants[j].interactable = true;                            
                         }
                     }
                     edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-
+                    edifice.GetComponent<Edifice>().idPosition = i;
                 }
                 else
                 {
