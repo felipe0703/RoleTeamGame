@@ -361,7 +361,7 @@ MonoBehaviour:
   m_FadeOriginalTextOutline: 0
   m_FadeOriginalTextShadow: 0
   m_MoveIn:
-    Enable: 1
+    Enable: 0
     Began: 0
     Animating: 0
     Done: 0
@@ -392,13 +392,13 @@ MonoBehaviour:
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_ScaleIn:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
     ScaleBegin: {x: 0, y: 0, z: 0}
-    EaseType: 27
-    Time: 1
+    EaseType: 26
+    Time: 4
     Delay: 0
     Sounds:
       m_Begin: {fileID: 0}
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GUISpeed: 1
-  m_AutoAnimation: 1
+  m_AutoAnimation: 0
   m_AnimationMode: 4
   m_IdleTime: 8
 --- !u!4 &503143350
@@ -1149,17 +1149,17 @@ MonoBehaviour:
   m_FadeOriginalTextOutline: 0
   m_FadeOriginalTextShadow: 0
   m_MoveIn:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
-    MoveFrom: 7
+    MoveFrom: 2
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
-    EaseType: 27
-    Time: 1
-    Delay: 2
+    EaseType: 0
+    Time: 4
+    Delay: 0
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}
@@ -1180,7 +1180,7 @@ MonoBehaviour:
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_ScaleIn:
-    Enable: 1
+    Enable: 0
     Began: 0
     Animating: 0
     Done: 0
