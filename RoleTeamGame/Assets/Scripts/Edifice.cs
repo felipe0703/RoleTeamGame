@@ -44,6 +44,7 @@ public class Edifice : MonoBehaviour
     public int contFire;
 
     public bool isInspected = false;
+    public int idPosition = -1;
 
     //AUDIO
     private AudioSource edificeAudio;
@@ -191,6 +192,7 @@ public class Edifice : MonoBehaviour
             Debug.Log("Mascota");
         }
     }
+
     public void PlayClickSound()
     {
         edificeAudio.PlayOneShot(clips[3]);
