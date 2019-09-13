@@ -397,9 +397,9 @@ MonoBehaviour:
     Animating: 0
     Done: 0
     ScaleBegin: {x: 0, y: 0, z: 0}
-    EaseType: 26
-    Time: 4
-    Delay: 0
+    EaseType: 11
+    Time: 2
+    Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}
@@ -427,9 +427,9 @@ MonoBehaviour:
     Done: 0
     m_ScaleLast: {x: 0, y: 0, z: 0}
     Min: {x: 1, y: 1, z: 1}
-    Max: {x: 1.05, y: 1.05, z: 1.05}
+    Max: {x: 1.2, y: 1.2, z: 1.2}
     EaseType: 21
-    Time: 1
+    Time: 2
     Delay: 0
     Sound:
       m_AudioClip: {fileID: 0}
@@ -1157,9 +1157,9 @@ MonoBehaviour:
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
-    EaseType: 0
-    Time: 4
-    Delay: 0
+    EaseType: 25
+    Time: 1
+    Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}
