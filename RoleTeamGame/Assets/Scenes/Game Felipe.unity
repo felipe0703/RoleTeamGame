@@ -2050,7 +2050,7 @@ GameObject:
   - component: {fileID: 261847792}
   m_Layer: 0
   m_Name: BoardManager
-  m_TagString: Untagged
+  m_TagString: BoardManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2085,10 +2085,10 @@ MonoBehaviour:
   currentStreet: {fileID: 2970909160875802345, guid: a7c2f1981e65ee54a8e6a544c6145251,
     type: 3}
   streetList:
-  - {fileID: 21300000, guid: 6eab1c2912829894cab4f61cd302f958, type: 3}
-  - {fileID: 21300004, guid: 6eab1c2912829894cab4f61cd302f958, type: 3}
-  - {fileID: 21300006, guid: 6eab1c2912829894cab4f61cd302f958, type: 3}
-  - {fileID: 21300004, guid: 32344601ea8d29c4582c07d7c8787b93, type: 3}
+  - {fileID: 2970909160875802345, guid: a7c2f1981e65ee54a8e6a544c6145251, type: 3}
+  - {fileID: 2970909160875802345, guid: 229ee778a9d1d814ebd0e5c660e36ded, type: 3}
+  - {fileID: 2970909160875802345, guid: 7e53e8ce3701cbb429ea3e8372e6bc4e, type: 3}
+  - {fileID: 2970909160875802345, guid: 36100e259f3a472468cf4e944c110935, type: 3}
   currentRiver: {fileID: 8363111426474032847, guid: d577e435d25bda844830bde8d63b6a3b,
     type: 3}
   riverList:
@@ -8798,6 +8798,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 213189025}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

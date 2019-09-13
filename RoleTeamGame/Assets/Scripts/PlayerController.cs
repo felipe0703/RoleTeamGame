@@ -539,4 +539,20 @@ public class PlayerController : MonoBehaviour
             actions[i].SetActive(true);
         }
     }
+
+    public GameObject GetNeighborStreet()
+    {
+        // RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right, 1f, LayerMask.GetMask("Streets"));
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right,4f);
+        if (hit.collider != null)
+        {
+            Debug.Log("encontre algo");
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            Debug.Log("nada");
+            return null;
+        }
+    }
 }

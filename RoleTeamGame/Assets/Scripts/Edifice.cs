@@ -67,7 +67,7 @@ public class Edifice : MonoBehaviour
         int person = GameController.sharedInstance.totalPerson;
         int pet = GameController.sharedInstance.totalPet;
         int population = disabledPerson + person + pet;
-
+        idPosition = -1;
         //TODO: ANTES DE GENERAR EL NUMERO RANDOM PREGUNTE SI AUN QUEDAN PERSONAS DISPONIBLES
 
         // PREGUNTAR POR CADA HABITANTE
@@ -180,9 +180,11 @@ public class Edifice : MonoBehaviour
 
     public void IsSelectedTakeOut(int id)
     {
+        Debug.Log("presione edificios");
         if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
         {
             Debug.Log("persona coja");
+            
         }else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
         {
             Debug.Log("persona");
@@ -191,6 +193,16 @@ public class Edifice : MonoBehaviour
         {
             Debug.Log("Mascota");
         }
+        PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        GameObject street = controller.GetNeighborStreet();
+        string nameStreet = "Edifice[" + controller.transform.localPosition.x.ToString() + "][" + controller.transform.localPosition.y.ToString() + "]";
+
+        Transform street2 = GameObject.FindGameObjectWithTag("BoardManager").transform.Find(nameStreet);
+        //TODO: buscar como verificar si encontro la calle que quiero
+        Debug.Log(street2.name);
+
+        Debug.Log(idPosition);
     }
 
     public void PlayClickSound()
