@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
     public int totalDisabledPerson = 40;
     public int totalPerson = 30;
     public int totalPet = 20;
+    public GameObject disabledPerson;
+    public GameObject person;
+    public GameObject pet;
 
 
     #endregion // Variables

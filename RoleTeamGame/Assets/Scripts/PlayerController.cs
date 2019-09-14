@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public Transform target;
     public Transform target2;
     public int MyTurn = 1;
-
+    public GameObject street;
     Transform[] targets;    
     public float speed;
 
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     // VARIABLES PRIVADAS    
     float distanceEdifice = 8f;
     bool moveTarget1, moveTarget2 = false;
+
 
     GameManager gm;
 
@@ -359,7 +360,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                     edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                    edifice.GetComponent<Edifice>().idPosition = i;
+                    edifice.GetComponent<Edifice>().idPositionEdifice = i;
                 }
                 else
                 {
@@ -553,6 +554,15 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("nada");
             return null;
+        }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Street"))
+        {
+            street = collision.gameObject;
         }
     }
 }

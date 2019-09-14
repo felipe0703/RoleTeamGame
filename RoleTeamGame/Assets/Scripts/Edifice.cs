@@ -27,6 +27,8 @@ public class Edifice : MonoBehaviour
     public int id;
     public GameObject btn;
 
+    public Transform street2;
+
 
     public GameObject level1;
     public GameObject level2;
@@ -44,7 +46,7 @@ public class Edifice : MonoBehaviour
     public int contFire;
 
     public bool isInspected = false;
-    public int idPosition = -1;
+    public int idPositionEdifice = -1;
 
     //AUDIO
     private AudioSource edificeAudio;
@@ -67,7 +69,7 @@ public class Edifice : MonoBehaviour
         int person = GameController.sharedInstance.totalPerson;
         int pet = GameController.sharedInstance.totalPet;
         int population = disabledPerson + person + pet;
-        idPosition = -1;
+        idPositionEdifice = -1;
         //TODO: ANTES DE GENERAR EL NUMERO RANDOM PREGUNTE SI AUN QUEDAN PERSONAS DISPONIBLES
 
         // PREGUNTAR POR CADA HABITANTE
@@ -180,29 +182,27 @@ public class Edifice : MonoBehaviour
 
     public void IsSelectedTakeOut(int id)
     {
-        Debug.Log("presione edificios");
-        if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
+        PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        GameObject habitant = null;
+        
+        if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
         {
-            Debug.Log("persona coja");
+            habitant = GameController.sharedInstance.disabledPerson;
             
         }else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
         {
-            Debug.Log("persona");
+            habitant = GameController.sharedInstance.person;
         }
         else if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
         {
-            Debug.Log("Mascota");
+            habitant = GameController.sharedInstance.pet;
         }
-        PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-        GameObject street = controller.GetNeighborStreet();
-        string nameStreet = "Edifice[" + controller.transform.localPosition.x.ToString() + "][" + controller.transform.localPosition.y.ToString() + "]";
-
-        Transform street2 = GameObject.FindGameObjectWithTag("BoardManager").transform.Find(nameStreet);
-        //TODO: buscar como verificar si encontro la calle que quiero
-        Debug.Log(street2.name);
-
-        Debug.Log(idPosition);
+        if (idPositionEdifice == 0)
+        {
+            Instantiate(habitant, controller.street.transform.GetChild(0).transform);
+        }
     }
 
     public void PlayClickSound()
