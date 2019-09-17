@@ -50,6 +50,15 @@ public class PlayerController : MonoBehaviour
     //Sistema de turno
     public bool myTurn = true;
 
+    //Para corrutina de audio del fuego 'DetectFireEdifice'
+    int fireLvl;
+    bool detectFire = true;
+    bool moving = true;
+    GameObject vecino;
+    GameObject contadorNvlFgo;
+    GameObject fireGmObj;
+
+
 
     #endregion
 
@@ -111,19 +120,105 @@ public class PlayerController : MonoBehaviour
             moveTarget1 = false;
             moveTarget2 = true;
         }
+        if (transform.position != target.position)
+        {
+            moving = true;
+        }
 
         if (transform.position == target2.position)
         {
             moveTarget2 = false;
             StopAnim();
             target.position = transform.position;
+            if (moving == true && detectFire == false)
+            {
+                detectFire = true;
+                moving = false;
+            }
             //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
-            if(GameController.sharedInstance.numbersActions == 0 && myTurn)
+            if (GameController.sharedInstance.numbersActions == 0 && myTurn)
             {
                 myTurn = false;
                 TurnSystemManager.sharedInstance.StartTurnFire();
             }
         }
+        //Detección del nivel del fuego para sonido
+        ;
+        if (detectFire == true)
+        {
+            fireLvl = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                vecino = GetNeighbor(adjacentDirections[i]);
+                if (vecino.tag == "Edifice")
+                {
+                    if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
+                    {
+                        contadorNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl <2)
+                        {
+                            fireLvl = 1;
+                        }
+                        contadorNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 3)
+                        {
+                            fireLvl = 2;
+                        }
+                        contadorNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 4)
+                        {
+                            fireLvl = 3;
+                        }
+                    }
+
+                    if (vecino.transform.Find("Fire") != null) //Si el vecino detectado es una casa
+                    {
+                        contadorNvlFgo = vecino.transform.Find("Fire/Level1").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 2)
+                        {
+                            fireLvl = 1;
+                        }
+                        contadorNvlFgo = vecino.transform.Find("Fire/Level2").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 3)
+                        {
+                            fireLvl = 2;
+                        }
+                        contadorNvlFgo = vecino.transform.Find("Fire/Level3").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 4)
+                        {
+                            fireLvl = 3;
+                        }
+                    }
+
+                    if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
+                    {
+                        contadorNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 2)
+                        {
+                            fireLvl = 1;
+                        }
+                        contadorNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 3)
+                        {
+                            fireLvl = 2;
+                        }
+                        contadorNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
+                        if (contadorNvlFgo.activeSelf && fireLvl < 4)
+                        {
+                            fireLvl = 3;
+                        }
+                    }
+
+
+                }
+                
+                
+            }
+            Debug.Log("Nivel fuego cercano: " + fireLvl);
+            detectFire = false;
+        }
+
+
     }
 
     #endregion // MonoBehaviour
@@ -497,6 +592,8 @@ public class PlayerController : MonoBehaviour
         gm.PlayOneStepSound();
     }
 
+    
+
     #endregion
 
     #region Animacion
@@ -539,4 +636,6 @@ public class PlayerController : MonoBehaviour
             actions[i].SetActive(true);
         }
     }
+
+
 }
