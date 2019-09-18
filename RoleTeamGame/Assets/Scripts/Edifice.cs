@@ -180,15 +180,18 @@ public class Edifice : MonoBehaviour
         isInspected = true;
     }
 
+    //TODO: EVALUAR SI ES CONVENIENTE TENER ESTA FUNCIONALIDAD EN ESTE SCRIPT O EN EL GAMECONTROLLER
     public void IsSelectedTakeOut(int id)
     {
         PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         GameObject habitant = null;
         
+        // detecto que tipo de habitante seleccione
         if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
         {
             habitant = GameController.sharedInstance.disabledPerson;
+            habitants[id].gameObject.SetActive(false);
             
         }else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
         {
@@ -199,9 +202,32 @@ public class Edifice : MonoBehaviour
             habitant = GameController.sharedInstance.pet;
         }
 
-        if (idPositionEdifice == 0)
+        habitants[id].gameObject.SetActive(false);
+        // tamaño de un arreglo de booleanos que determina si la calle esta ocupada
+        int sizePosition = controller.street.GetComponent<HabitantsInTheStreet>().positions.Length;
+
+        // recorre el arreglo de booleanos de las posiciones de las calles
+        // si encuentra una calle vacia posiciona ahí al habitante del edificio
+        // si es un edificio sobre el jugador posiciona al habitante arriba en la calle
+        // si es un edificio bajo el jugador posiciona al habitante abajo en la calle
+        for (int i = 0; i < sizePosition; i++)
         {
-            Instantiate(habitant, controller.street.transform.GetChild(0).transform);
+            if (!controller.street.GetComponent<HabitantsInTheStreet>().positions[i])
+            {
+                if((idPositionEdifice == 0 || idPositionEdifice == 3) && i < 3 )
+                {
+                    Instantiate(habitant, controller.street.transform.GetChild(i).transform);
+                    controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
+                    return;
+                }
+
+                if((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
+                {
+                    Instantiate(habitant, controller.street.transform.GetChild(i).transform);
+                    controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
+                    return;
+                }                
+            }
         }
     }
 

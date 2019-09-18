@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 7078886511707157492}
   - component: {fileID: 4014963318693677728}
   - component: {fileID: 1817511151354564707}
+  - component: {fileID: 5533427540513574318}
   m_Layer: 9
   m_Name: StreetVertical 1
   m_TagString: Street
@@ -525,11 +526,11 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 3, y: 3}
   m_Spacing: {x: 4, y: 0.5}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 2
+  m_ConstraintCount: 3
 --- !u!50 &1817511151354564707
 Rigidbody2D:
   serializedVersion: 4
@@ -551,6 +552,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5533427540513574318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970909160875802345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d907418a046f74997ddba201124692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positions: 000000000000
 --- !u!1 &4748746749853171352
 GameObject:
   m_ObjectHideFlags: 0

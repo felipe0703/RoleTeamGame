@@ -81,9 +81,6 @@ public class PlayerController : MonoBehaviour
             target2.parent = null;
             targets = target.GetComponentsInChildren<Transform>();
         }
-
-
-
     }
 
     // Update is called once per frame
@@ -379,8 +376,6 @@ public class PlayerController : MonoBehaviour
 
     #region Movements
 
-
-
     //  MOVE
     void MovePlayer(float fixedSpeed, Vector3 targetPosition)
     {
@@ -540,23 +535,6 @@ public class PlayerController : MonoBehaviour
             actions[i].SetActive(true);
         }
     }
-
-    public GameObject GetNeighborStreet()
-    {
-        // RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right, 1f, LayerMask.GetMask("Streets"));
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right,4f);
-        if (hit.collider != null)
-        {
-            Debug.Log("encontre algo");
-            return hit.collider.gameObject;
-        }
-        else
-        {
-            Debug.Log("nada");
-            return null;
-        }
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
