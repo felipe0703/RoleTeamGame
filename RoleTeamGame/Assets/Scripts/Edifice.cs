@@ -27,6 +27,8 @@ public class Edifice : MonoBehaviour
     public int id;
     public GameObject btn;
 
+    public Transform street2;
+
 
     public GameObject level1;
     public GameObject level2;
@@ -44,7 +46,7 @@ public class Edifice : MonoBehaviour
     public int contFire;
 
     public bool isInspected = false;
-    public int idPosition = -1;
+    public int idPositionEdifice = -1;
 
     //AUDIO
     private AudioSource edificeAudio;
@@ -67,7 +69,7 @@ public class Edifice : MonoBehaviour
         int person = GameController.sharedInstance.totalPerson;
         int pet = GameController.sharedInstance.totalPet;
         int population = disabledPerson + person + pet;
-
+        idPositionEdifice = -1;
         //TODO: ANTES DE GENERAR EL NUMERO RANDOM PREGUNTE SI AUN QUEDAN PERSONAS DISPONIBLES
 
         // PREGUNTAR POR CADA HABITANTE
@@ -178,18 +180,54 @@ public class Edifice : MonoBehaviour
         isInspected = true;
     }
 
+    //TODO: EVALUAR SI ES CONVENIENTE TENER ESTA FUNCIONALIDAD EN ESTE SCRIPT O EN EL GAMECONTROLLER
     public void IsSelectedTakeOut(int id)
     {
-        if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
+        PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        GameObject habitant = null;
+        
+        // detecto que tipo de habitante seleccione
+        if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
         {
-            Debug.Log("persona coja");
+            habitant = GameController.sharedInstance.disabledPerson;
+            habitants[id].gameObject.SetActive(false);
+            
         }else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
         {
-            Debug.Log("persona");
+            habitant = GameController.sharedInstance.person;
         }
         else if(habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
         {
-            Debug.Log("Mascota");
+            habitant = GameController.sharedInstance.pet;
+        }
+
+        habitants[id].gameObject.SetActive(false);
+        // tamaño de un arreglo de booleanos que determina si la calle esta ocupada
+        int sizePosition = controller.street.GetComponent<HabitantsInTheStreet>().positions.Length;
+
+        // recorre el arreglo de booleanos de las posiciones de las calles
+        // si encuentra una calle vacia posiciona ahí al habitante del edificio
+        // si es un edificio sobre el jugador posiciona al habitante arriba en la calle
+        // si es un edificio bajo el jugador posiciona al habitante abajo en la calle
+        for (int i = 0; i < sizePosition; i++)
+        {
+            if (!controller.street.GetComponent<HabitantsInTheStreet>().positions[i])
+            {
+                if((idPositionEdifice == 0 || idPositionEdifice == 3) && i < 3 )
+                {
+                    Instantiate(habitant, controller.street.transform.GetChild(i).transform);
+                    controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
+                    return;
+                }
+
+                if((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
+                {
+                    Instantiate(habitant, controller.street.transform.GetChild(i).transform);
+                    controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
+                    return;
+                }                
+            }
         }
     }
 
