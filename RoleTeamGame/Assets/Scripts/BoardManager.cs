@@ -309,7 +309,20 @@ public class BoardManager : MonoBehaviour
         edifice = centralEdifices[Random.Range(0, centralEdifices.Count)];
 
         //Iniciar fuego
-        edifice.GetComponent<Edifice>().StartFireLevel3();
+        int idEdifice = edifice.GetComponent<Edifice>().id;
+        if(idEdifice == 1)
+        {
+            edifice.GetComponent<Edifice>().StartFireLevel3();
+        }
+        else if (idEdifice == 2)
+        {
+            edifice.GetComponent<Edifice>().StartFireLevel4();
+        }
+        else
+        {
+            edifice.GetComponent<Edifice>().StartFireLevel2();
+        }
+        
     }
     #endregion // FireStart/SaveEdifice
 

@@ -12,7 +12,8 @@ public enum FireState
     level0,
     level1,
     level2,
-    level3
+    level3,
+    level4
 }
 #endregion //FireState
 
@@ -33,6 +34,7 @@ public class Edifice : MonoBehaviour
     public GameObject level1;
     public GameObject level2;
     public GameObject level3;
+    public GameObject level4;
 
     public Button[] habitants;
     public Sprite[] imageHabitants;
@@ -291,6 +293,10 @@ public class Edifice : MonoBehaviour
     {
         SetFireState(FireState.level3);
     }
+     public void StartFireLevel4()
+    {
+        SetFireState(FireState.level4);
+    }
 
 
     void SetFireState(FireState newFireState)
@@ -299,15 +305,32 @@ public class Edifice : MonoBehaviour
         if(newFireState == FireState.level1)
         {
             level1.SetActive(true);
+            level2.SetActive(false);
+            level3.SetActive(false);
+            level4.SetActive(false);
         }
         if (newFireState == FireState.level2)
         {
-           level2.SetActive(true);
+            level1.SetActive(false);
+            level2.SetActive(true);
+            level3.SetActive(false);
+            level4.SetActive(false);
         }
         if (newFireState == FireState.level3)
         {
+            level1.SetActive(false);
+            level2.SetActive(false);
             level3.SetActive(true);
+            level4.SetActive(false);
             contFire = 3;
+        }
+        if (newFireState == FireState.level4)
+        {
+            level1.SetActive(false);
+            level2.SetActive(false);
+            level3.SetActive(false);
+            level4.SetActive(true);
+            contFire = 4;
         }
     }
     #endregion //FireState
