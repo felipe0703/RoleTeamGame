@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Setting Game.unity
     guid: 41ab0f9dffcd7c842934f050fc2b3308
   - enabled: 1
+    path: Assets/Scenes/CreateGame.unity
+    guid: 7ce046eca01ce9249b17a626a36c02d9
+  - enabled: 1
+    path: Assets/Scenes/JoinGame.unity
+    guid: 2959ba42369a8884981ac39d9d8e408d
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: a8af93c8a8863d34da78cca98a4bbbed
   m_configObjects: {}
