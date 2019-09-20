@@ -130,26 +130,6 @@ public class Edifice : MonoBehaviour
 
     public void Update()
     {
-        /*
-        if (level1.activeSelf)
-        {
-            edificeAudio.clip = clips[0];
-        }
-        if (level2.activeSelf)
-        {
-            edificeAudio.clip = clips[1];
-        }
-        if (level3.activeSelf)
-        {
-            edificeAudio.clip = clips[2];
-        }
-
-        if (!edificeAudio.isPlaying)
-        {
-            edificeAudio.Play();
-        }
-        */
-
         if(contFire == 1)
         {
             StartFireLevel1();
@@ -236,7 +216,7 @@ public class Edifice : MonoBehaviour
 
     public void PlayClickSound()
     {
-        edificeAudio.PlayOneShot(clips[3]);
+        edificeAudio.PlayOneShot(clips[0]);
     }
     
 
