@@ -126,7 +126,7 @@ public class Edifice : MonoBehaviour
 
     public void Update()
     {
-        
+        /*
         if (level1.activeSelf)
         {
             edificeAudio.clip = clips[0];
@@ -144,6 +144,7 @@ public class Edifice : MonoBehaviour
         {
             edificeAudio.Play();
         }
+        */
 
         if(contFire == 1)
         {
