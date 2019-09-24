@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     GameObject vecino;
     GameObject bufferNvlFgo;
     GameObject fireGmObj;
-
+    public FireSoundControl FireSound;
 
 
     #endregion
@@ -229,6 +229,7 @@ public class PlayerController : MonoBehaviour
                 
             }
             Debug.Log("Nivel fuego cercano: " + fireLvl);
+            FireSound.ChangeFireSound(fireLvl);
             detectFire = false;
         }
 
