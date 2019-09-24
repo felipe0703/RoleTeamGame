@@ -436,7 +436,7 @@ MonoBehaviour:
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
-    Time: 2
+    Time: 1
     Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
@@ -745,7 +745,7 @@ MonoBehaviour:
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
-    Time: 2
+    Time: 1
     Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
@@ -1430,7 +1430,7 @@ MonoBehaviour:
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
-    Time: 2
+    Time: 1
     Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
@@ -2430,7 +2430,7 @@ MonoBehaviour:
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
-    Time: 2
+    Time: 1
     Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
