@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public enum TurnGame
 {
     noTurn,
@@ -17,6 +17,18 @@ public class TurnSystemManager : MonoBehaviour
     //public int numberPlayers;
     public static int turn = 0;
     public int turnLimit = 3;
+
+    public GameObject avisoFuego;
+    public GameObject avisoP1;
+    public GameObject avisoP2;
+    public GameObject avisoP3;
+    public GameObject avisoP4;
+
+    public GUIAnimFREE fuego;
+    public GUIAnimFREE p1;
+    public GUIAnimFREE p2;
+    public GUIAnimFREE p3;
+    public GUIAnimFREE p4;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +68,10 @@ public class TurnSystemManager : MonoBehaviour
     public void StartTurnFire()
     {
         SetTurnGame(TurnGame.fire);
+        avisoFuego.SetActive(true);
+        fuego.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
+        fuego.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
+        avisoFuego.SetActive(false);
     }
 
 
