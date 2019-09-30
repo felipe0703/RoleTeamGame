@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class FireSoundControl : MonoBehaviour
 {
-    private AudioSource fireAudio;
-    public AudioClip[] clips;
+
+    public grumbleAMP musicScript;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        fireAudio = gameObject.GetComponent<AudioSource>();
+        musicScript.PlaySong(0, 0, 0.5f);
     }
 
     // Update is called once per frame
@@ -24,25 +24,22 @@ public class FireSoundControl : MonoBehaviour
     {
         if (n == 0)
         {
-            fireAudio.Stop();
+            musicScript.CrossFadeToNewLayer(0);
         }
 
         if (n == 1)
         {
-            fireAudio.clip = clips[0];
-            if (!fireAudio.isPlaying) { fireAudio.Play(); }
+            musicScript.CrossFadeToNewLayer(1);
         }
 
         if (n == 2)
         {
-            fireAudio.clip = clips[1];
-            if (!fireAudio.isPlaying) { fireAudio.Play(); }
+            musicScript.CrossFadeToNewLayer(2);
         }
 
         if (n > 2)
         {
-            fireAudio.clip = clips[2];
-            if (!fireAudio.isPlaying) { fireAudio.Play(); }
+            musicScript.CrossFadeToNewLayer(3);
         }
     }
 }

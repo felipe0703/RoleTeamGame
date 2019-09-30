@@ -18,6 +18,8 @@ public class TurnSystemManager : MonoBehaviour
     public static int turn = 0;
     public int turnLimit = 3;
 
+    public PlayerController playerScript;
+
     public GameObject avisoFuego;
     public GameObject avisoP1;
     public GameObject avisoP2;
@@ -59,6 +61,7 @@ public class TurnSystemManager : MonoBehaviour
     public void StartTurnPlayer1()
     {
         SetTurnGame(TurnGame.player1);
+        playerScript.DetectFireLevel(); //Para cambiar el sonido si el fuego del edificio cercano avanzó
     }
 
     public void StartTurnPlayer2()

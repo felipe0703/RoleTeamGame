@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     public FireSoundControl FireSound;
 
 
+
     #endregion
 
     // ########################################
@@ -111,6 +112,11 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("MoveX",animDir2.x);
             animator.SetFloat("MoveY",animDir2.y);
             MovePlayer(fixedSpeed, target2.position);
+            if (moving == true && detectFire == false) 
+            {
+                detectFire = true;
+                moving = false;
+            }
         }
 
         if(transform.position == target.position)
@@ -128,11 +134,7 @@ public class PlayerController : MonoBehaviour
             moveTarget2 = false;
             StopAnim();
             target.position = transform.position;
-            if (moving == true && detectFire == false)
-            {
-                detectFire = true;
-                moving = false;
-            }
+            
             //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
             if (GameController.sharedInstance.numbersActions == 0 && myTurn)
             {
@@ -140,100 +142,7 @@ public class PlayerController : MonoBehaviour
                 TurnSystemManager.sharedInstance.StartTurnFire();
             }
         }
-
-        //Detección del nivel del fuego para sonido
-        
-        if (detectFire == true)
-        {
-            fireLvl = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                vecino = GetNeighbor(adjacentDirections[i]);
-                if (vecino.tag == "Edifice")
-                {
-                    if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
-                    {
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl <2)
-                        {
-                            fireLvl = 1;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                        {
-                            fireLvl = 2;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                        {
-                            fireLvl = 3;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level4").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                        {
-                            fireLvl = 4;
-                        }
-                    }
-
-                    if (vecino.transform.Find("FireHouse") != null) //Si el vecino detectado es una casa
-                    {
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level1").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
-                        {
-                            fireLvl = 1;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level2").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                        {
-                            fireLvl = 2;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level3").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                        {
-                            fireLvl = 3;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level4").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                        {
-                            fireLvl = 4;
-                        }
-                    }
-
-                    if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
-                    {
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
-                        {
-                            fireLvl = 1;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                        {
-                            fireLvl = 2;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                        {
-                            fireLvl = 3;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level4").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                        {
-                            fireLvl = 4;
-                        }
-                    }
-
-
-                }
-                
-                
-            }
-            Debug.Log("Nivel fuego cercano: " + fireLvl);
-            FireSound.ChangeFireSound(fireLvl);
-            detectFire = false;
-        }
-
-
+        DetectFireLevel();
     }
 
     #endregion // MonoBehaviour
@@ -248,6 +157,21 @@ public class PlayerController : MonoBehaviour
     private GameObject GetNeighbor(Vector2 direction)
     {
         RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction);
+        if (hit.collider != null)
+        {
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    //Este es lo mismo que arriba, pero calculando desde la posición destino del movimiento. 
+    //Esto es para hacer una transición suave entre distintos niveles de sonido del fuego
+    private GameObject GetFutureNeighbor(Vector2 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(target2.transform.position, direction);
         if (hit.collider != null)
         {
             return hit.collider.gameObject;
@@ -655,6 +579,99 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Street"))
         {
             street = collision.gameObject;
+        }
+    }
+
+    public void DetectFireLevel()
+    {
+        if (detectFire == true)
+        {
+            fireLvl = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                vecino = GetFutureNeighbor(adjacentDirections[i]);
+                if (vecino.tag == "Edifice")
+                {
+                    if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
+                    {
+                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                        {
+                            fireLvl = 1;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                        {
+                            fireLvl = 2;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                        {
+                            fireLvl = 3;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level4").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                        {
+                            fireLvl = 4;
+                        }
+                    }
+
+                    if (vecino.transform.Find("FireHouse") != null) //Si el vecino detectado es una casa
+                    {
+                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level1").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                        {
+                            fireLvl = 1;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level2").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                        {
+                            fireLvl = 2;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level3").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                        {
+                            fireLvl = 3;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level4").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                        {
+                            fireLvl = 4;
+                        }
+                    }
+
+                    if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
+                    {
+                        bufferNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                        {
+                            fireLvl = 1;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                        {
+                            fireLvl = 2;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                        {
+                            fireLvl = 3;
+                        }
+                        bufferNvlFgo = vecino.transform.Find("FirePark/Level4").gameObject;
+                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                        {
+                            fireLvl = 4;
+                        }
+                    }
+
+
+                }
+
+
+            }
+            Debug.Log("Nivel fuego cercano: " + fireLvl);
+            FireSound.ChangeFireSound(fireLvl);
+            detectFire = false;
         }
     }
 }

@@ -2357,8 +2357,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352679068}
-  - component: {fileID: 352679067}
   - component: {fileID: 352679066}
+  - component: {fileID: 352679067}
   m_Layer: 0
   m_Name: Fuego
   m_TagString: Untagged
@@ -2378,106 +2378,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864504e124b99a344b7729d53c1524b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: 0d59f1ae8311e2f44b5453bb4f716dd1, type: 3}
-  - {fileID: 8300000, guid: 24496d7b35e99554b85a911d16ad980b, type: 3}
-  - {fileID: 8300000, guid: 0ecbab50e88d6724eb3640a3bc7c443f, type: 3}
---- !u!82 &352679067
-AudioSource:
+  musicScript: {fileID: 352679067}
+--- !u!114 &352679067
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352679065}
   m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0044b2a1fe8c73146950efed70f39ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songs:
+  - {fileID: 1741404592}
+  globalVolume: 0.5
+  globalCrossFadeTime: 1
+  players: []
+  resourceRequestMode: 0
 --- !u!4 &352679068
 Transform:
   m_ObjectHideFlags: 0
@@ -3490,7 +3409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.389706, y: 9, z: -10}
+  m_LocalPosition: {x: 17.37918, y: 9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 179477463}
@@ -8700,6 +8619,42 @@ RectTransform:
   m_AnchoredPosition: {x: -11.5, y: 0}
   m_SizeDelta: {x: -23, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1741404592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c6b15e8a7a8404fab1b489203eee17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textName: SONG 0
+  layer:
+  - {fileID: 8300000, guid: 93711e38ca6575f428cfe3635a71f22d, type: 3}
+  - {fileID: 8300000, guid: 0d59f1ae8311e2f44b5453bb4f716dd1, type: 3}
+  - {fileID: 8300000, guid: 24496d7b35e99554b85a911d16ad980b, type: 3}
+  - {fileID: 8300000, guid: 0ecbab50e88d6724eb3640a3bc7c443f, type: 3}
+  layerNames:
+  - Layer 0
+  - Layer 1
+  - Layer 2
+  - Layer 3
+  volumes:
+  - 1
+  - 1
+  - 1
+  - 1
+  loopCrossfadeBy: 0
+  layerCrossfadeBy: 0.3
+  loop: 1
+  layerResourceNames:
+  - 
+  - 
+  - 
+  - 
 --- !u!1 &1777917316
 GameObject:
   m_ObjectHideFlags: 0
@@ -9083,6 +9038,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTurnGame: 1
   turnLimit: 3
+  playerScript: {fileID: 213189028}
+  avisoFuego: {fileID: 0}
+  avisoP1: {fileID: 0}
+  avisoP2: {fileID: 0}
+  avisoP3: {fileID: 0}
+  avisoP4: {fileID: 0}
+  fuego: {fileID: 0}
+  p1: {fileID: 0}
+  p2: {fileID: 0}
+  p3: {fileID: 0}
+  p4: {fileID: 0}
 --- !u!4 &1852238260
 Transform:
   m_ObjectHideFlags: 0
