@@ -637,6 +637,7 @@ public class PlayerController : MonoBehaviour
     public void UpdateNumberOfActions()
     {
         GameController.sharedInstance.SubtractActions();
+        //animacion de restar acción
         int i = GameController.sharedInstance.numbersActions;
         actions[i].SetActive(false);
     }
