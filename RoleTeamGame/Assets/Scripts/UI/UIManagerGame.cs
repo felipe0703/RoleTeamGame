@@ -19,7 +19,9 @@ public class UIManagerGame : MonoBehaviour
     public GameObject panelButtons;
     public GameObject buttons;
     public GameObject panelUI;
-    public GameObject panelInfo;
+    public GameObject panelMinimap;
+    public GameObject vCam1;
+    public GameObject vCam2;
    // public GameObject[] panelButtonsMove;
 
     public GameObject up;
@@ -86,6 +88,9 @@ public class UIManagerGame : MonoBehaviour
     }
 
     public void TogglePanel(){
+
+        vCam1.SetActive(true);
+        vCam2.SetActive(false);
         if(!boton.gameObject.activeSelf){
             boton.gameObject.SetActive(true);
             boton.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
@@ -129,15 +134,15 @@ public class UIManagerGame : MonoBehaviour
     {
         panelUI.SetActive(false);
     }
-
-    //TODO: eliminar ya que no se usara un panel par amostrar la info
-    public void ShowPanelInfo()
+    //  PANEL MINIMAP
+    public void ShowPanelMinimap()
     {
-        panelInfo.SetActive(true);
+        panelMinimap.SetActive(true);
     }
 
-    public void HidePanelInfo()
+    public void HidePanelMinimap()
     {
-        panelInfo.SetActive(false);
+        panelMinimap.SetActive(false);
     }
+
 }
