@@ -5,7 +5,13 @@ using UnityEngine;
 public class SfxControl : MonoBehaviour
 {
 
-    public AudioClip[] clips;
+    public AudioClip gateFx;
+    public AudioClip doorFx;
+    public AudioClip communicationsFx;
+    public AudioClip clickSound;
+    public AudioClip hiClickSound;
+    public AudioClip fireTurnSound;
+    public AudioClip playerTurnSound;
     private AudioSource fxAudio;
     int edificeType;
 
@@ -21,24 +27,33 @@ public class SfxControl : MonoBehaviour
         
     }
 
+    public void PlayTurnFireSound()
+    {
+        fxAudio.PlayOneShot(fireTurnSound);
+    }
+    public void PlayTurnPlayerSound()
+    {
+        fxAudio.PlayOneShot(playerTurnSound);
+    }
+
     public void PlayClickSound()
     {
-        fxAudio.PlayOneShot(clips[3]);
+        fxAudio.PlayOneShot(clickSound);
     }
 
     public void PlayHiClickSound()
     {
-        fxAudio.PlayOneShot(clips[4]);
+        fxAudio.PlayOneShot(hiClickSound);
     }
 
     public void PlayCommunicationsFx()
     {
-        fxAudio.PlayOneShot(clips[2], 0.3f);
+        fxAudio.PlayOneShot(communicationsFx, 0.3f);
     }
 
     public void PlayDoorFx(int id)
     {
-        fxAudio.PlayOneShot(clips[0], 0.3f);
+        fxAudio.PlayOneShot(doorFx, 0.3f);
         /*
         if (id < 3)
         {

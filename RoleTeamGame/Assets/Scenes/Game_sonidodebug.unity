@@ -1275,37 +1275,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &190905411
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 190905413}
-  m_Layer: 0
-  m_Name: Music
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &190905413
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190905411}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.96, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 536020999}
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &208108983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,12 +1594,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2707d6c0d346348b4169bf484b0bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: 32e444bffbdcd9d4a9acfd364d5a177d, type: 3}
-  - {fileID: 8300000, guid: f2dbd5e90e0e34549a6e42247613b33d, type: 3}
-  - {fileID: 8300000, guid: 93e797a168de9c84aa2dd1ab915a7b50, type: 3}
-  - {fileID: 8300000, guid: 070dc1abee0156444ba6e3dbdc538592, type: 3}
-  - {fileID: 8300000, guid: 98cf34f3909154b4da6120c60a0c86cc, type: 3}
+  gateFx: {fileID: 0}
+  doorFx: {fileID: 0}
+  communicationsFx: {fileID: 0}
+  clickSound: {fileID: 0}
+  hiClickSound: {fileID: 0}
+  fireTurnSound: {fileID: 0}
+  playerTurnSound: {fileID: 0}
 --- !u!82 &240892756
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3500,7 +3470,7 @@ GameObject:
   - component: {fileID: 536021000}
   - component: {fileID: 536021001}
   m_Layer: 0
-  m_Name: Control
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3514,11 +3484,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536020998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 265.78885, y: 168.66444, z: 1.5625}
+  m_LocalPosition: {x: 246.82886, y: 168.66444, z: 1.5625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 190905413}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &536021000
 MonoBehaviour:

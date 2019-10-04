@@ -25,14 +25,7 @@ public class MusicControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (musicScript.isPlaying())
-        {
-            Debug.Log("Esta sonandooo");
-        }
-        if (!musicScript.isPlaying())
-        {
-            Debug.Log("No esta sonandooo");
-        }
+
     }
 
     IEnumerator IdleMusicTimer()
