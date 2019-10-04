@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     GameObject bufferNvlFgo;
     GameObject fireGmObj;
     public FireSoundControl FireSound;
+    public SfxControl ScriptEfectos;
 
 
 
@@ -385,6 +386,7 @@ public class PlayerController : MonoBehaviour
 
                 if (edifice.GetComponent<Edifice>().isInspected) // el edificio fue inspeccionado 
                 {
+                    //ScriptEfectos.DetectEdifice(edifice);
                     for (int j = 0; j < 3; j++)
                     {
                         if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
