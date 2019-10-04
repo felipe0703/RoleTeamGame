@@ -32,6 +32,14 @@ public class TurnSystemManager : MonoBehaviour
     public GUIAnimFREE p3;
     public GUIAnimFREE p4;
 
+    SfxControl ScriptEfSonido;
+
+    private void Awake()
+    {
+        ScriptEfSonido = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,16 +69,18 @@ public class TurnSystemManager : MonoBehaviour
     public void StartTurnPlayer1()
     {
         SetTurnGame(TurnGame.player1);
-        playerScript.DetectFireLevel(); //Para cambiar el sonido si el fuego del edificio cercano avanzó
+        ScriptEfSonido.PlayTurnPlayerSound();
     }
 
     public void StartTurnPlayer2()
     {
         SetTurnGame(TurnGame.player2);
+        ScriptEfSonido.PlayTurnPlayerSound();
     }
     public void StartTurnFire()
     {
         SetTurnGame(TurnGame.fire);
+        ScriptEfSonido.PlayTurnFireSound();
         avisoFuego.SetActive(true);
         fuego.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
         fuego.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
