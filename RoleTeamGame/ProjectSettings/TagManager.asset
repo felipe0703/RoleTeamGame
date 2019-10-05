@@ -12,6 +12,8 @@ TagManager:
   - Sonido
   - TurnSystem
   - BoardManager
+  - DisabledPerson
+  - Person
   layers:
   - Default
   - TransparentFX
@@ -21,13 +23,13 @@ TagManager:
   - UI
   - 
   - 
+  - MinimapVisible
+  - Habitants
+  - 
+  - 
   - Edifice
   - Streets
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
   - 
   - 
   - 

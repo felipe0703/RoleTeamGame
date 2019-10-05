@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6485153229246021462}
   - component: {fileID: 451961704971468295}
   - component: {fileID: 3139205771618248400}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: River
   m_TagString: River
   m_Icon: {fileID: 0}

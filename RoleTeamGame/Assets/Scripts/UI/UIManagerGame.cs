@@ -19,7 +19,10 @@ public class UIManagerGame : MonoBehaviour
     public GameObject panelButtons;
     public GameObject buttons;
     public GameObject panelUI;
-    public GameObject panelInfo;
+    public GameObject panelActions;
+    public GameObject panelMinimap;
+    public GameObject vCam1;
+    public GameObject vCam2;
    // public GameObject[] panelButtonsMove;
 
     public GameObject up;
@@ -56,36 +59,15 @@ public class UIManagerGame : MonoBehaviour
         }
     }
     #endregion
-         
-    // BUTTONS
-    public void ShowButtonsActions()
-    {
-        panelButtons.SetActive(true);
-    }
-
-    public void HideButtonsActions()
-    {
-        panelButtons.SetActive(false);
-    }
+          
 
 
-    // PANEL MOVE
-    public void ShowPanelMove()
-    {
-        buttons.SetActive(true);
-        HidePanelUI();
-        HideButtonsActions();
-    }
-
-    public void HidePanelMove()
-    {
-        buttons.SetActive(false);
-        ShowPanelUI();
-        ShowButtonsActions();
-        HideAllButtonsMove();
-    }
+    
 
     public void TogglePanel(){
+
+        vCam1.SetActive(true);
+        vCam2.SetActive(false);
         if(!boton.gameObject.activeSelf){
             boton.gameObject.SetActive(true);
             boton.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
@@ -119,6 +101,28 @@ public class UIManagerGame : MonoBehaviour
         downLeft.SetActive(false);
     }
 
+
+   
+
+    // PANEL MOVE
+    public void ShowPanelMove()
+    {
+        buttons.SetActive(true);
+        //HidePanelUI();
+        HidePanelActions();
+        HideButtonsActions();
+    }
+
+    public void HidePanelMove()
+    {
+        buttons.SetActive(false);
+        //ShowPanelUI();
+        ShowPanelActions();
+        ShowButtonsActions();
+        HideAllButtonsMove();
+    }
+
+
     //  PANEL UI
     public void ShowPanelUI()
     {
@@ -130,14 +134,37 @@ public class UIManagerGame : MonoBehaviour
         panelUI.SetActive(false);
     }
 
-    //TODO: eliminar ya que no se usara un panel par amostrar la info
-    public void ShowPanelInfo()
+    // BUTTONS
+    public void ShowButtonsActions()
     {
-        panelInfo.SetActive(true);
+        panelButtons.SetActive(true);
     }
 
-    public void HidePanelInfo()
+    public void HideButtonsActions()
     {
-        panelInfo.SetActive(false);
+        panelButtons.SetActive(false);
     }
+
+    //  PANEL ACTIONS
+    public void ShowPanelActions()
+    {
+        panelActions.SetActive(true);
+    }
+
+    public void HidePanelActions()
+    {
+        panelActions.SetActive(false);
+    }
+
+    //  PANEL MINIMAP
+    public void ShowPanelMinimap()
+    {
+        panelMinimap.SetActive(true);
+    }
+
+    public void HidePanelMinimap()
+    {
+        panelMinimap.SetActive(false);
+    }
+
 }
