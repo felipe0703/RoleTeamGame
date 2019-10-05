@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class ControlPruebaMusica : MonoBehaviour
+public class MusicControl : MonoBehaviour
 {
-    private TextMeshProUGUI textMesh;
     public grumbleAMP musicScript;
     private AudioSource musicSrc;
-    public GameObject canvas;
-    GameObject timerText;
     float timeLeft = 1.0f;
     public float minDelay;
     public float maxDelay;
@@ -25,22 +20,12 @@ public class ControlPruebaMusica : MonoBehaviour
 
         timeLeft = UnityEngine.Random.Range(minDelay, maxDelay);
 
-        timerText = canvas.transform.Find("ParteSuperior/PanelSegundos/Numero").gameObject;
-        textMesh = timerText.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        textMesh.text = Math.Truncate(timeLeft).ToString();
-        if (musicScript.isPlaying())
-        {
-            Debug.Log("Esta sonandooo");
-        }
-        if (!musicScript.isPlaying())
-        {
-            Debug.Log("No esta sonandooo");
-        }
+
     }
 
     IEnumerator IdleMusicTimer()
@@ -63,7 +48,6 @@ public class ControlPruebaMusica : MonoBehaviour
                 timeLeft = UnityEngine.Random.Range(minDelay, maxDelay);
                 resetTimer = false;
             }
-            Debug.Log("Corriendo corrutina correlacional");
             yield return null;
         }
     }
