@@ -507,7 +507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4332643523452835491
 Transform:
   m_ObjectHideFlags: 0
@@ -686,7 +686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7427260372058598960
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1403,13 +1403,13 @@ GameObject:
   m_Component:
   - component: {fileID: 142846794770385230}
   - component: {fileID: 7860362536991830636}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SpriteMinimap
   m_TagString: DisabledPerson
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &142846794770385230
 Transform:
   m_ObjectHideFlags: 0

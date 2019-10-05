@@ -19,6 +19,7 @@ public class UIManagerGame : MonoBehaviour
     public GameObject panelButtons;
     public GameObject buttons;
     public GameObject panelUI;
+    public GameObject panelActions;
     public GameObject panelMinimap;
     public GameObject vCam1;
     public GameObject vCam2;
@@ -58,34 +59,10 @@ public class UIManagerGame : MonoBehaviour
         }
     }
     #endregion
-         
-    // BUTTONS
-    public void ShowButtonsActions()
-    {
-        panelButtons.SetActive(true);
-    }
-
-    public void HideButtonsActions()
-    {
-        panelButtons.SetActive(false);
-    }
+          
 
 
-    // PANEL MOVE
-    public void ShowPanelMove()
-    {
-        buttons.SetActive(true);
-        HidePanelUI();
-        HideButtonsActions();
-    }
-
-    public void HidePanelMove()
-    {
-        buttons.SetActive(false);
-        ShowPanelUI();
-        ShowButtonsActions();
-        HideAllButtonsMove();
-    }
+    
 
     public void TogglePanel(){
 
@@ -124,6 +101,28 @@ public class UIManagerGame : MonoBehaviour
         downLeft.SetActive(false);
     }
 
+
+   
+
+    // PANEL MOVE
+    public void ShowPanelMove()
+    {
+        buttons.SetActive(true);
+        //HidePanelUI();
+        HidePanelActions();
+        HideButtonsActions();
+    }
+
+    public void HidePanelMove()
+    {
+        buttons.SetActive(false);
+        //ShowPanelUI();
+        ShowPanelActions();
+        ShowButtonsActions();
+        HideAllButtonsMove();
+    }
+
+
     //  PANEL UI
     public void ShowPanelUI()
     {
@@ -134,6 +133,29 @@ public class UIManagerGame : MonoBehaviour
     {
         panelUI.SetActive(false);
     }
+
+    // BUTTONS
+    public void ShowButtonsActions()
+    {
+        panelButtons.SetActive(true);
+    }
+
+    public void HideButtonsActions()
+    {
+        panelButtons.SetActive(false);
+    }
+
+    //  PANEL ACTIONS
+    public void ShowPanelActions()
+    {
+        panelActions.SetActive(true);
+    }
+
+    public void HidePanelActions()
+    {
+        panelActions.SetActive(false);
+    }
+
     //  PANEL MINIMAP
     public void ShowPanelMinimap()
     {

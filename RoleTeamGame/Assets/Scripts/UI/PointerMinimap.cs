@@ -10,7 +10,7 @@ public class PointerMinimap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("DisabledPerson"))
+        if (collision.CompareTag("Person"))
         {
             vCam1.SetActive(false);
             vCam2.SetActive(true);
