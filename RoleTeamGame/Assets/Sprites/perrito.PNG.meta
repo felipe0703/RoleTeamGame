@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 4735ac19b668a524c88bb371be97616f
+guid: be54e8905ef2e2d4ea61dd6f8d4e23b4
 TextureImporter:
   fileIDToRecycleName:
-    21300000: viento png_0
-    21300002: viento png_1
-    21300004: viento png_2
-    21300006: viento png_3
-    21300008: viento png_4
-    21300010: viento png_5
+    21300000: perrito_0
+    21300002: perrito_1
+    21300004: perrito_2
+    21300006: perrito_3
+    21300008: perrito_4
+    21300010: perrito_5
+    21300012: perrito_6
+    21300014: perrito_7
+    21300016: perrito_8
+    21300018: perrito_9
+    21300020: perrito_10
+    21300022: perrito_11
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -48,10 +54,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,13 +96,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: viento png_0
+      name: perrito_0
       rect:
         serializedVersion: 2
-        x: 74
-        y: 450
-        width: 33
-        height: 23
+        x: 7
+        y: 97
+        width: 18
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,19 +110,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4145f88382bf8b40939ead119077692
+      spriteID: cc230d735e539a448a3f9b11533f2485
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_1
+      name: perrito_1
       rect:
         serializedVersion: 2
-        x: 96
-        y: 393
-        width: 40
-        height: 33
+        x: 39
+        y: 97
+        width: 19
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,19 +130,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feaa94178b727a5469c666e8afb49e9f
+      spriteID: 9d0a70ad8bc07314ab016ed504d647ba
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_2
+      name: perrito_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 312
-        width: 42
-        height: 40
+        x: 71
+        y: 96
+        width: 18
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,19 +150,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40270287bf204214c9a2abcc74ff9d0f
+      spriteID: 173feff2f3ac3724eb114b5750dd6ee8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_3
+      name: perrito_3
       rect:
         serializedVersion: 2
-        x: 124
-        y: 228
-        width: 64
-        height: 35
+        x: 2
+        y: 64
+        width: 28
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,19 +170,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9db19818b25c29f438fdad75d12cc0ff
+      spriteID: e1f69a9efe0d2ce40a8dfa13d035ae84
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_4
+      name: perrito_4
       rect:
         serializedVersion: 2
-        x: 156
-        y: 123
-        width: 62
-        height: 41
+        x: 34
+        y: 63
+        width: 28
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,19 +190,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98e46a88683dad64caab46cf3feb63e4
+      spriteID: 22ce893d96c41324c9fa04926eff3948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_5
+      name: perrito_5
       rect:
         serializedVersion: 2
-        x: 188
-        y: 11
-        width: 49
-        height: 45
+        x: 66
+        y: 64
+        width: 29
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,7 +210,127 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a804cd0377637d0469c7e5ebe47586b5
+      spriteID: de6ef54ef73771a4eacea46e9747ea9d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: perrito_6
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 32
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 387614080ca824e48a14a65671e56241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: perrito_7
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 32
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca540d88180e0f349b81dd465113948e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: perrito_8
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 32
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1cd5619539fd0e4590b9a2fcba4f1c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: perrito_9
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1
+        width: 17
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89de22602fdbced4185a36269a9a9a42
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: perrito_10
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 1
+        width: 18
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28b1ef474a08db044b9365e33149eeae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: perrito_11
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 0
+        width: 18
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2faab1371ffdfae4b9e3e1475185ea83
       vertices: []
       indices: 
       edges: []
@@ -212,7 +338,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 18ee79310a2f2ea4c98e1f260cbb7f98
+    spriteID: 8a6833c47aab8a64f9384b1a398075c8
     vertices: []
     indices: 
     edges: []
