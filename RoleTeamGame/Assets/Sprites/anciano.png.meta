@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 4735ac19b668a524c88bb371be97616f
+guid: adfa8a9c3f8016347a3534d1099c2c48
 TextureImporter:
   fileIDToRecycleName:
-    21300000: viento png_0
-    21300002: viento png_1
-    21300004: viento png_2
-    21300006: viento png_3
-    21300008: viento png_4
-    21300010: viento png_5
+    21300000: anciano_0
+    21300002: anciano_1
+    21300004: anciano_2
+    21300006: anciano_3
+    21300008: anciano_4
+    21300010: anciano_5
+    21300012: anciano_6
+    21300014: anciano_7
+    21300016: anciano_8
+    21300018: anciano_9
+    21300020: anciano_10
+    21300022: anciano_11
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -48,10 +54,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,12 +96,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: viento png_0
+      name: anciano_0
       rect:
         serializedVersion: 2
-        x: 74
-        y: 450
-        width: 33
+        x: 1
+        y: 101
+        width: 17
         height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -104,19 +110,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4145f88382bf8b40939ead119077692
+      spriteID: 1798d6fcfd0218a4d8966066827af78a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_1
+      name: anciano_1
       rect:
         serializedVersion: 2
-        x: 96
-        y: 393
-        width: 40
-        height: 33
+        x: 34
+        y: 101
+        width: 17
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,19 +130,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feaa94178b727a5469c666e8afb49e9f
+      spriteID: 5546aea80b9bd3b4e9224c97b6549361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_2
+      name: anciano_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 312
-        width: 42
-        height: 40
+        x: 65
+        y: 100
+        width: 17
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,19 +150,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40270287bf204214c9a2abcc74ff9d0f
+      spriteID: 0ab508aea9b6c2c459d8ccc7f3d69997
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_3
+      name: anciano_3
       rect:
         serializedVersion: 2
-        x: 124
-        y: 228
-        width: 64
-        height: 35
+        x: 1
+        y: 69
+        width: 17
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,19 +170,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9db19818b25c29f438fdad75d12cc0ff
+      spriteID: e0d76083d42c74c4693b77ce85eb754c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_4
+      name: anciano_4
       rect:
         serializedVersion: 2
-        x: 156
-        y: 123
-        width: 62
-        height: 41
+        x: 34
+        y: 69
+        width: 17
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,19 +190,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98e46a88683dad64caab46cf3feb63e4
+      spriteID: 0fcadd6bdd2d44a4991595edf9eb9adc
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_5
+      name: anciano_5
       rect:
         serializedVersion: 2
-        x: 188
-        y: 11
-        width: 49
-        height: 45
+        x: 65
+        y: 69
+        width: 17
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,7 +210,127 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a804cd0377637d0469c7e5ebe47586b5
+      spriteID: 2607589a13544c542840e8e1ae3c25f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciano_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 37
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8261b5b1d7bbd834aa6d1e61de600fcc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciano_7
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 37
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb11eb749d72bf446a6cac62f896d5fa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciano_8
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 36
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b34627d3362dae46955a1b3bbcd7293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciano_9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 5
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6274c7875ef2d34bb68261cf8a18968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciano_10
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 4
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e25ec3b227a95f2489ed01b7fd9d0a88
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciano_11
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 4
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08f28721f48aa7e45be0791c17202646
       vertices: []
       indices: 
       edges: []
@@ -212,7 +338,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 18ee79310a2f2ea4c98e1f260cbb7f98
+    spriteID: 640b99534734ac14eac678948631ab8e
     vertices: []
     indices: 
     edges: []
