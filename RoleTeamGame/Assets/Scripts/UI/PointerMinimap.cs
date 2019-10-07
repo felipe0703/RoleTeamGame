@@ -12,10 +12,15 @@ public class PointerMinimap : MonoBehaviour
     {
         if (collision.CompareTag("Person"))
         {
-            vCam1.SetActive(false);
-            vCam2.SetActive(true);
+            ChangeCam();
             panelMinimap.SetActive(false);
             //collision.GetComponent<DetectEdifice>().DetectEdificeToMovePerson();
         }
+    }
+
+    public void ChangeCam()
+    {
+        vCam1.SetActive(false);
+        vCam2.SetActive(true);
     }
 }

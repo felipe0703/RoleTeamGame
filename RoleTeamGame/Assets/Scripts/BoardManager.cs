@@ -168,8 +168,8 @@ public class BoardManager : MonoBehaviour
                         allEdifices.Add(newEdifice);
                     }
                     else
-                    {                   
-
+                    {
+                        //  GENERACIÓN CALLES
 
                         if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
                         {
@@ -189,8 +189,7 @@ public class BoardManager : MonoBehaviour
                            // newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
 
                         }
-
-                        //  GENERACIÓN CALLES
+                        
                         GameObject newStreet = Instantiate(currentStreet,
                             new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),
                             currentStreet.transform.rotation
@@ -234,8 +233,12 @@ public class BoardManager : MonoBehaviour
 
                     // Formato al nombre de los objetos
                     newRiver.name = string.Format("River[{0}][{1}]", x, y);
+                    
+                    if (x == xSizeBoard - 1)
+                        sprite = riverList[1];
+                    else
+                        sprite = riverList[0];
 
-                    sprite = riverList[0];
                     newRiver.GetComponent<SpriteRenderer>().sprite = sprite;
 
                     newRiver.transform.parent = GameObject.Find("Rivers").transform;

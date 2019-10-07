@@ -25,7 +25,9 @@ public class MinimapInteractive : MonoBehaviour, IPointerClickHandler
                             mainCam.position.y + minimapToWorldY, 
                             0f);     
 
-        pointer.position = newPos;  
+        pointer.position = newPos;
+
+       // pointer.GetComponent<PointerMinimap>().ChangeCam();
     }
 
 

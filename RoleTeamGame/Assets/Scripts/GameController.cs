@@ -31,9 +31,8 @@ public class GameController : MonoBehaviour
 
     //  COMPONENTES
     public TextMeshProUGUI textTimer;
-    public GameObject panelEndTurn;
     public GameObject buttonShowActions;
-    public Canvas canvas;
+    public Canvas canvasActions;
     TurnSystemManager turnSystem;
 
     // HABITANTES DE EDIFICIOS    
@@ -128,18 +127,7 @@ public class GameController : MonoBehaviour
     #endregion //Acciones
 
 
-    //  MOSTRAR PANEL AL TERMINAR EL TURNO
-    public void ShowPanelEndTurn()
-    {
-        canvas.sortingOrder = -10;
-        panelEndTurn.SetActive(true);   
-    }
-
-    public void HidePanelEndTurn()
-    {
-        canvas.sortingOrder = 10;
-        panelEndTurn.SetActive(false);
-    }
+    
 
     // ########################################
     // función de manejo del tiempo

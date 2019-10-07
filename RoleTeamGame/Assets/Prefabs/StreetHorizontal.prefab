@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5666420898840218016}
   - component: {fileID: 2541250715498559908}
   - component: {fileID: 1285003367960269266}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Position2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 6494516582504632212}
   - component: {fileID: 2956895927888665833}
   - component: {fileID: 5200379655729786112}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Position3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 8364489962770860266}
   - component: {fileID: 2183677506905861225}
   - component: {fileID: 2084683750271825248}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Position1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 7879558930704687866}
   - component: {fileID: 7218980264346885464}
   - component: {fileID: 6557621791667395822}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Position4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 4014963318693677728}
   - component: {fileID: 3242689436132558928}
   - component: {fileID: 2582484609155052621}
-  m_Layer: 13
+  m_Layer: 8
   m_Name: StreetHorizontal
   m_TagString: Street
   m_Icon: {fileID: 0}
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 7803297956132016882}
   - component: {fileID: 5320796152087763316}
   - component: {fileID: 7823969119094787415}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Position5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 9032984759295338636}
   - component: {fileID: 3660019450740469191}
   - component: {fileID: 2397000972318491523}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Position6
   m_TagString: Untagged
   m_Icon: {fileID: 0}

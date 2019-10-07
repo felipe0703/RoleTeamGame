@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 #endregion //Namespaces
 
 
@@ -21,10 +22,14 @@ public class UIManagerGame : MonoBehaviour
     public GameObject panelUI;
     public GameObject panelActions;
     public GameObject panelMinimap;
+    public GameObject panelNotification;
+    public TextMeshProUGUI textNotification;
     public GameObject vCam1;
     public GameObject vCam2;
+
    // public GameObject[] panelButtonsMove;
 
+    // BUTTONS
     public GameObject up;
     public GameObject right;
     public GameObject down;
@@ -167,4 +172,15 @@ public class UIManagerGame : MonoBehaviour
         panelMinimap.SetActive(false);
     }
 
+    //PANEL NOTIFICATIONS
+    public void ShowPanelNotification(string notification)
+    {
+        panelNotification.SetActive(true);
+        textNotification.text = notification;
+    }
+
+    public void HidePanelNotification()
+    {
+        panelNotification.SetActive(false);
+    }
 }

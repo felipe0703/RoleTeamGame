@@ -54,7 +54,7 @@ public class MusicControl : MonoBehaviour
 
     void PlayIdleMusic()
     {
-        Debug.Log("Reproduciendo música de reposo");
+        //Debug.Log("Reproduciendo música de reposo");
         musicScript.PlaySong(0, 0, 0);
     }
 }
