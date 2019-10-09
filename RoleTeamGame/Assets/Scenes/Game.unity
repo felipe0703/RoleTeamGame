@@ -1259,7 +1259,7 @@ MonoBehaviour:
   disabledPerson: {fileID: 9126926093658832263, guid: c246d702179116e4bb2b21d63362996c,
     type: 3}
   person: {fileID: 9126926093658832263, guid: a3ee178628964b14c987fd686411ccd0, type: 3}
-  pet: {fileID: 8006695428119856351, guid: 7c29b6e8c8b1cc74dbfef6479602113f, type: 3}
+  pet: {fileID: 9126926093658832263, guid: 0f5809732556bfa459a31432c33df19b, type: 3}
 --- !u!4 &1087861670
 Transform:
   m_ObjectHideFlags: 0
