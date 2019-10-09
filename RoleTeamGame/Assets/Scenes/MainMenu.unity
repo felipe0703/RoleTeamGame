@@ -446,11 +446,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92a91ecc2965d745ad9703ad3be51ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bkgr: {fileID: 0}
-  buttonCreateGame: {fileID: 0}
-  buttonJoinGame: {fileID: 0}
-  buttonAudio: {fileID: 0}
-  buttonCredits: {fileID: 0}
+  bkgr: {fileID: 375833508}
+  buttonCreateGame: {fileID: 1336833455}
+  buttonJoinGame: {fileID: 1468653695}
+  buttonAudio: {fileID: 1262064474}
+  buttonCredits: {fileID: 897388107}
 --- !u!4 &173353724
 Transform:
   m_ObjectHideFlags: 0

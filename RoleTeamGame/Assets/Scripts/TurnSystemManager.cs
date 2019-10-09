@@ -52,7 +52,7 @@ public class TurnSystemManager : MonoBehaviour
             Destroy(gameObject);
         }
         //modo desarrollador
-        StartTurnPlayer1();
+        //StartTurnPlayer1();
     }
 
     // Update is called once per frame
@@ -104,7 +104,6 @@ public class TurnSystemManager : MonoBehaviour
             GameController.sharedInstance.numbersActions = GameManager.sharedInstance.maxNumbersActions;
             controller.ActiveActions();
             controller.myTurn = true;
-            GameController.sharedInstance.HidePanelEndTurn();
         }
 
         if (newTurnGame == TurnGame.player2)
@@ -117,7 +116,6 @@ public class TurnSystemManager : MonoBehaviour
         {
     //     Debug.Log("Turno Fuego");
             currentTurnGame = TurnGame.fire;
-            GameController.sharedInstance.ShowPanelEndTurn();
             BoardManager.sharedInstance.IncreaseFire();
             BoardManager.sharedInstance.WindGeneration();
             BoardManager.sharedInstance.EdificeNeighborWithFire();

@@ -155,13 +155,10 @@ public class Edifice : MonoBehaviour
 
     public void IsSelected()
     {
-        //UIManagerGame.sharedInstance.ShowPanelInfo();
-        //UIManagerGame.sharedInstance.panelInfo.GetComponent<PanelInfo>().FillInformation(gameObject);
         FillHabitant();
         PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         controller.UpdateNumberOfActions();
         controller.HideAllButtonsInspect();
-        UIManagerGame.sharedInstance.ShowPanelUI();
         isInspected = true;
     }
 
@@ -176,9 +173,8 @@ public class Edifice : MonoBehaviour
         if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
         {
             habitant = GameController.sharedInstance.disabledPerson;
-            habitants[id].gameObject.SetActive(false);
-            
-        }else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
+        }
+        else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
         {
             habitant = GameController.sharedInstance.person;
         }
@@ -186,8 +182,12 @@ public class Edifice : MonoBehaviour
         {
             habitant = GameController.sharedInstance.pet;
         }
-
+        habitants[id].image.enabled = false;
         habitants[id].gameObject.SetActive(false);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        HabitantsNotInteractable();
+
+
         // tamaño de un arreglo de booleanos que determina si la calle esta ocupada
         int sizePosition = controller.street.GetComponent<HabitantsInTheStreet>().positions.Length;
 
@@ -218,6 +218,14 @@ public class Edifice : MonoBehaviour
         }
     }
 
+
+    void HabitantsNotInteractable()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            habitants[i].interactable = false;
+        }
+    }
     public void PlayClickSound()
     {
         edificeAudio.PlayOneShot(clips[0]);
