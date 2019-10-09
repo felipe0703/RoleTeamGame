@@ -1117,7 +1117,7 @@ MonoBehaviour:
   - 1
   loopCrossfadeBy: 0
   layerCrossfadeBy: 1.5
-  loop: 1
+  loop: 0
   layerResourceNames:
   - 
 --- !u!1 &168397204
