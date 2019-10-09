@@ -53,7 +53,7 @@ public class Edifice : MonoBehaviour
     //AUDIO
     private AudioSource edificeAudio;
     public AudioClip[] clips;
-    SfxControl ScriptEfSonido;
+    SfxControl ScriptEfectos;
 
     #endregion // Variables
 
@@ -67,7 +67,7 @@ public class Edifice : MonoBehaviour
     {
         edificeAudio = gameObject.GetComponent<AudioSource>();
         edificeAudio.pitch = 1.36f;
-        ScriptEfSonido = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
+        ScriptEfectos = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
         
         int disabledPerson = GameController.sharedInstance.totalDisabledPerson;
         int person = GameController.sharedInstance.totalPerson;
@@ -203,7 +203,7 @@ public class Edifice : MonoBehaviour
                 {
                     Instantiate(habitant, controller.street.transform.GetChild(i).transform);
                     controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
-                    ScriptEfSonido.PlayDoorFx(id);
+                    ScriptEfectos.PlayDoorFx(id);
                     return;
                 }
 
@@ -211,7 +211,7 @@ public class Edifice : MonoBehaviour
                 {
                     Instantiate(habitant, controller.street.transform.GetChild(i).transform);
                     controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
-                    ScriptEfSonido.PlayDoorFx(id);
+                    ScriptEfectos.PlayDoorFx(id);
                     return;
                 }                
             }
