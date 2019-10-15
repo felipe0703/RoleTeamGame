@@ -389,7 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textName: SONG 1
   layer:
-  - {fileID: 8300000, guid: bcc5f3aaa3378d947959358628071440, type: 3}
+  - {fileID: 8300000, guid: 54e822cedbd938b43a98d7eb1e05d719, type: 3}
   layerNames:
   - Layer 0
   volumes:
@@ -845,8 +845,8 @@ MonoBehaviour:
   musicScript: {fileID: 396907561}
   visibleCount: 1
   canvas: {fileID: 316663546}
-  minDelay: 2
-  maxDelay: 2
+  minDelay: 30
+  maxDelay: 80
 --- !u!4 &396907563
 Transform:
   m_ObjectHideFlags: 0
