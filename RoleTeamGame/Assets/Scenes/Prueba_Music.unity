@@ -389,7 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textName: SONG 1
   layer:
-  - {fileID: 8300000, guid: 54e822cedbd938b43a98d7eb1e05d719, type: 3}
+  - {fileID: 8300000, guid: 72f0579e156bf054bbbf1fe48d80b23b, type: 3}
   layerNames:
   - Layer 0
   volumes:
@@ -1892,7 +1892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textName: SONG 0
   layer:
-  - {fileID: 8300000, guid: 24a6364ce6df5fd4f815b57e5561917e, type: 3}
+  - {fileID: 8300000, guid: 172686314d9ed1d47923e8ace8513a14, type: 3}
   layerNames:
   - Layer 0
   volumes:
