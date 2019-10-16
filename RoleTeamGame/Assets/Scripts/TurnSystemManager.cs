@@ -2,118 +2,125 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public enum TurnGame
+
+namespace Com.BrumaGames.Llamaradas
 {
-    noTurn,
-    player1,
-    player2,
-    fire
-}
-
-public class TurnSystemManager : MonoBehaviour
-{
-    public TurnGame currentTurnGame = TurnGame.noTurn;
-    public static TurnSystemManager sharedInstance;
-    //public int numberPlayers;
-    public static int turn = 0;
-    public int turnLimit = 3;
-
-    public PlayerController playerScript;
-
-    public GameObject avisoFuego;
-    public GameObject avisoP1;
-    public GameObject avisoP2;
-    public GameObject avisoP3;
-    public GameObject avisoP4;
-
-    public GUIAnimFREE fuego;
-    public GUIAnimFREE p1;
-    public GUIAnimFREE p2;
-    public GUIAnimFREE p3;
-    public GUIAnimFREE p4;
-
-    // Start is called before the first frame update
-    void Start()
+    public enum TurnGame
     {
-        if(sharedInstance == null)
-        {
-            sharedInstance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        //modo desarrollador
-        //StartTurnPlayer1();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            BoardManager.sharedInstance.WindGeneration();
-        }
-    }
-
-    #region TurnFire
-
-    public void StartTurnPlayer1()
-    {
-        SetTurnGame(TurnGame.player1);
-        playerScript.DetectFireLevel(); //Para cambiar el sonido si el fuego del edificio cercano avanzó
-    }
-
-    public void StartTurnPlayer2()
-    {
-        SetTurnGame(TurnGame.player2);
-    }
-    public void StartTurnFire()
-    {
-        SetTurnGame(TurnGame.fire);
-        avisoFuego.SetActive(true);
-        fuego.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
-        fuego.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
-        avisoFuego.SetActive(false);
+        noTurn,
+        player1,
+        player2,
+        fire
     }
 
 
-    void SetTurnGame(TurnGame newTurnGame)
+
+    public class TurnSystemManager : MonoBehaviour
     {
-        if (newTurnGame == TurnGame.noTurn)
+        public TurnGame currentTurnGame = TurnGame.noTurn;
+        public static TurnSystemManager sharedInstance;
+        //public int numberPlayers;
+        public static int turn = 0;
+        public int turnLimit = 3;
+
+        public PlayerController playerScript;
+
+        public GameObject avisoFuego;
+        public GameObject avisoP1;
+        public GameObject avisoP2;
+        public GameObject avisoP3;
+        public GameObject avisoP4;
+
+        public GUIAnimFREE fuego;
+        public GUIAnimFREE p1;
+        public GUIAnimFREE p2;
+        public GUIAnimFREE p3;
+        public GUIAnimFREE p4;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            Debug.Log("Turno jugador: 0");
-            currentTurnGame = TurnGame.noTurn;
+            if (sharedInstance == null)
+            {
+                sharedInstance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            //modo desarrollador
+            //StartTurnPlayer1();
         }
 
-        if (newTurnGame == TurnGame.player1)
+        // Update is called once per frame
+        void Update()
         {
-   //     Debug.Log("Turno jugador: 1");
-            currentTurnGame = TurnGame.player1;
-            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            GameController.sharedInstance.numbersActions = GameManager.sharedInstance.maxNumbersActions;
-            controller.ActiveActions();
-            controller.myTurn = true;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                BoardManager.sharedInstance.WindGeneration();
+            }
         }
 
-        if (newTurnGame == TurnGame.player2)
+        #region TurnFire
+
+        public void StartTurnPlayer1()
         {
-            Debug.Log("Turno jugador: 2");
-            currentTurnGame = TurnGame.player2;
+            SetTurnGame(TurnGame.player1);
+            playerScript.DetectFireLevel(); //Para cambiar el sonido si el fuego del edificio cercano avanzó
         }
 
-        if (newTurnGame == TurnGame.fire)
+        public void StartTurnPlayer2()
         {
-    //     Debug.Log("Turno Fuego");
-            currentTurnGame = TurnGame.fire;
-            BoardManager.sharedInstance.IncreaseFire();
-            BoardManager.sharedInstance.WindGeneration();
-            BoardManager.sharedInstance.EdificeNeighborWithFire();
-            StartTurnPlayer1();
+            SetTurnGame(TurnGame.player2);
         }
+        public void StartTurnFire()
+        {
+            SetTurnGame(TurnGame.fire);
+            avisoFuego.SetActive(true);
+            fuego.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
+            fuego.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
+            avisoFuego.SetActive(false);
+        }
+
+
+        void SetTurnGame(TurnGame newTurnGame)
+        {
+            if (newTurnGame == TurnGame.noTurn)
+            {
+                Debug.Log("Turno jugador: 0");
+                currentTurnGame = TurnGame.noTurn;
+            }
+
+            if (newTurnGame == TurnGame.player1)
+            {
+                //     Debug.Log("Turno jugador: 1");
+                currentTurnGame = TurnGame.player1;
+                PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                GameController.sharedInstance.numbersActions = GameManager.sharedInstance.maxNumbersActions;
+                controller.ActiveActions();
+                controller.myTurn = true;
+            }
+
+            if (newTurnGame == TurnGame.player2)
+            {
+                Debug.Log("Turno jugador: 2");
+                currentTurnGame = TurnGame.player2;
+            }
+
+            if (newTurnGame == TurnGame.fire)
+            {
+                //     Debug.Log("Turno Fuego");
+                currentTurnGame = TurnGame.fire;
+                BoardManager.sharedInstance.IncreaseFire();
+                BoardManager.sharedInstance.WindGeneration();
+                BoardManager.sharedInstance.EdificeNeighborWithFire();
+                StartTurnPlayer1();
+            }
+        }
+
+
+        #endregion
+
     }
-
-
-    #endregion
 
 }

@@ -2,257 +2,227 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 #endregion // Namespaces
 
-public class PlayerController : MonoBehaviour
+namespace Com.BrumaGames.Llamaradas
 {
-    // ########################################
-    // Variables
-    // ########################################
-
-    #region Variables
-    [Space(10)]
-    [Header("Movement")]
-    public Transform target;
-    public Transform target2;
-    public int MyTurn = 1;
-    public GameObject street;
-    Transform[] targets;    
-    public float speed;
-
-    // live
-    public GameObject[] actions;
-
-    // VARIABLES PRIVADAS    
-    float distanceEdifice = 8f;
-    bool moveTarget1, moveTarget2 = false;
-
-
-    GameManager gm;
-
-    //  POSICIONES DEL JUGADOR AL INICIAR
-    int[] positionA = { 20, 140 };
-    int[] positionB = { 30, 50, 70, 90, 110, 130 };
-
-    //Detectar los edificios adyacentes
-    private Vector2[] adjacentDirections = new Vector2[]
+    public class PlayerController : Photon.Pun.MonoBehaviourPun //MonoBehaviour
     {
+        // ########################################
+        // Variables
+        // ########################################
+
+        #region Variables 
+
+        [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
+        public static GameObject LocalPlayerInstance;
+
+        CinemachineVirtualCamera playerVirtualCam;
+
+        [Space(10)]
+        [Header("Movement")]
+        public Transform target;
+        public Transform target2;
+        public int MyTurn = 1;
+        public GameObject street;
+        Transform[] targets;
+        public float speed;
+
+        // live
+        public GameObject[] actions;
+
+        // VARIABLES PRIVADAS    
+        float distanceEdifice = 8f;
+        bool moveTarget1, moveTarget2 = false;
+
+
+        GameManager gm;
+
+        //  POSICIONES DEL JUGADOR AL INICIAR
+        int[] positionA = { 20, 140 };
+        int[] positionB = { 30, 50, 70, 90, 110, 130 };
+
+        //Detectar los edificios adyacentes
+        private Vector2[] adjacentDirections = new Vector2[]
+        {
         Vector2.up,
         Vector2.right,
         Vector2.down,
         Vector2.left
-    };
-    public LayerMask detectedByThePlayer;
-   
-    // Animacion
-    private Animator animator;
-    private Vector2 animDir = Vector2.zero;
-    private Vector2 animDir2 = Vector2.zero;
+        };
+        public LayerMask detectedByThePlayer;
 
-    //Sistema de turno
-    public bool myTurn = true;
+        // Animacion
+        private Animator animator;
+        private Vector2 animDir = Vector2.zero;
+        private Vector2 animDir2 = Vector2.zero;
 
-    //Para corrutina de audio del fuego 'DetectFireEdifice'
-    int fireLvl;
-    bool detectFire = true;
-    bool moving = true;
-    GameObject vecino;
-    GameObject bufferNvlFgo;
-    GameObject fireGmObj;
-    public FireSoundControl FireSound;
-    public SfxControl ScriptEfectos;
+        //Sistema de turno
+        public bool myTurn = true;
+
+        //Para corrutina de audio del fuego 'DetectFireEdifice'
+        int fireLvl;
+        bool detectFire = true;
+        bool moving = true;
+        GameObject vecino;
+        GameObject bufferNvlFgo;
+        GameObject fireGmObj;
+        public FireSoundControl FireSound;
+        public SfxControl ScriptEfectos;
 
 
 
-    #endregion
+        #endregion
 
-    // ########################################
-    // MonoBehaviours Functions
-    // ########################################
+        // ########################################
+        // MonoBehaviours Functions
+        // ########################################
 
-    #region MonoBehaviour
+        #region MonoBehaviour
 
-    private void Awake()
-    {
-    }
-
-    void Start()
-    {
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
-
-        animator = GetComponent<Animator>();
-        // Posicionamiento del player de forma aleatoria
-        // TODO: QUE EL POSICIONAMIENTO DE UN JUGADOR NO SEA IGUAL A OTRO JUGADOR
-        int i1 = Random.Range(0, 2);
-        int i2 = Random.Range(0, 5);
-        transform.localPosition = new Vector3(positionA[i1], positionB[i2], 0);
-
-        if (target != null && target2 != null)
+        private void Awake()
         {
-            target.parent = null;
-            target2.parent = null;
-            targets = target.GetComponentsInChildren<Transform>();
-        }
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        float fixedSpeed = speed * Time.deltaTime;
-
-        if (moveTarget1)
-        {
-            animator.SetBool("PlayerMoving",true);
-            animator.SetFloat("MoveX",animDir.x);
-            animator.SetFloat("MoveY",animDir.y);
-            MovePlayer(fixedSpeed,target.position);
-        }
-
-        if (moveTarget2)
-        {
-            animator.SetBool("PlayerMoving",true);
-            animator.SetFloat("MoveX",animDir2.x);
-            animator.SetFloat("MoveY",animDir2.y);
-            MovePlayer(fixedSpeed, target2.position);
-            if (moving == true && detectFire == false) 
+            // # Importante
+            // utilizado en GameController.cs: hacemos un seguimiento de la instancia localPlayer para evitar la creación de instancias cuando los niveles están sincronizados
+            if (photonView.IsMine)
             {
-                detectFire = true;
-                moving = false;
+                PlayerController.LocalPlayerInstance = this.gameObject;
             }
         }
 
-        if(transform.position == target.position)
+        void Start()
         {
-            moveTarget1 = false;
-            moveTarget2 = true;
-        }
-        if (transform.position != target.position)
-        {
-            moving = true;
-        }
+            gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
 
-        if (transform.position == target2.position)
-        {
-            moveTarget2 = false;
-            StopAnim();
-            target.position = transform.position;
-            
-            //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
-            if (GameController.sharedInstance.numbersActions == 0 && myTurn)
+            animator = GetComponent<Animator>();
+            // Posicionamiento del player de forma aleatoria
+            // TODO: QUE EL POSICIONAMIENTO DE UN JUGADOR NO SEA IGUAL A OTRO JUGADOR
+            int i1 = Random.Range(0, 2);
+            int i2 = Random.Range(0, 5);
+            //transform.localPosition = new Vector3(positionA[i1], positionB[i2], 0);
+
+            if (target != null && target2 != null)
             {
-                myTurn = false;
-                TurnSystemManager.sharedInstance.StartTurnFire();
+                target.parent = null;
+                target2.parent = null;
+                targets = target.GetComponentsInChildren<Transform>();
             }
         }
-        DetectFireLevel();
-    }
 
-    #endregion // MonoBehaviour
-
-    // ########################################
-    // Dectect Edifices Functions
-    // ########################################
-
-    #region DetectEdifices
-
-    // obtengo el vecino
-    private GameObject GetNeighbor(Vector2 direction,string layerMask)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, LayerMask.GetMask(layerMask));
-        if (hit.collider != null)
+        // Update is called once per frame
+        void FixedUpdate()
         {
-            return hit.collider.gameObject;
-        }
-        else
-        {
-            return null;
-        }
-    }
+            float fixedSpeed = speed * Time.deltaTime;
 
-    //Este es lo mismo que arriba, pero calculando desde la posición destino del movimiento. 
-    //Esto es para hacer una transición suave entre distintos niveles de sonido del fuego
-    private GameObject GetFutureNeighbor(Vector2 direction)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(target2.transform.position, direction);
-        if (hit.collider != null)
-        {
-            return hit.collider.gameObject;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public void DetectEdificeToMove()
-    {
-
-        //TODO:CUANDO TENGA UN BORDER O RIO QUE NO MUESTRE BOTONES
-        //  EDIFICIOS A LA DERECHA E IZQUIERDA
-        for (int i = 0; i < 4; i++)
-        {
-            Debug.Log(GetNeighbor(adjacentDirections[i], "Edifice").name);
-        }
-
-        if (GetNeighbor(adjacentDirections[1],"Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
-        {          
-
-            // HAY BORDE ARRIBA
-            if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isBorder)
+            if (moveTarget1)
             {
-                UIManagerGame.sharedInstance.down.SetActive(true);
-            }// HAY BORDE ABAJO
-            else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isBorder)
+                animator.SetBool("PlayerMoving", true);
+                animator.SetFloat("MoveX", animDir.x);
+                animator.SetFloat("MoveY", animDir.y);
+                MovePlayer(fixedSpeed, target.position);
+            }
+
+            if (moveTarget2)
             {
-                UIManagerGame.sharedInstance.up.SetActive(true);
+                animator.SetBool("PlayerMoving", true);
+                animator.SetFloat("MoveX", animDir2.x);
+                animator.SetFloat("MoveY", animDir2.y);
+                MovePlayer(fixedSpeed, target2.position);
+                if (moving == true && detectFire == false)
+                {
+                    detectFire = true;
+                    moving = false;
+                }
+            }
+
+            if (transform.position == target.position)
+            {
+                moveTarget1 = false;
+                moveTarget2 = true;
+            }
+            if (transform.position != target.position)
+            {
+                moving = true;
+            }
+
+            if (transform.position == target2.position)
+            {
+                moveTarget2 = false;
+                StopAnim();
+                target.position = transform.position;
+
+                //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
+                if (GameController.sharedInstance.numbersActions == 0 && myTurn)
+                {
+                    myTurn = false;
+                    TurnSystemManager.sharedInstance.StartTurnFire();
+                }
+            }
+            DetectFireLevel();
+        }
+
+
+        #endregion // MonoBehaviour
+
+        // ########################################
+        // Dectect Edifices Functions
+        // ########################################
+
+        #region DetectEdifices
+
+        // obtengo el vecino
+        private GameObject GetNeighbor(Vector2 direction, string layerMask)
+        {
+            Debug.Log("1");
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 10f, LayerMask.GetMask(layerMask));
+            Debug.Log("2");
+            if (hit.collider != null)
+            {
+                Debug.Log("3");
+                return hit.collider.gameObject;
             }
             else
             {
-                UIManagerGame.sharedInstance.up.SetActive(true);
-                UIManagerGame.sharedInstance.down.SetActive(true);
+                Debug.Log("4");
+                return null;
             }
-            UIManagerGame.sharedInstance.upRight.SetActive(true);
-            UIManagerGame.sharedInstance.upLeft.SetActive(true);
-            UIManagerGame.sharedInstance.downRight.SetActive(true);
-            UIManagerGame.sharedInstance.downLeft.SetActive(true);
         }
 
-        // EDIFICIOS ARRIBA Y ABAJO
-        if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice")
+        //Este es lo mismo que arriba, pero calculando desde la posición destino del movimiento. 
+        //Esto es para hacer una transición suave entre distintos niveles de sonido del fuego
+        private GameObject GetFutureNeighbor(Vector2 direction)
         {
-            // HAY BORDE DERECHA
-            if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isBorder)
+            RaycastHit2D hit = Physics2D.Raycast(target2.transform.position, direction);
+            if (hit.collider != null)
             {
-                UIManagerGame.sharedInstance.left.SetActive(true);
-            }// HAY BORDE IZQUIERDA
-            else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isBorder)
-            {
-                UIManagerGame.sharedInstance.right.SetActive(true);
+                return hit.collider.gameObject;
             }
             else
             {
-                UIManagerGame.sharedInstance.right.SetActive(true);
-                UIManagerGame.sharedInstance.left.SetActive(true);
+                return null;
             }
-            UIManagerGame.sharedInstance.rightUp.SetActive(true);
-            UIManagerGame.sharedInstance.rightDown.SetActive(true);
-            UIManagerGame.sharedInstance.leftUp.SetActive(true);
-            UIManagerGame.sharedInstance.leftDown.SetActive(true);
         }
 
-
-        //EDIFICIO A LA DERECHA
-        if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice" )
+        public void DetectEdificeToMove()
         {
-            // BOSQUE A LA IZQUIERDA
-            if(GetNeighbor(adjacentDirections[3], "Streets").tag == "Border")
+
+            //TODO:CUANDO TENGA UN BORDER O RIO QUE NO MUESTRE BOTONES
+            //  EDIFICIOS A LA DERECHA E IZQUIERDA
+            for (int i = 0; i < 4; i++)
             {
-                // si tengo una esquina arriba
-                if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
+                Debug.Log(GetNeighbor(adjacentDirections[i], "Edifice").name);
+            }
+
+            if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
+            {
+
+                // HAY BORDE ARRIBA
+                if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isBorder)
                 {
                     UIManagerGame.sharedInstance.down.SetActive(true);
-                }// si tengo una esquina abajo
-                else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
+                }// HAY BORDE ABAJO
+                else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isBorder)
                 {
                     UIManagerGame.sharedInstance.up.SetActive(true);
                 }
@@ -261,76 +231,21 @@ public class PlayerController : MonoBehaviour
                     UIManagerGame.sharedInstance.up.SetActive(true);
                     UIManagerGame.sharedInstance.down.SetActive(true);
                 }
-
-                UIManagerGame.sharedInstance.downRight.SetActive(true);
                 UIManagerGame.sharedInstance.upRight.SetActive(true);
-            }
-        }
-        
-        //EDIFICIO A LA IZQUIEDA
-        if (GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice" )
-        {
-            // AGUA A LA DERECHA
-            if(GetNeighbor(adjacentDirections[1], "Water").tag == "River")
-            {
-                // si tengo una esquina arriba
-                if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
-                {
-                    UIManagerGame.sharedInstance.down.SetActive(true);
-                }// si tengo una esquina abajo
-                else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
-                {
-                    UIManagerGame.sharedInstance.up.SetActive(true);
-                }
-                else
-                {
-                    UIManagerGame.sharedInstance.up.SetActive(true);
-                    UIManagerGame.sharedInstance.down.SetActive(true);
-                }
-
-                UIManagerGame.sharedInstance.downLeft.SetActive(true);
                 UIManagerGame.sharedInstance.upLeft.SetActive(true);
+                UIManagerGame.sharedInstance.downRight.SetActive(true);
+                UIManagerGame.sharedInstance.downLeft.SetActive(true);
             }
-        } 
-        
-        //EDIFICIO ABAJO
-        if (GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice" )
-        {
-            // BORDE ARRIBA
-            if(GetNeighbor(adjacentDirections[0], "Streets").tag == "Border")
-            {
-                // si tengo una esquina derecha
-                if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
-                {
-                    UIManagerGame.sharedInstance.left.SetActive(true);
-                }// si tengo una esquina izquierda
-                else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
-                {
-                    UIManagerGame.sharedInstance.right.SetActive(true);
-                }
-                else
-                {
-                    UIManagerGame.sharedInstance.right.SetActive(true);
-                    UIManagerGame.sharedInstance.left.SetActive(true);
-                }
 
-                UIManagerGame.sharedInstance.rightDown.SetActive(true);
-                UIManagerGame.sharedInstance.leftDown.SetActive(true);
-            }
-        } 
-        
-        //EDIFICIO ARRIBA
-        if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice" )
-        {
-            // BORDE ABAJO
-            if(GetNeighbor(adjacentDirections[2], "Streets").tag == "Border")
+            // EDIFICIOS ARRIBA Y ABAJO
+            if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice")
             {
-                // si tengo una esquina derecha
-                if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
+                // HAY BORDE DERECHA
+                if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isBorder)
                 {
                     UIManagerGame.sharedInstance.left.SetActive(true);
-                }// si tengo una esquina izquierda
-                else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
+                }// HAY BORDE IZQUIERDA
+                else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isBorder)
                 {
                     UIManagerGame.sharedInstance.right.SetActive(true);
                 }
@@ -340,355 +255,472 @@ public class PlayerController : MonoBehaviour
                     UIManagerGame.sharedInstance.left.SetActive(true);
                 }
                 UIManagerGame.sharedInstance.rightUp.SetActive(true);
+                UIManagerGame.sharedInstance.rightDown.SetActive(true);
                 UIManagerGame.sharedInstance.leftUp.SetActive(true);
+                UIManagerGame.sharedInstance.leftDown.SetActive(true);
+            }
+
+
+            //EDIFICIO A LA DERECHA
+            if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice")
+            {
+                // BOSQUE A LA IZQUIERDA
+                if (GetNeighbor(adjacentDirections[3], "Streets").tag == "Border")
+                {
+                    // si tengo una esquina arriba
+                    if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.down.SetActive(true);
+                    }// si tengo una esquina abajo
+                    else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.up.SetActive(true);
+                    }
+                    else
+                    {
+                        UIManagerGame.sharedInstance.up.SetActive(true);
+                        UIManagerGame.sharedInstance.down.SetActive(true);
+                    }
+
+                    UIManagerGame.sharedInstance.downRight.SetActive(true);
+                    UIManagerGame.sharedInstance.upRight.SetActive(true);
+                }
+            }
+
+            //EDIFICIO A LA IZQUIEDA
+            if (GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
+            {
+                // AGUA A LA DERECHA
+                if (GetNeighbor(adjacentDirections[1], "Water").tag == "River")
+                {
+                    // si tengo una esquina arriba
+                    if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.down.SetActive(true);
+                    }// si tengo una esquina abajo
+                    else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.up.SetActive(true);
+                    }
+                    else
+                    {
+                        UIManagerGame.sharedInstance.up.SetActive(true);
+                        UIManagerGame.sharedInstance.down.SetActive(true);
+                    }
+
+                    UIManagerGame.sharedInstance.downLeft.SetActive(true);
+                    UIManagerGame.sharedInstance.upLeft.SetActive(true);
+                }
+            }
+
+            //EDIFICIO ABAJO
+            if (GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice")
+            {
+                // BORDE ARRIBA
+                if (GetNeighbor(adjacentDirections[0], "Streets").tag == "Border")
+                {
+                    // si tengo una esquina derecha
+                    if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.left.SetActive(true);
+                    }// si tengo una esquina izquierda
+                    else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.right.SetActive(true);
+                    }
+                    else
+                    {
+                        UIManagerGame.sharedInstance.right.SetActive(true);
+                        UIManagerGame.sharedInstance.left.SetActive(true);
+                    }
+
+                    UIManagerGame.sharedInstance.rightDown.SetActive(true);
+                    UIManagerGame.sharedInstance.leftDown.SetActive(true);
+                }
+            }
+
+            //EDIFICIO ARRIBA
+            if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice")
+            {
+                // BORDE ABAJO
+                if (GetNeighbor(adjacentDirections[2], "Streets").tag == "Border")
+                {
+                    // si tengo una esquina derecha
+                    if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.left.SetActive(true);
+                    }// si tengo una esquina izquierda
+                    else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
+                    {
+                        UIManagerGame.sharedInstance.right.SetActive(true);
+                    }
+                    else
+                    {
+                        UIManagerGame.sharedInstance.right.SetActive(true);
+                        UIManagerGame.sharedInstance.left.SetActive(true);
+                    }
+                    UIManagerGame.sharedInstance.rightUp.SetActive(true);
+                    UIManagerGame.sharedInstance.leftUp.SetActive(true);
+                }
             }
         }
-    }
-    // detecta si tenemos algun edificio a los lados y activa el boton del edificio
-    public void DetectEdificeToInspect()
-    {
-        GameObject edifice;
-        bool detected = false;
-
-        for (int i = 0; i < adjacentDirections.Length; i++)
+        // detecta si tenemos algun edificio a los lados y activa el boton del edificio
+        public void DetectEdificeToInspect()
         {
-            if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
+            GameObject edifice;
+            bool detected = false;
+
+            for (int i = 0; i < adjacentDirections.Length; i++)
             {
-                edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-                if (!edifice.GetComponent<Edifice>().isInspected)
+                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
                 {
-                    edifice.GetComponent<Edifice>().btn.SetActive(true);
-                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                    detected = true;
+                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
+                    if (!edifice.GetComponent<Edifice>().isInspected)
+                    {
+                        edifice.GetComponent<Edifice>().btn.SetActive(true);
+                        edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                        detected = true;
+                    }
+                }
+            }
+
+            if (!detected)
+            {
+                UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
+            }
+        }
+
+        public void HideAllButtonsInspect()
+        {
+            GameObject edifice;
+
+            for (int i = 0; i < adjacentDirections.Length; i++)
+            {
+                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
+                    edifice.GetComponent<Edifice>().btn.SetActive(false);
+                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                 }
             }
         }
 
-        if (!detected)
+        // detecta si tenemos algun edificio a los lados y activa el boton del edificio
+        public void DetectEdificeTakeOutHabitant()
         {
-            UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
-        }
-    }
+            GameObject edifice;
+            bool detected = false;
 
-    public void HideAllButtonsInspect()
-    {
-        GameObject edifice;
-
-        for (int i = 0; i < adjacentDirections.Length; i++)
-        {
-            if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
+            for (int i = 0; i < adjacentDirections.Length; i++)
             {
-                edifice = GetNeighbor(adjacentDirections[i],"Edifice");
-                edifice.GetComponent<Edifice>().btn.SetActive(false);
-                edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-            }
-        }
-    }
-
-    // detecta si tenemos algun edificio a los lados y activa el boton del edificio
-    public void DetectEdificeTakeOutHabitant()
-    {
-        GameObject edifice;
-        bool detected = false;
-
-        for (int i = 0; i < adjacentDirections.Length; i++)
-        {
-            if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
-            {
-                edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-
-                if (edifice.GetComponent<Edifice>().isInspected) // el edificio fue inspeccionado 
+                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
                 {
-                    //ScriptEfectos.DetectEdifice(edifice);
-                    for (int j = 0; j < 3; j++)
+                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
+
+                    if (edifice.GetComponent<Edifice>().isInspected) // el edificio fue inspeccionado 
                     {
-                        if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
+                        //ScriptEfectos.DetectEdifice(edifice);
+                        for (int j = 0; j < 3; j++)
                         {
-                            edifice.GetComponent<Edifice>().habitants[j].interactable = true;
-                            edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                            detected = true;
+                            if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
+                            {
+                                edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                                edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                                detected = true;
+                            }
                         }
-                    }                    
-                    edifice.GetComponent<Edifice>().idPositionEdifice = i;
+                        edifice.GetComponent<Edifice>().idPositionEdifice = i;
+                    }
                 }
             }
-        }
 
-        if (!detected)
-        {
-            UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
-        }
-    }
-
-
-    #endregion //DetectEdifices
-
-    // ########################################
-    // Movements Functions
-    // ########################################
-
-    #region Movements
-
-    //  MOVE
-    void MovePlayer(float fixedSpeed, Vector3 targetPosition)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, fixedSpeed);
-    }      
-
-    void InAllMovements(Vector3 targetPosition)
-    {
-        target.position = targetPosition;
-        moveTarget1 = true;
-        UpdateNumberOfActions();
-        UIManagerGame.sharedInstance.HidePanelMove();
-        UIManagerGame.sharedInstance.HideButtonsActions();
-    } 
-
-    // LEFT
-    public void MoveLeftPlayer()
-    { 
-        InAllMovements(targets[4].position);
-        target2.position = targets[4].position;
-        SetDirectionAnim1(-1,0);
-        SetDirectionAnim2(-1,0);
-    }
-
-    public void MoveLeftUp()
-    {
-        InAllMovements(targets[4].position);
-        target2.position = targets[1].position;
-        SetDirectionAnim1(-1,0);
-        SetDirectionAnim2(0,1);
-    }
-
-    public void MoveLeftDown()
-    {
-        InAllMovements(targets[4].position);
-        target2.position = targets[3].position;
-        SetDirectionAnim1(-1,0);
-        SetDirectionAnim2(0,-1);
-    }
-
-    //  RIGHT
-    public void MoveRightPlayer()
-    {
-        InAllMovements(targets[2].position);
-        target2.position = targets[2].position;
-        SetDirectionAnim1(1,0);
-        SetDirectionAnim2(1,0);
-    }
-    public void MoveRightUpPlayer()
-    {
-        InAllMovements(targets[2].position);
-        target2.position = targets[1].position;
-        SetDirectionAnim1(1,0);
-        SetDirectionAnim2(0,1);
-    }
-    public void MoveRightDownPlayer()
-    {
-        InAllMovements(targets[2].position);
-        target2.position = targets[3].position;
-        SetDirectionAnim1(1,0);
-        SetDirectionAnim2(0,-1);
-    }
-
-    //  UP
-    public void MoveUpPlayer()
-    {
-        InAllMovements(targets[1].position);
-        target2.position = targets[1].position;
-        SetDirectionAnim1(0,1);
-        SetDirectionAnim2(0,1);
-    }
-    public void MoveUpRightPlayer()
-    {
-        InAllMovements(targets[1].position);
-        target2.position = targets[2].position;
-        SetDirectionAnim1(0,1);
-        SetDirectionAnim2(1,0);
-    }
-    public void MoveUpLeftPlayer()
-    {
-        InAllMovements(targets[1].position);
-        target2.position = targets[4].position;
-        SetDirectionAnim1(0,1);
-        SetDirectionAnim2(-1,0);
-    }
-
-    // DOWN
-    public void MoveDownPlayer()
-    {
-        InAllMovements(targets[3].position);
-        target2.position = targets[3].position;
-        SetDirectionAnim1(0,-1);
-        SetDirectionAnim2(0,-1);
-    }
-    public void MoveDownRightPlayer()
-    {
-        InAllMovements(targets[3].position);
-        target2.position = targets[2].position;
-        SetDirectionAnim1(0,-1);
-        SetDirectionAnim2(1,0);
-    }
-    public void MoveDownLeftPlayer()
-    {
-        InAllMovements(targets[3].position);
-        target2.position = targets[4].position;
-        SetDirectionAnim1(0,-1);
-        SetDirectionAnim2(-1,0);
-    }
-    #endregion // Movements
-
-    #region Audio
-
-    void PlayStepSound()
-    {
-        gm.PlayOneStepSound();
-    }
-
-    
-
-    #endregion
-
-    #region Animacion
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(target2.position, 0.5f);
-    }
-
-    private void SetDirectionAnim1(float x, float y){
-        animDir = new Vector2(x,y);
-    }
-
-    private void SetDirectionAnim2(float x, float y){
-        animDir2 = new Vector2(x,y);
-    }
-
-    private void StopAnim(){
-        animator.SetBool("PlayerMoving",false);
-        animator.SetFloat("MoveX",0);
-        animator.SetFloat("MoveY",0);
-        animator.SetFloat("LastMoveX",animDir2.x);
-        animator.SetFloat("LastMoveY",animDir2.y);
-    }
-    #endregion // Animación
-
-    public void UpdateNumberOfActions()
-    {
-        GameController.sharedInstance.SubtractActions();
-        //animacion de restar acción
-        int i = GameController.sharedInstance.numbersActions;
-        actions[i].SetActive(false);
-    }
-
-    public void ActiveActions()
-    {
-        int maxActions = GameManager.sharedInstance.maxNumbersActions;
-        for (int i = 0; i < maxActions; i++)
-        {
-            actions[i].SetActive(true);
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Street"))
-        {
-            street = collision.gameObject;
-        }
-    }
-
-    public void DetectFireLevel()
-    {
-        if (detectFire == true)
-        {
-            fireLvl = 0;
-            for (int i = 0; i < 4; i++)
+            if (!detected)
             {
-                vecino = GetFutureNeighbor(adjacentDirections[i]);
-                if (vecino.tag == "Edifice")
+                UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
+            }
+        }
+
+
+        #endregion //DetectEdifices
+
+        // ########################################
+        // Movements Functions
+        // ########################################
+
+        #region Movements
+
+        //  MOVE
+        void MovePlayer(float fixedSpeed, Vector3 targetPosition)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, fixedSpeed);
+        }
+
+        void InAllMovements(Vector3 targetPosition)
+        {
+            target.position = targetPosition;
+            moveTarget1 = true;
+            UpdateNumberOfActions();
+            UIManagerGame.sharedInstance.HidePanelMove();
+            UIManagerGame.sharedInstance.HideButtonsActions();
+        }
+
+        // LEFT
+        public void MoveLeftPlayer()
+        {
+            InAllMovements(targets[4].position);
+            target2.position = targets[4].position;
+            SetDirectionAnim1(-1, 0);
+            SetDirectionAnim2(-1, 0);
+        }
+
+        public void MoveLeftUp()
+        {
+            InAllMovements(targets[4].position);
+            target2.position = targets[1].position;
+            SetDirectionAnim1(-1, 0);
+            SetDirectionAnim2(0, 1);
+        }
+
+        public void MoveLeftDown()
+        {
+            InAllMovements(targets[4].position);
+            target2.position = targets[3].position;
+            SetDirectionAnim1(-1, 0);
+            SetDirectionAnim2(0, -1);
+        }
+
+        //  RIGHT
+        public void MoveRightPlayer()
+        {
+            InAllMovements(targets[2].position);
+            target2.position = targets[2].position;
+            SetDirectionAnim1(1, 0);
+            SetDirectionAnim2(1, 0);
+        }
+        public void MoveRightUpPlayer()
+        {
+            InAllMovements(targets[2].position);
+            target2.position = targets[1].position;
+            SetDirectionAnim1(1, 0);
+            SetDirectionAnim2(0, 1);
+        }
+        public void MoveRightDownPlayer()
+        {
+            InAllMovements(targets[2].position);
+            target2.position = targets[3].position;
+            SetDirectionAnim1(1, 0);
+            SetDirectionAnim2(0, -1);
+        }
+
+        //  UP
+        public void MoveUpPlayer()
+        {
+            InAllMovements(targets[1].position);
+            target2.position = targets[1].position;
+            SetDirectionAnim1(0, 1);
+            SetDirectionAnim2(0, 1);
+        }
+        public void MoveUpRightPlayer()
+        {
+            InAllMovements(targets[1].position);
+            target2.position = targets[2].position;
+            SetDirectionAnim1(0, 1);
+            SetDirectionAnim2(1, 0);
+        }
+        public void MoveUpLeftPlayer()
+        {
+            InAllMovements(targets[1].position);
+            target2.position = targets[4].position;
+            SetDirectionAnim1(0, 1);
+            SetDirectionAnim2(-1, 0);
+        }
+
+        // DOWN
+        public void MoveDownPlayer()
+        {
+            InAllMovements(targets[3].position);
+            target2.position = targets[3].position;
+            SetDirectionAnim1(0, -1);
+            SetDirectionAnim2(0, -1);
+        }
+        public void MoveDownRightPlayer()
+        {
+            InAllMovements(targets[3].position);
+            target2.position = targets[2].position;
+            SetDirectionAnim1(0, -1);
+            SetDirectionAnim2(1, 0);
+        }
+        public void MoveDownLeftPlayer()
+        {
+            InAllMovements(targets[3].position);
+            target2.position = targets[4].position;
+            SetDirectionAnim1(0, -1);
+            SetDirectionAnim2(-1, 0);
+        }
+        #endregion // Movements
+
+        #region Audio
+
+        void PlayStepSound()
+        {
+            gm.PlayOneStepSound();
+        }
+
+
+
+        #endregion
+
+        #region Animacion
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(target2.position, 0.5f);
+        }
+
+        private void SetDirectionAnim1(float x, float y)
+        {
+            animDir = new Vector2(x, y);
+        }
+
+        private void SetDirectionAnim2(float x, float y)
+        {
+            animDir2 = new Vector2(x, y);
+        }
+
+        private void StopAnim()
+        {
+            animator.SetBool("PlayerMoving", false);
+            animator.SetFloat("MoveX", 0);
+            animator.SetFloat("MoveY", 0);
+            animator.SetFloat("LastMoveX", animDir2.x);
+            animator.SetFloat("LastMoveY", animDir2.y);
+        }
+        #endregion // Animación
+        
+        #region Public Methods
+        public void UpdateNumberOfActions()
+        {
+            GameController.sharedInstance.SubtractActions();
+            //animacion de restar acción
+            int i = GameController.sharedInstance.numbersActions;
+            actions[i].SetActive(false);
+        }
+
+        public void ActiveActions()
+        {
+            int maxActions = GameManager.sharedInstance.maxNumbersActions;
+            for (int i = 0; i < maxActions; i++)
+            {
+                actions[i].SetActive(true);
+            }
+        }
+        public void DetectFireLevel()
+        {
+            if (detectFire == true)
+            {
+                fireLvl = 0;
+                for (int i = 0; i < 4; i++)
                 {
-                    if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
+                    vecino = GetFutureNeighbor(adjacentDirections[i]);
+                    if (vecino.tag == "Edifice")
                     {
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                        if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
                         {
-                            fireLvl = 1;
+                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                            {
+                                fireLvl = 1;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                            {
+                                fireLvl = 2;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                            {
+                                fireLvl = 3;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level4").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                            {
+                                fireLvl = 4;
+                            }
                         }
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                        {
-                            fireLvl = 2;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                        {
-                            fireLvl = 3;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireEdifice/Level4").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                        {
-                            fireLvl = 4;
-                        }
-                    }
 
-                    if (vecino.transform.Find("FireHouse") != null) //Si el vecino detectado es una casa
-                    {
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level1").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                        if (vecino.transform.Find("FireHouse") != null) //Si el vecino detectado es una casa
                         {
-                            fireLvl = 1;
+                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level1").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                            {
+                                fireLvl = 1;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level2").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                            {
+                                fireLvl = 2;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level3").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                            {
+                                fireLvl = 3;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level4").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                            {
+                                fireLvl = 4;
+                            }
                         }
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level2").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                        {
-                            fireLvl = 2;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level3").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                        {
-                            fireLvl = 3;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FireHouse/Level4").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                        {
-                            fireLvl = 4;
-                        }
-                    }
 
-                    if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
-                    {
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                        if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
                         {
-                            fireLvl = 1;
+                            bufferNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                            {
+                                fireLvl = 1;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                            {
+                                fireLvl = 2;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                            {
+                                fireLvl = 3;
+                            }
+                            bufferNvlFgo = vecino.transform.Find("FirePark/Level4").gameObject;
+                            if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                            {
+                                fireLvl = 4;
+                            }
                         }
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                        {
-                            fireLvl = 2;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                        {
-                            fireLvl = 3;
-                        }
-                        bufferNvlFgo = vecino.transform.Find("FirePark/Level4").gameObject;
-                        if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                        {
-                            fireLvl = 4;
-                        }
+
+
                     }
 
 
                 }
-
-
+                Debug.Log("Nivel fuego cercano: " + fireLvl);
+                //TODO: HABILITAR LUEGO
+                //FireSound.ChangeFireSound(fireLvl);
+                detectFire = false;
             }
-            Debug.Log("Nivel fuego cercano: " + fireLvl);
-            FireSound.ChangeFireSound(fireLvl);
-            detectFire = false;
         }
+        #endregion // Public Methods
+
+        #region Private Methods
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Street"))
+            {
+                street = collision.gameObject;
+            }
+        }
+
+        #endregion //Private Methods
+        
     }
+
 }
