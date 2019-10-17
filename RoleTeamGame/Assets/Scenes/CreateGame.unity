@@ -653,17 +653,17 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
-    MoveTo: 2
+    MoveTo: 3
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
     Time: 1
-    Delay: 0
+    Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}
@@ -1079,17 +1079,17 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
-    MoveTo: 2
+    MoveTo: 3
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
     Time: 1
-    Delay: 0
+    Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}
@@ -1568,17 +1568,17 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
-    MoveTo: 2
+    MoveTo: 3
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
     Time: 1
-    Delay: 0
+    Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}
@@ -2451,17 +2451,17 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
-    MoveTo: 2
+    MoveTo: 3
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
     EaseType: 26
     Time: 1
-    Delay: 0
+    Delay: 0.1
     Sounds:
       m_Begin: {fileID: 0}
       m_AfterDelay: {fileID: 0}

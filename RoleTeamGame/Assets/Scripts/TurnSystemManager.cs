@@ -60,8 +60,14 @@ public class TurnSystemManager : MonoBehaviour
 
     public void StartTurnPlayer1()
     {
+
         SetTurnGame(TurnGame.player1);
+        avisoP1.SetActive(true);
+        p1.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        p1.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        avisoP1.SetActive(false);
         playerScript.DetectFireLevel(); //Para cambiar el sonido si el fuego del edificio cercano avanzó
+
     }
 
     public void StartTurnPlayer2()
