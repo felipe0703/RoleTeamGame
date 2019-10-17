@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
         Vector2.down,
         Vector2.left
     };
-
+    public LayerMask detectedByThePlayer;
+   
     // Animacion
     private Animator animator;
     private Vector2 animDir = Vector2.zero;
@@ -155,9 +156,9 @@ public class PlayerController : MonoBehaviour
     #region DetectEdifices
 
     // obtengo el vecino
-    private GameObject GetNeighbor(Vector2 direction)
+    private GameObject GetNeighbor(Vector2 direction,string layerMask)
     {
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction);
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, LayerMask.GetMask(layerMask));
         if (hit.collider != null)
         {
             return hit.collider.gameObject;
@@ -188,15 +189,20 @@ public class PlayerController : MonoBehaviour
 
         //TODO:CUANDO TENGA UN BORDER O RIO QUE NO MUESTRE BOTONES
         //  EDIFICIOS A LA DERECHA E IZQUIERDA
-        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" && GetNeighbor(adjacentDirections[3]).tag == "Edifice")
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.Log(GetNeighbor(adjacentDirections[i], "Edifice").name);
+        }
+
+        if (GetNeighbor(adjacentDirections[1],"Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
         {          
 
             // HAY BORDE ARRIBA
-            if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isBorder)
+            if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isBorder)
             {
                 UIManagerGame.sharedInstance.down.SetActive(true);
             }// HAY BORDE ABAJO
-            else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isBorder)
+            else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isBorder)
             {
                 UIManagerGame.sharedInstance.up.SetActive(true);
             }
@@ -212,14 +218,14 @@ public class PlayerController : MonoBehaviour
         }
 
         // EDIFICIOS ARRIBA Y ABAJO
-        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" && GetNeighbor(adjacentDirections[2]).tag == "Edifice")
+        if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice")
         {
             // HAY BORDE DERECHA
-            if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isBorder)
+            if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isBorder)
             {
                 UIManagerGame.sharedInstance.left.SetActive(true);
             }// HAY BORDE IZQUIERDA
-            else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isBorder)
+            else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isBorder)
             {
                 UIManagerGame.sharedInstance.right.SetActive(true);
             }
@@ -236,17 +242,17 @@ public class PlayerController : MonoBehaviour
 
 
         //EDIFICIO A LA DERECHA
-        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" )
+        if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice" )
         {
             // BOSQUE A LA IZQUIERDA
-            if(GetNeighbor(adjacentDirections[3]).tag == "Border")
+            if(GetNeighbor(adjacentDirections[3], "Streets").tag == "Border")
             {
                 // si tengo una esquina arriba
-                if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isCorner)
+                if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.down.SetActive(true);
                 }// si tengo una esquina abajo
-                else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isCorner)
+                else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.up.SetActive(true);
                 }
@@ -262,17 +268,17 @@ public class PlayerController : MonoBehaviour
         }
         
         //EDIFICIO A LA IZQUIEDA
-        if (GetNeighbor(adjacentDirections[3]).tag == "Edifice" )
+        if (GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice" )
         {
             // AGUA A LA DERECHA
-            if(GetNeighbor(adjacentDirections[1]).tag == "River")
+            if(GetNeighbor(adjacentDirections[1], "Water").tag == "River")
             {
                 // si tengo una esquina arriba
-                if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isCorner)
+                if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.down.SetActive(true);
                 }// si tengo una esquina abajo
-                else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isCorner)
+                else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.up.SetActive(true);
                 }
@@ -288,17 +294,17 @@ public class PlayerController : MonoBehaviour
         } 
         
         //EDIFICIO ABAJO
-        if (GetNeighbor(adjacentDirections[2]).tag == "Edifice" )
+        if (GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice" )
         {
             // BORDE ARRIBA
-            if(GetNeighbor(adjacentDirections[0]).tag == "Border")
+            if(GetNeighbor(adjacentDirections[0], "Streets").tag == "Border")
             {
                 // si tengo una esquina derecha
-                if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isCorner)
+                if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.left.SetActive(true);
                 }// si tengo una esquina izquierda
-                else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isCorner)
+                else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.right.SetActive(true);
                 }
@@ -314,17 +320,17 @@ public class PlayerController : MonoBehaviour
         } 
         
         //EDIFICIO ARRIBA
-        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" )
+        if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice" )
         {
             // BORDE ABAJO
-            if(GetNeighbor(adjacentDirections[2]).tag == "Border")
+            if(GetNeighbor(adjacentDirections[2], "Streets").tag == "Border")
             {
                 // si tengo una esquina derecha
-                if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isCorner)
+                if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.left.SetActive(true);
                 }// si tengo una esquina izquierda
-                else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isCorner)
+                else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
                 {
                     UIManagerGame.sharedInstance.right.SetActive(true);
                 }
@@ -342,20 +348,26 @@ public class PlayerController : MonoBehaviour
     public void DetectEdificeToInspect()
     {
         GameObject edifice;
+        bool detected = false;
 
         for (int i = 0; i < adjacentDirections.Length; i++)
         {
-            if (GetNeighbor(adjacentDirections[i]).tag == "Edifice")
+            if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
             {
-                edifice = GetNeighbor(adjacentDirections[i]);
+                edifice = GetNeighbor(adjacentDirections[i], "Edifice");
                 if (!edifice.GetComponent<Edifice>().isInspected)
                 {
                     edifice.GetComponent<Edifice>().btn.SetActive(true);
                     edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-
+                    detected = true;
                 }
             }
-        }       
+        }
+
+        if (!detected)
+        {
+            UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
+        }
     }
 
     public void HideAllButtonsInspect()
@@ -364,9 +376,9 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < adjacentDirections.Length; i++)
         {
-            if (GetNeighbor(adjacentDirections[i]).tag == "Edifice")
+            if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
             {
-                edifice = GetNeighbor(adjacentDirections[i]);
+                edifice = GetNeighbor(adjacentDirections[i],"Edifice");
                 edifice.GetComponent<Edifice>().btn.SetActive(false);
                 edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             }
@@ -377,12 +389,13 @@ public class PlayerController : MonoBehaviour
     public void DetectEdificeTakeOutHabitant()
     {
         GameObject edifice;
+        bool detected = false;
 
         for (int i = 0; i < adjacentDirections.Length; i++)
         {
-            if (GetNeighbor(adjacentDirections[i]).tag == "Edifice")
+            if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
             {
-                edifice = GetNeighbor(adjacentDirections[i]);
+                edifice = GetNeighbor(adjacentDirections[i], "Edifice");
 
                 if (edifice.GetComponent<Edifice>().isInspected) // el edificio fue inspeccionado 
                 {
@@ -391,17 +404,19 @@ public class PlayerController : MonoBehaviour
                     {
                         if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
                         {
-                            edifice.GetComponent<Edifice>().habitants[j].interactable = true;                            
+                            edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                            edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                            detected = true;
                         }
-                    }
-                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                    }                    
                     edifice.GetComponent<Edifice>().idPositionEdifice = i;
                 }
-                else
-                {
-                    Debug.Log("no hay personas que salvar");
-                }
             }
+        }
+
+        if (!detected)
+        {
+            UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
         }
     }
 

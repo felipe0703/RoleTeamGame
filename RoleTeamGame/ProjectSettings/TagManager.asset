@@ -12,6 +12,8 @@ TagManager:
   - Sonido
   - TurnSystem
   - BoardManager
+  - DisabledPerson
+  - Person
   layers:
   - Default
   - TransparentFX
@@ -21,13 +23,13 @@ TagManager:
   - UI
   - 
   - 
-  - Edifice
   - Streets
+  - Edifice
+  - Border
+  - Habitants
+  - MinimapVisible
   - 
-  - 
-  - 
-  - 
-  - 
+  - Player
   - 
   - 
   - 
@@ -48,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Habitants
+    uniqueID: 2982267459
     locked: 0
