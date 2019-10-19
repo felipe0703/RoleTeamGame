@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 4735ac19b668a524c88bb371be97616f
+guid: 6ea3d8df88be2e14690153145f33aace
 TextureImporter:
   fileIDToRecycleName:
-    21300000: viento png_0
-    21300002: viento png_1
-    21300004: viento png_2
-    21300006: viento png_3
-    21300008: viento png_4
-    21300010: viento png_5
+    21300000: anciana_0
+    21300002: anciana_1
+    21300004: anciana_2
+    21300006: anciana_3
+    21300008: anciana_4
+    21300010: anciana_5
+    21300012: anciana_6
+    21300014: anciana_7
+    21300016: anciana_8
+    21300018: anciana_9
+    21300020: anciana_10
+    21300022: anciana_11
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -48,10 +54,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,13 +96,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: viento png_0
+      name: anciana_0
       rect:
         serializedVersion: 2
-        x: 74
-        y: 450
-        width: 33
-        height: 23
+        x: 9
+        y: 104
+        width: 17
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,19 +110,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4145f88382bf8b40939ead119077692
+      spriteID: 82c03ff1f968d964799259680411bbea
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_1
+      name: anciana_1
       rect:
         serializedVersion: 2
-        x: 96
-        y: 393
-        width: 40
-        height: 33
+        x: 41
+        y: 104
+        width: 17
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,19 +130,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feaa94178b727a5469c666e8afb49e9f
+      spriteID: bbd043924286a7c4388e523dcd226611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_2
+      name: anciana_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 312
-        width: 42
-        height: 40
+        x: 73
+        y: 103
+        width: 17
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,19 +150,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40270287bf204214c9a2abcc74ff9d0f
+      spriteID: 0007037f5c3341d4e87f0d1053ace793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_3
+      name: anciana_3
       rect:
         serializedVersion: 2
-        x: 124
-        y: 228
-        width: 64
-        height: 35
+        x: 10
+        y: 72
+        width: 17
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,19 +170,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9db19818b25c29f438fdad75d12cc0ff
+      spriteID: f57ee0c47f0b3c44f84df4815558236a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_4
+      name: anciana_4
       rect:
         serializedVersion: 2
-        x: 156
-        y: 123
-        width: 62
-        height: 41
+        x: 41
+        y: 72
+        width: 17
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,19 +190,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98e46a88683dad64caab46cf3feb63e4
+      spriteID: 69880697242839e4b9d7510a070814aa
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: viento png_5
+      name: anciana_5
       rect:
         serializedVersion: 2
-        x: 188
-        y: 11
-        width: 49
-        height: 45
+        x: 73
+        y: 72
+        width: 17
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,7 +210,127 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a804cd0377637d0469c7e5ebe47586b5
+      spriteID: f2bd02d9dadec344a81e588a5739b9f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciana_6
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 40
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e77b7323db61fe6478763b819f05ad4f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciana_7
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 40
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cd73f954c02aa544984aa21cba9cfa3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciana_8
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 39
+        width: 17
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe02082cc6fba494cac9ee2bdd753c4d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciana_9
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 8
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88228e3d1b47edd419713bf4f82de906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciana_10
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 7
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72ad5e40ab72c304c82e56a32ff5b259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anciana_11
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 7
+        width: 17
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 364e6a935cbe73240bb7909d6a0a52e5
       vertices: []
       indices: 
       edges: []
@@ -212,7 +338,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 18ee79310a2f2ea4c98e1f260cbb7f98
+    spriteID: 52e10c9418b50a84d81764380750ac32
     vertices: []
     indices: 
     edges: []
