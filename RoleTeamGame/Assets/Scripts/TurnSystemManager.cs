@@ -20,17 +20,9 @@ public class TurnSystemManager : MonoBehaviour
 
     public PlayerController playerScript;
 
-    public GameObject avisoFuego;
-    public GameObject avisoP1;
-    public GameObject avisoP2;
-    public GameObject avisoP3;
-    public GameObject avisoP4;
+    public GameObject [] avisos;
 
-    public GUIAnimFREE fuego;
-    public GUIAnimFREE p1;
-    public GUIAnimFREE p2;
-    public GUIAnimFREE p3;
-    public GUIAnimFREE p4;
+    public GUIAnimFREE turno;
 
     // Start is called before the first frame update
     void Start()
@@ -60,27 +52,38 @@ public class TurnSystemManager : MonoBehaviour
 
     public void StartTurnPlayer1()
     {
-
         SetTurnGame(TurnGame.player1);
-        avisoP1.SetActive(true);
-        p1.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        p1.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        avisoP1.SetActive(false);
+        DesactivarAvisos();
+        avisos[1].SetActive(true);
+        StartCoroutine(AnimacionTurnos());
         playerScript.DetectFireLevel(); //Para cambiar el sonido si el fuego del edificio cercano avanzó
 
+    }
+
+    IEnumerator AnimacionTurnos(){
+        turno.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        yield return new WaitForSeconds(3.1f);
+        turno.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
     }
 
     public void StartTurnPlayer2()
     {
         SetTurnGame(TurnGame.player2);
     }
+    
     public void StartTurnFire()
     {
         SetTurnGame(TurnGame.fire);
-        avisoFuego.SetActive(true);
-        fuego.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
-        fuego.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
-        avisoFuego.SetActive(false);
+        DesactivarAvisos();
+        avisos[0].SetActive(true);
+        turno.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Children);
+        turno.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Children);
+    }
+
+    void DesactivarAvisos(){
+        for(int i = 0; i < avisos.Length; i++){
+            avisos[i].SetActive(false);
+        }
     }
 
 
