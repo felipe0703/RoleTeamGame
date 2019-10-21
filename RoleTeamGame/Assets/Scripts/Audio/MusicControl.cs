@@ -54,7 +54,8 @@ public class MusicControl : MonoBehaviour
 
     void PlayIdleMusic()
     {
+        int song = UnityEngine.Random.Range(0, 2);
         //Debug.Log("Reproduciendo música de reposo");
-        musicScript.PlaySong(0, 0, 0);
+        musicScript.PlaySong(song, 0, 0);
     }
 }
