@@ -80,7 +80,11 @@ public class ControlPruebaMusica : MonoBehaviour
 
     void PlayIdleMusic()
     {
-        Debug.Log("Reproduciendo música de reposo");
-        musicScript.PlaySong(0, 0, 0);
+        int song = UnityEngine.Random.Range(0, 2);
+        Debug.Log("Reproduciendo música de reposo: "+song);
+        musicScript.PlaySong(song, 0, 0);
+     /*   timeLeft = UnityEngine.Random.Range(minDelay, maxDelay);
+        resetTimer = false;
+        */
     }
 }
