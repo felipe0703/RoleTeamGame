@@ -43,7 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba0828308c7dfd438f39d7fc61f1401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 7338679163177260240, guid: 23b58c1f2f2ce54489cc0eb50bc47bc1,
+  playerPrefab: {fileID: 8419924678169854548, guid: 396947c8f0fc33749810a273c67077fb,
+    type: 3}
+  boarManagerPrefab: {fileID: 2990823235590865444, guid: 807079cf34aa79540afaaeced3b9de17,
+    type: 3}
+  turnSystemManager: {fileID: 1487560886613959084, guid: 2f81371bd7716604c9b420ff7316fc93,
     type: 3}
   maxNumbersActions: 4
   tiempoInicial: 30

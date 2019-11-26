@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Photon.Pun;
 #endregion // Namespaces
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class PlayerController : Photon.Pun.MonoBehaviourPun //MonoBehaviour
+    public class PlayerController : MonoBehaviourPun //MonoBehaviour
     {
         // ########################################
         // Variables
@@ -24,13 +25,19 @@ namespace Com.BrumaGames.Llamaradas
         [Header("Movement")]
         public Transform target;
         public Transform target2;
-        public int MyTurn = 1;
         public GameObject street;
         Transform[] targets;
         public float speed;
 
-        // live
-        public GameObject[] actions;
+        // NUMERO DE ACCIONES
+        public GameObject canvas;
+        public GameObject canvasUI;
+        public GameObject panelActions;
+        public GameObject[] actions;        
+        public int numbersActions = 0;
+
+        //button ShowAActions
+        public GameObject buttonShowActions;
 
         // VARIABLES PRIVADAS    
         float distanceEdifice = 8f;
@@ -38,6 +45,7 @@ namespace Com.BrumaGames.Llamaradas
 
 
         GameManager gm;
+        PhotonView pv;
 
         //  POSICIONES DEL JUGADOR AL INICIAR
         int[] positionA = { 20, 140 };
@@ -46,11 +54,12 @@ namespace Com.BrumaGames.Llamaradas
         //Detectar los edificios adyacentes
         private Vector2[] adjacentDirections = new Vector2[]
         {
-        Vector2.up,
-        Vector2.right,
-        Vector2.down,
-        Vector2.left
+            Vector2.up,
+            Vector2.right,
+            Vector2.down,
+            Vector2.left
         };
+
         public LayerMask detectedByThePlayer;
 
         // Animacion
@@ -59,7 +68,9 @@ namespace Com.BrumaGames.Llamaradas
         private Vector2 animDir2 = Vector2.zero;
 
         //Sistema de turno
-        public bool myTurn = true;
+        public bool myTurn = false;
+        public bool finishTurn = false;
+        public int MyTurn;
 
         //Para corrutina de audio del fuego 'DetectFireEdifice'
         int fireLvl;
@@ -70,8 +81,6 @@ namespace Com.BrumaGames.Llamaradas
         GameObject fireGmObj;
         public FireSoundControl FireSound;
         public SfxControl ScriptEfectos;
-
-
 
         #endregion
 
@@ -94,8 +103,21 @@ namespace Com.BrumaGames.Llamaradas
         void Start()
         {
             gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
-
+            pv = GetComponent<PhotonView>();
             animator = GetComponent<Animator>();
+            myTurn = false;
+            finishTurn = false;
+            //numbersActions = GameManager.sharedInstance.maxNumbersActions;
+
+            if (pv.IsMine)
+            {
+                int actor = PhotonNetwork.LocalPlayer.ActorNumber;
+                UIManagerGame.sharedInstance.textPlayer.text = "Soy Jugador: " + actor;
+                //if (actor == 1)// si soy el primer jugador, es mi turno
+                  //  myTurn = true;
+            }
+            
+
             // Posicionamiento del player de forma aleatoria
             // TODO: QUE EL POSICIONAMIENTO DE UN JUGADOR NO SEA IGUAL A OTRO JUGADOR
             int i1 = Random.Range(0, 2);
@@ -108,13 +130,37 @@ namespace Com.BrumaGames.Llamaradas
                 target2.parent = null;
                 targets = target.GetComponentsInChildren<Transform>();
             }
+
+            // control de acciones del jugador
+            canvas = GameObject.Find("Canvas");
+            canvasUI = canvas.transform.GetChild(0).gameObject;
+            panelActions = canvasUI.transform.GetChild(0).gameObject;
+
+            for(int i = 0; i < panelActions.transform.childCount; i++)
+            {
+                actions[i] = panelActions.transform.GetChild(i).gameObject;
+            }
+
+            //activar visualización de las energías
+            //ActiveActions();
+
+            //obtener el boton de acciones
+            GameObject canvasActions = canvas.transform.GetChild(1).gameObject;
+            buttonShowActions = canvasActions.transform.GetChild(2).gameObject;
         }
 
+        private void Update()
+        {
+            
+        }
         // Update is called once per frame
         void FixedUpdate()
         {
+            #region Move
+            //velocidad jugador
             float fixedSpeed = speed * Time.deltaTime;
 
+            // movimiento a la esquina
             if (moveTarget1)
             {
                 animator.SetBool("PlayerMoving", true);
@@ -122,7 +168,7 @@ namespace Com.BrumaGames.Llamaradas
                 animator.SetFloat("MoveY", animDir.y);
                 MovePlayer(fixedSpeed, target.position);
             }
-
+            //moviendo al jugador al destino
             if (moveTarget2)
             {
                 animator.SetBool("PlayerMoving", true);
@@ -152,17 +198,40 @@ namespace Com.BrumaGames.Llamaradas
                 StopAnim();
                 target.position = transform.position;
 
-                //TODO:  quizás sea mejor manejar el fin del turno en el gamecontroller
-                if (GameController.sharedInstance.numbersActions == 0 && myTurn)
+                // si llegue al destino y no tengo mas acciones finaliza mi turno
+                if (pv.IsMine)
                 {
-                    myTurn = false;
-                    TurnSystemManager.sharedInstance.StartTurnFire();
+                    if (numbersActions == 0 && myTurn)
+                    {
+                        finishTurn = true;
+                        myTurn = false;
+                    }
+
+                    if (finishTurn)
+                    {
+                        finishTurn = false;
+                        pv.RPC("SetTurn", RpcTarget.AllViaServer);
+                    }
                 }
             }
-            DetectFireLevel();
+            #endregion
         }
 
-
+        //IMPLEMENTAR LUEGO
+        private void LateUpdate()
+        {
+            // DetectFireLevel();
+            if (PhotonNetwork.LocalPlayer.ActorNumber == TurnSystemManager.sharedInstance.playerTurn )
+            {
+                //UIManagerGame.sharedInstance.textSetTurn.text = "Es mi turno";
+                buttonShowActions.SetActive(true);
+            }
+            else
+            {
+                //UIManagerGame.sharedInstance.textSetTurn.text = "No es mi turno";
+                buttonShowActions.SetActive(false);
+            }
+        }
         #endregion // MonoBehaviour
 
         // ########################################
@@ -174,17 +243,13 @@ namespace Com.BrumaGames.Llamaradas
         // obtengo el vecino
         private GameObject GetNeighbor(Vector2 direction, string layerMask)
         {
-            Debug.Log("1");
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 10f, LayerMask.GetMask(layerMask));
-            Debug.Log("2");
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, LayerMask.GetMask(layerMask));
             if (hit.collider != null)
             {
-                Debug.Log("3");
                 return hit.collider.gameObject;
             }
             else
             {
-                Debug.Log("4");
                 return null;
             }
         }
@@ -204,16 +269,24 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
+        public void HideAllButtonsInspect()
+        {
+            GameObject edifice;
+
+            for (int i = 0; i < adjacentDirections.Length; i++)
+            {
+                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
+                    edifice.GetComponent<Edifice>().btn.SetActive(false);
+                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                }
+            }
+        }
+
         public void DetectEdificeToMove()
         {
-
-            //TODO:CUANDO TENGA UN BORDER O RIO QUE NO MUESTRE BOTONES
             //  EDIFICIOS A LA DERECHA E IZQUIERDA
-            for (int i = 0; i < 4; i++)
-            {
-                Debug.Log(GetNeighbor(adjacentDirections[i], "Edifice").name);
-            }
-
             if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
             {
 
@@ -390,20 +463,7 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
-        public void HideAllButtonsInspect()
-        {
-            GameObject edifice;
-
-            for (int i = 0; i < adjacentDirections.Length; i++)
-            {
-                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
-                {
-                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-                    edifice.GetComponent<Edifice>().btn.SetActive(false);
-                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                }
-            }
-        }
+        
 
         // detecta si tenemos algun edificio a los lados y activa el boton del edificio
         public void DetectEdificeTakeOutHabitant()
@@ -597,120 +657,182 @@ namespace Com.BrumaGames.Llamaradas
             animator.SetFloat("LastMoveY", animDir2.y);
         }
         #endregion // Animación
-        
-        #region Public Methods
-        public void UpdateNumberOfActions()
-        {
-            GameController.sharedInstance.SubtractActions();
-            //animacion de restar acción
-            int i = GameController.sharedInstance.numbersActions;
-            actions[i].SetActive(false);
-        }
 
+        #region Public Methods
+
+        // ########################################
+        // Funciones de Contador Acciones
+        // ########################################
+
+        #region Acciones
+        
+        
+        //Activa UI Actions(Energias), recargo mis acciones y activo mi turno        
         public void ActiveActions()
         {
-            int maxActions = GameManager.sharedInstance.maxNumbersActions;
-            for (int i = 0; i < maxActions; i++)
+            if (pv.IsMine)
             {
-                actions[i].SetActive(true);
-            }
-        }
-        public void DetectFireLevel()
-        {
-            if (detectFire == true)
-            {
-                fireLvl = 0;
-                for (int i = 0; i < 4; i++)
+                numbersActions = GameManager.sharedInstance.maxNumbersActions;
+                myTurn = true;
+                for (int i = 0; i < numbersActions; i++)
                 {
-                    vecino = GetFutureNeighbor(adjacentDirections[i]);
-                    if (vecino.tag == "Edifice")
-                    {
-                        if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
-                        {
-                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 2)
-                            {
-                                fireLvl = 1;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                            {
-                                fireLvl = 2;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                            {
-                                fireLvl = 3;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FireEdifice/Level4").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                            {
-                                fireLvl = 4;
-                            }
-                        }
-
-                        if (vecino.transform.Find("FireHouse") != null) //Si el vecino detectado es una casa
-                        {
-                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level1").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 2)
-                            {
-                                fireLvl = 1;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level2").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                            {
-                                fireLvl = 2;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level3").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                            {
-                                fireLvl = 3;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FireHouse/Level4").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                            {
-                                fireLvl = 4;
-                            }
-                        }
-
-                        if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
-                        {
-                            bufferNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 2)
-                            {
-                                fireLvl = 1;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 3)
-                            {
-                                fireLvl = 2;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 4)
-                            {
-                                fireLvl = 3;
-                            }
-                            bufferNvlFgo = vecino.transform.Find("FirePark/Level4").gameObject;
-                            if (bufferNvlFgo.activeSelf && fireLvl < 5)
-                            {
-                                fireLvl = 4;
-                            }
-                        }
-
-
-                    }
-
-
+                    actions[i].SetActive(true);
                 }
-                Debug.Log("Nivel fuego cercano: " + fireLvl);
-                //TODO: HABILITAR LUEGO
-                //FireSound.ChangeFireSound(fireLvl);
-                detectFire = false;
+            }            
+        }
+
+        //   AGREGAR ACCION USADA
+        public void AddActions()
+        {
+            if (numbersActions >= GameManager.sharedInstance.maxNumbersActions)
+            {
+                numbersActions = GameManager.sharedInstance.maxNumbersActions;
+            }
+            else
+            {
+                numbersActions++;
             }
         }
+
+        //  RESTAR ACCION
+        public void SubtractActions()
+        {
+            if (numbersActions <= 0)
+            {
+                numbersActions = 0;
+            }
+            else
+            {
+                numbersActions--;
+            }
+        }
+
+        public void UpdateNumberOfActions()
+        {
+            //GameController.sharedInstance.SubtractActions();
+            SubtractActions();
+            //animacion de restar acción
+            // int i = GameController.sharedInstance.numbersActions;
+            int i = numbersActions;
+            actions[i].SetActive(false);
+        }       
+
+        #endregion //Acciones    
+
+        #region DectectFireMusic
+        //IMPLEMENTAR ACA Y EN TURNSYSTEM
+
+        /* public void DetectFireLevel()
+         {
+             if (detectFire == true)
+             {
+                 fireLvl = 0;
+                 for (int i = 0; i < 4; i++)
+                 {
+                     vecino = GetFutureNeighbor(adjacentDirections[i]);
+                     if (vecino.tag == "Edifice")
+                     {
+                         if (vecino.transform.Find("FireEdifice") != null) //Si el vecino detectado es un edificio
+                         {
+                             bufferNvlFgo = vecino.transform.Find("FireEdifice/Level1").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                             {
+                                 fireLvl = 1;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FireEdifice/Level2").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                             {
+                                 fireLvl = 2;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FireEdifice/Level3").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                             {
+                                 fireLvl = 3;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FireEdifice/Level4").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                             {
+                                 fireLvl = 4;
+                             }
+                         }
+
+                         if (vecino.transform.Find("FireHouse") != null) //Si el vecino detectado es una casa
+                         {
+                             bufferNvlFgo = vecino.transform.Find("FireHouse/Level1").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                             {
+                                 fireLvl = 1;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FireHouse/Level2").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                             {
+                                 fireLvl = 2;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FireHouse/Level3").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                             {
+                                 fireLvl = 3;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FireHouse/Level4").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                             {
+                                 fireLvl = 4;
+                             }
+                         }
+
+                         if (vecino.transform.Find("FirePark") != null) //Si el vecino detectado es un parque
+                         {
+                             bufferNvlFgo = vecino.transform.Find("FirePark/Level1").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 2)
+                             {
+                                 fireLvl = 1;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FirePark/Level2").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 3)
+                             {
+                                 fireLvl = 2;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FirePark/Level3").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 4)
+                             {
+                                 fireLvl = 3;
+                             }
+                             bufferNvlFgo = vecino.transform.Find("FirePark/Level4").gameObject;
+                             if (bufferNvlFgo.activeSelf && fireLvl < 5)
+                             {
+                                 fireLvl = 4;
+                             }
+                         }
+
+
+                     }
+
+
+                 }
+                 Debug.Log("Nivel fuego cercano: " + fireLvl);
+                 //TODO: HABILITAR LUEGO
+                 //FireSound.ChangeFireSound(fireLvl);
+                 detectFire = false;
+             }
+         }*/
+
+        #endregion
+
         #endregion // Public Methods
 
         #region Private Methods
+
+        #region Turn
+        // metodo que envia al servido el cambio de turno de jugador
+        [PunRPC]
+        void SetTurn()
+        {
+            TurnSystemManager.turn++;
+            TurnSystemManager.sharedInstance.ExceedTurnLimit();
+        }
+        #endregion // Turn
+
+        #region CollisionStreet
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Street"))
@@ -718,9 +840,10 @@ namespace Com.BrumaGames.Llamaradas
                 street = collision.gameObject;
             }
         }
+        #endregion
 
         #endregion //Private Methods
-        
+
     }
 
 }

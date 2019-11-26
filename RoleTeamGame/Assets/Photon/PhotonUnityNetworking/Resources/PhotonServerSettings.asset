@@ -34,5 +34,20 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - FireStart
+  - test
+  - Test
+  - TestRPC
+  - IncreaseFire
+  - FireStartEdifice
+  - FireStartInEdifice
+  - StartFireNeighbor
+  - EdificeNeighborWithFire
+  - WindGeneration
+  - FireLevel2
+  - FireLevel3
+  - FireLevel4
+  - FireLevel
+  - SetTurn
   DisableAutoOpenWizard: 1
   ShowSettings: 0

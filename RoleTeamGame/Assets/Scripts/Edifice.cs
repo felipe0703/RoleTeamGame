@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 #endregion //Namespace
 
 
@@ -20,7 +21,6 @@ namespace Com.BrumaGames.Llamaradas
     }
     #endregion //FireState
 
-
     public class Edifice : MonoBehaviour
     {
         // ########################################
@@ -28,7 +28,10 @@ namespace Com.BrumaGames.Llamaradas
         // ########################################
 
         #region Variables
+
         public int id;
+        PhotonView pv;
+
         public GameObject btn;
 
         public Transform street2;
@@ -68,6 +71,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public void Start()
         {
+
             edificeAudio = gameObject.GetComponent<AudioSource>();
             edificeAudio.pitch = 1.36f;
             ScriptEfectos = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
@@ -133,25 +137,8 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
         }
-
-        public void Update()
-        {
-            if (contFire == 1)
-            {
-                StartFireLevel1();
-            }
-            else if (contFire == 2)
-            {
-                StartFireLevel2();
-            }
-            else if (contFire == 3)
-            {
-                StartFireLevel3();
-            }
-        }
-
+        
         #endregion // Monobehaviour
-
 
         // ########################################
         // Funciones IsSelected y Audio
@@ -275,17 +262,16 @@ namespace Com.BrumaGames.Llamaradas
 
         #endregion // Audio
 
-
         // ########################################
         // Funciones Estados del fuego
         // ########################################
 
         #region FireState
 
-        public void StartFireLevel1()
+       /* public void StartFireLevel1()
         {
             SetFireState(FireState.level1);
-        }
+        }*/
         public void StartFireLevel2()
         {
             SetFireState(FireState.level2);
@@ -303,38 +289,49 @@ namespace Com.BrumaGames.Llamaradas
         void SetFireState(FireState newFireState)
         {
             //TODO: cambiar el color de los sprite cuando se comience a quemar
+
             if (newFireState == FireState.level1)
             {
-                level1.SetActive(true);
+                //CallStartFireNeighbor();
+                /*level1.SetActive(true);
                 level2.SetActive(false);
                 level3.SetActive(false);
-                level4.SetActive(false);
+                level4.SetActive(false);*/
             }
+
             if (newFireState == FireState.level2)
             {
                 level1.SetActive(false);
                 level2.SetActive(true);
                 level3.SetActive(false);
                 level4.SetActive(false);
+                contFire = 2;
+                //CallFireLevel2();
             }
+
             if (newFireState == FireState.level3)
             {
+                contFire = 3;
                 level1.SetActive(false);
                 level2.SetActive(false);
                 level3.SetActive(true);
                 level4.SetActive(false);
-                contFire = 3;
+                //CallFireLevel3();
             }
+
             if (newFireState == FireState.level4)
             {
+                contFire = 4;
                 level1.SetActive(false);
                 level2.SetActive(false);
                 level3.SetActive(false);
                 level4.SetActive(true);
-                contFire = 4;
+                //CallFireLevel4();
             }
         }
         #endregion //FireState
+
+        #region GetNeighborEdifice
 
         public GameObject GetNeighborEdifice(Vector2 direction)
         {
@@ -348,8 +345,84 @@ namespace Com.BrumaGames.Llamaradas
                 return null;
             }
         }
+        #endregion
 
+        #region FireStart
+        //fuego en el primer edificio, donde comienza el incendio
+        public void CallFireStart()
+        {
+            pv = GetComponent<PhotonView>();
+            pv.RPC("FireStartInEdifice", RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        void FireStartInEdifice()
+        {
+            if (id == 1)
+            {
+                StartFireLevel3();
+            }
+            else if (id == 2)
+            {
+                StartFireLevel4();
+            }
+            else
+            {
+                StartFireLevel2();
+            }
+        }
+        #endregion
+
+        #region FireStartNeighbor
+
+        // inicia el fuego en los edificios vecinos
+        public void CallStartFireNeighbor(int viewId)
+        {
+            pv = this.GetComponent<PhotonView>();
+            if( pv.ViewID == viewId && contFire == 1 && PhotonNetwork.IsMasterClient)
+            {
+                pv.RPC("StartFireNeighbor", RpcTarget.AllViaServer, viewId);
+            }            
+        }
+        
+        [PunRPC]
+        void StartFireNeighbor(int viewId)
+        {
+            //TODO: PROBAR ADQUIRIENDO DIRECTAMENTE LOS GAMEOBJECT
+            level1.SetActive(true);
+            level2.SetActive(false);
+            level3.SetActive(false);
+            level4.SetActive(false);
+        }
+        #endregion
+
+        #region FireLevel
+        
+        public void CallFireLevel()
+        {
+            pv = GetComponent<PhotonView>();
+            pv.RPC("FireLevel", RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        void FireLevel()
+        {
+            if (contFire == 2)
+            {
+                StartFireLevel2();
+            }
+            else if (contFire == 3)
+            {
+                StartFireLevel3();
+            }
+            else if (contFire == 4)
+            {
+                StartFireLevel4();
+            }
+        }
+        
+
+        #endregion
 
     }
-
 }

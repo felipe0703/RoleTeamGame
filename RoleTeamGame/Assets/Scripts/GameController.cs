@@ -21,20 +21,30 @@ namespace Com.BrumaGames.Llamaradas
         [Tooltip("El prefab que representa al player")]
         public GameObject playerPrefab;
 
+        [Tooltip("Prefab del BoarManager que se instanciara al iniciar la partida")]
+        public GameObject boarManagerPrefab;
+
+        [Tooltip("Prefab del turnSystemManager que se instanciara al iniciar la partida")]
+        public GameObject turnSystemManager;
+
         //  POSICIONES DEL JUGADOR AL INICIAR
         int[] positionA = { 20, 140 };
         int[] positionB = { 30, 50, 70, 90, 110, 130 };
 
 
-        public int maxNumbersActions = 4;
+       // public int maxNumbersActions = 5;
 
         //  Variables Públicas
-        [Tooltip("Tiempo inicial en segundo")] public int tiempoInicial;
-        [Tooltip("Escala del tiempo del Reloj")] [Range(-10f, 10f)] public float escalaDeTiempo = 1;
-        //[HideInInspector]
-        public int numbersActions = 0;
+        [Tooltip("Tiempo inicial en segundo")]
+        public int tiempoInicial;
 
-        //  Variables Privadas   
+        [Tooltip("Escala del tiempo del Reloj")] [Range(-10f, 10f)]
+        public float escalaDeTiempo = 1;
+
+        //[HideInInspector]
+        //public int numbersActions = 0;
+
+        //  TIEMPO 
         private float tiempoDelFrameConTimeScale = 0f;
         private float tiempoAMostrarEnSegundos = 0f;
         private float escalaDeTiempoAlPausar, escalaDeTiempoInicial;
@@ -45,7 +55,6 @@ namespace Com.BrumaGames.Llamaradas
         public TextMeshProUGUI textTimer;
         public GameObject buttonShowActions;
         public Canvas canvasActions;
-        TurnSystemManager turnSystem;
 
         // HABITANTES DE EDIFICIOS    
         public int totalPopulation = 90;
@@ -76,6 +85,33 @@ namespace Com.BrumaGames.Llamaradas
                 Destroy(gameObject);
             }
 
+            //INSTANCIAR BOARMANAGER
+            if(boarManagerPrefab == null)
+            {
+                Debug.LogError("<Color=Red><a>Missing</a></Color> boarManagerPrefab Reference. Please set it up in GameObject 'Game Controller'", this);
+            }
+            else
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.InstantiateSceneObject(boarManagerPrefab.name, Vector3.zero, Quaternion.identity);
+                }
+            }
+
+            //INSTACIAR TURNSYSTEM
+            if (turnSystemManager == null)
+            {
+                Debug.LogError("<Color=Red><a>Missing</a></Color> turnSystenManagerPrefabs Reference. Please set it up in GameObject 'Game Controller'", this);
+            }
+            else
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.InstantiateSceneObject(turnSystemManager.name, Vector3.zero, Quaternion.identity);
+                }
+            }
+
+            //INSTANCIAR PLAYER
             if (playerPrefab == null)
             {
                 Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Controller'", this);
@@ -84,7 +120,6 @@ namespace Com.BrumaGames.Llamaradas
             {
                 if (PlayerController.LocalPlayerInstance == null)
                 {
-                    Debug.Log("Instanciamos LocalPlayer");
                     // instanciar player
                     //GameObject iPlayer = Instantiate(playerPrefab);
                     int i1 = Random.Range(0, 2);
@@ -94,8 +129,8 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
 
-            //  ACTIONS
-            numbersActions = GameManager.sharedInstance.maxNumbersActions;
+            //  ACTIONS se cambio a playerController
+            //numbersActions = GameManager.sharedInstance.maxNumbersActions;
 
             //  TIMER
             escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
@@ -119,42 +154,7 @@ namespace Com.BrumaGames.Llamaradas
                 ActualizarReloj(tiempoAMostrarEnSegundos);
             }
         }
-
-
-
-        #endregion // MonoBehaviour
-
-        // ########################################
-        // Funciones de Acciones Contador
-        // ########################################
-
-        #region Acciones
-        //   AGREGAR ACCION USADA
-        public void AddActions()
-        {
-            if (numbersActions >= maxNumbersActions)
-            {
-                numbersActions = maxNumbersActions;
-            }
-            else
-            {
-                numbersActions++;
-            }
-        }
-
-        //  RESTAR ACCION
-        public void SubtractActions()
-        {
-            if (numbersActions <= 0)
-            {
-                numbersActions = 0;
-            }
-            else
-            {
-                numbersActions--;
-            }
-        }
-        #endregion //Acciones    
+        #endregion // MonoBehaviour        
 
         // ########################################
         // función de manejo del tiempo

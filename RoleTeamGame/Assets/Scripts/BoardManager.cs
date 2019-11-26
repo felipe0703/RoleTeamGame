@@ -19,7 +19,7 @@ namespace Com.BrumaGames.Llamaradas
     }
     #endregion // DirectionOfTheWind
 
-    public class BoardManager : MonoBehaviour
+    public class BoardManager : MonoBehaviourPun
     {
         // ########################################
         // Variables
@@ -29,7 +29,7 @@ namespace Com.BrumaGames.Llamaradas
         public static BoardManager sharedInstance;              //  singleton    
         public DirectionOfTheWind currentDirectionWind = DirectionOfTheWind.west;
 
-        int directionWind;
+        public static int directionWind;
         public Image arrowDirectionWind;
 
         public int xSize, ySize;                                //  tamaño del tablero
@@ -38,7 +38,7 @@ namespace Com.BrumaGames.Llamaradas
         public List<GameObject> prefabs = new List<GameObject>();       //  lista de edificios que puedes instanciar
         public List<GameObject> allEdifices = new List<GameObject>();  // Lista con todos los edificios generados en el tablero
         public GameObject[,] edifices;                                  // arreglo de edificios    
-        private List<GameObject> centralEdifices = new List<GameObject>();// Edificios Centrales del tablero
+        public List<GameObject> centralEdifices = new List<GameObject>();// Edificios Centrales del tablero
 
         public int maxHouse = 12;
         public int maxEdifice = 18;
@@ -71,6 +71,9 @@ namespace Com.BrumaGames.Llamaradas
         };
 
         public List<GameObject> neighborsEdifices = new List<GameObject>(); // listado con los edificios vecinos al fuego
+
+
+        PhotonView pv;
         #endregion //Variables
 
         // ########################################
@@ -89,12 +92,22 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Destroy(gameObject);
             }
+            pv = gameObject.GetComponent<PhotonView>();
 
             Vector2 offset = currenteEdifice.GetComponent<BoxCollider2D>().size; // obtengo el tamaño del edificio
+
             CreateInitialBoard(offset); //  inicio el tablero
+            
+
             directionWind = 3;
         }
+        private void Update()
+        {
+            Debug.Log(directionWind);
+            UIManagerGame.sharedInstance.textSetTurn.text = directionWind.ToString();
+        }
         #endregion //MonoBehaviour
+
 
         // ########################################
         // GENERADOR DEL TABLERO
@@ -104,10 +117,11 @@ namespace Com.BrumaGames.Llamaradas
         private void CreateInitialBoard(Vector2 offset)
         {
 
+            //crea el tablero si soy el master
+            // si soy el cliente solo carga los objetos que estan instanciado desde master
             if (!PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom != null)
                 return;
 
-            Debug.Log("soy el maestro");
             int xSizeBoard = xSize * 2 + 5;
             int ySizeBoard = ySize * 2 + 5;
 
@@ -122,12 +136,13 @@ namespace Com.BrumaGames.Llamaradas
 
             Sprite sprite = null;
             GameObject edifice;
-            GameObject street;
+            //GameObject street;
 
             int idX = -1;
             int contHouse = 0;
             int contEdifice = 0;
             int contPark = 0;
+
 
 
             //  BUCLES QUE POSICIONA LOS EDIFICIOS, RIÓS Y CALLES
@@ -164,9 +179,11 @@ namespace Com.BrumaGames.Llamaradas
                             currenteEdifice = edifice;
 
                             //  GENERACIÓN EDIFICIOS
-                            Vector3 positionEdifice = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
+                            Vector3 edificePosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
+
                             //GameObject newEdifice = Instantiate(currenteEdifice,positionEdifice, currenteEdifice.transform.rotation);
-                            GameObject newEdifice = PhotonNetwork.Instantiate("Edifices/" + currenteEdifice.name, positionEdifice, Quaternion.identity);
+
+                            GameObject newEdifice = PhotonNetwork.Instantiate("Edifices/" + currenteEdifice.name, edificePosition, Quaternion.identity);
 
                             // Formato al nombre de los objetos
                             newEdifice.name = string.Format("Edifice[{0}][{1}]", x, y);
@@ -198,10 +215,11 @@ namespace Com.BrumaGames.Llamaradas
 
                             }
 
-                            GameObject newStreet = Instantiate(currentStreet,
-                                new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),
-                                currentStreet.transform.rotation
-                                );
+                            Vector3 streetPosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
+
+                           // GameObject newStreet = Instantiate(currentStreet, streetPosition,currentStreet.transform.rotation);
+
+                            GameObject newStreet = PhotonNetwork.Instantiate("Streets/" + currentStreet.name, streetPosition, Quaternion.identity);
 
                             // Formato al nombre de los objetos
                             newStreet.name = string.Format("Street[{0}][{1}]", x, y);
@@ -234,10 +252,12 @@ namespace Com.BrumaGames.Llamaradas
                     else if (x >= xSizeBoard - 2)
                     {
                         //  GENERACIÓN RIO
-                        GameObject newRiver = Instantiate(currentRiver,
-                            new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),
-                            currentRiver.transform.rotation
-                            );
+                        Vector3 riverPosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
+
+                        // GameObject newRiver = Instantiate(currentRiver,riverPosition,currentRiver.transform.rotation);
+
+                        GameObject newRiver = PhotonNetwork.Instantiate("Rivers/" + currentRiver.name, riverPosition, Quaternion.identity);
+
 
                         // Formato al nombre de los objetos
                         newRiver.name = string.Format("River[{0}][{1}]", x, y);
@@ -257,10 +277,10 @@ namespace Com.BrumaGames.Llamaradas
                     else if (x <= 1 || y <= 1 || y >= ySizeBoard - 2)
                     {
                         //  GENERACIÓN BORDER
-                        GameObject newBorder = Instantiate(currentBorder,
-                            new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0),
-                            currentBorder.transform.rotation
-                            );
+                        Vector3 borderPosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
+                        //GameObject newBorder = Instantiate(currentBorder, borderPosition,                            currentBorder.transform.rotation);
+
+                        GameObject newBorder = PhotonNetwork.Instantiate("Borders/" + currentBorder.name,borderPosition, Quaternion.identity);
 
                         // Formato al nombre de los objetos
                         newBorder.name = string.Format("Border[{0}][{1}]", x, y);
@@ -276,6 +296,7 @@ namespace Com.BrumaGames.Llamaradas
             }
             SaveEdificesInMatrix();
             FireStart();
+
         }
         #endregion
 
@@ -319,22 +340,11 @@ namespace Com.BrumaGames.Llamaradas
             // Obtener el edificio donde iniciará el fuego
             edifice = centralEdifices[Random.Range(0, centralEdifices.Count)];
 
-            //Iniciar fuego
             int idEdifice = edifice.GetComponent<Edifice>().id;
-            if (idEdifice == 1)
-            {
-                edifice.GetComponent<Edifice>().StartFireLevel3();
-            }
-            else if (idEdifice == 2)
-            {
-                edifice.GetComponent<Edifice>().StartFireLevel4();
-            }
-            else
-            {
-                edifice.GetComponent<Edifice>().StartFireLevel2();
-            }
 
+            edifice.GetComponent<Edifice>().CallFireStart();
         }
+
         #endregion // FireStart/SaveEdifice
 
         // ####################################################
@@ -342,32 +352,41 @@ namespace Com.BrumaGames.Llamaradas
         // ####################################################
 
         #region DirectionWind
-        //TODO: Generar funciones que selecciones direcciones del viento en forma aleatoria
-        // girar en 90 grados el viento actual, 3 posibilidades: 
-        // me mantengo, giro 90 a la derecha o 90 a la izquierda
-
-        public void WindGeneration()
+        public void CallWindGeneration()
         {
+            // Genera funciones que selecciones direcciones del viento en forma aleatoria
             int[] groupDirection = new int[3];
             int[] group1 = { 0, 2 };
             int[] group2 = { 1, 3 };
 
-            if (directionWind == 0 || directionWind == 2)
+            if (PhotonNetwork.IsMasterClient)
             {
-                groupDirection[0] = directionWind;
-                groupDirection[1] = group2[0];
-                groupDirection[2] = group2[1];
-            }
-            else if (directionWind == 1 || directionWind == 3)
-            {
-                groupDirection[0] = directionWind;
-                groupDirection[1] = group1[0];
-                groupDirection[2] = group1[1];
-            }
+                if (directionWind == 0 || directionWind == 2)
+                {
+                    groupDirection[0] = directionWind;
+                    groupDirection[1] = group2[0];
+                    groupDirection[2] = group2[1];
+                }
+                else if (directionWind == 1 || directionWind == 3)
+                {
+                    groupDirection[0] = directionWind;
+                    groupDirection[1] = group1[0];
+                    groupDirection[2] = group1[1];
+                }
 
-            int i = Random.Range(0, 3);
+                int i = Random.Range(0, 3);
 
-            directionWind = groupDirection[i];
+                directionWind = groupDirection[i];
+                pv.RPC("WindGeneration", RpcTarget.AllBuffered, directionWind);
+            }                
+        }
+               
+        // girar en 90 grados el viento actual, 3 posibilidades: 
+        // me mantengo, giro 90 a la derecha o 90 a la izquierda
+        [PunRPC]
+        void WindGeneration(int direction)
+        {
+            directionWind = direction;       
 
             if (directionWind == 0)
             {
@@ -414,13 +433,6 @@ namespace Com.BrumaGames.Llamaradas
                 directionWind = 0;
             }
 
-            if (newDirectionWind == DirectionOfTheWind.south)
-            {
-                Debug.Log("viento hacia el sur");
-                currentDirectionWind = DirectionOfTheWind.south;
-                directionWind = 2;
-            }
-
             if (newDirectionWind == DirectionOfTheWind.east)
             {
                 Debug.Log("viento hacia el este");
@@ -428,9 +440,16 @@ namespace Com.BrumaGames.Llamaradas
                 directionWind = 1;
             }
 
+            if (newDirectionWind == DirectionOfTheWind.south)
+            {
+                Debug.Log("viento hacia el sur");
+                currentDirectionWind = DirectionOfTheWind.south;
+                directionWind = 2;
+            }            
+
             if (newDirectionWind == DirectionOfTheWind.west)
             {
-                //            Debug.Log("viento hacia el oeste");
+                Debug.Log("viento hacia el oeste");
                 currentDirectionWind = DirectionOfTheWind.west;
                 directionWind = 3;
             }
@@ -442,12 +461,32 @@ namespace Com.BrumaGames.Llamaradas
         // ####################################################
 
         #region FunctionsFire
-        public void IncreaseFire()
+
+        #region IncreseFire
+        public void CallIncreaseFire()
         {
+           if(PhotonNetwork.IsMasterClient)
+                pv.RPC("IncreaseFire", RpcTarget.AllBuffered);
+        }
+        
+        [PunRPC]
+        void IncreaseFire()
+        {
+            Debug.Log("en el metodo increase");
             GameObject edifice;
             int contFire;
             int maxFire;
 
+            // Si no soy el master busco a los edificios y la lista esta vacia
+           if (!PhotonNetwork.IsMasterClient && allEdifices.Count == 0)
+            {
+                GameObject[] edifices = GameObject.FindGameObjectsWithTag("Edifice");
+                for (int i = 0; i < 36; i++)
+                {
+                    allEdifices.Add(edifices[i]);
+                }
+            }
+            //a los edificios que tienen fuego se le aumenta aun mas
             for (int i = 0; i < allEdifices.Count; i++)
             {
                 edifice = allEdifices[i];
@@ -457,18 +496,39 @@ namespace Com.BrumaGames.Llamaradas
                 if (contFire > 0 && contFire < maxFire)
                 {
                     edifice.GetComponent<Edifice>().contFire++;
-                    Debug.Log("Incremento del fuego " + edifice.name);
+                    edifice.GetComponent<Edifice>().CallFireLevel();
                 }
-            }
+            }                
+        }
+        #endregion
+
+        #region EdificeNeighborWithFire
+        public void CallEdificeNeighborWithFire()
+        {
+            pv.RPC("EdificeNeighborWithFire", RpcTarget.AllBuffered);
         }
 
-        public void EdificeNeighborWithFire()
+        // obtiene los edificios que son vecinos a los que tienen fuego y estan en direción del viento 
+        [PunRPC]
+        void EdificeNeighborWithFire()
         {
             GameObject edifice;
             GameObject neighborEdifice;
             int contFire;
 
+            //comprobar si esto es necesario
             neighborsEdifices.Clear();
+
+            // Si no soy el master busco a los edificios
+            if (!PhotonNetwork.IsMasterClient && allEdifices.Count == 0)
+            {
+                GameObject[] edifices = GameObject.FindGameObjectsWithTag("Edifice");
+                for (int i = 0; i < 36; i++)
+                {
+                    allEdifices.Add(edifices[i]);
+                }
+            }
+
             for (int i = 0; i < allEdifices.Count; i++)
             {
                 edifice = allEdifices[i];
@@ -476,32 +536,33 @@ namespace Com.BrumaGames.Llamaradas
 
                 if (contFire > 0)
                 {
-                    //               Debug.Log("edificio con fuego");
                     neighborEdifice = edifice.GetComponent<Edifice>().GetNeighborEdifice(adjacentDirections[directionWind]);
 
                     if (neighborEdifice != null && neighborEdifice.GetComponent<Edifice>().contFire == 0)
                     {
-                        neighborsEdifices.Add(neighborEdifice);
+                        neighborsEdifices.Add(neighborEdifice); //obtengo todos los edificios donde debe iniciar fuego
                     }
                 }
             }
-            IncreaseFireNeighborEdifice();
+            StartFireNeighborEdifice();
         }
 
-        public void IncreaseFireNeighborEdifice()
+        //inicia el fuego en los vecinos que estan en la dirección del viento
+        public void StartFireNeighborEdifice()
         {
             GameObject edifice;
-
-            //TODO: Aumentar el fuego en todos los edificios de la lista neighborEdifices
+            //Aumenta el fuego en todos los edificios de la lista neighborEdifices
             for (int i = 0; i < neighborsEdifices.Count; i++)
             {
                 edifice = neighborsEdifices[i];
-
-                edifice.GetComponent<Edifice>().contFire++;
-                edifice.GetComponent<Edifice>().StartFireLevel1();
-                //Debug.Log("Incremento del fuego edificio vecino " + edifice.name);
+                edifice.GetComponent<Edifice>().contFire = 1;
+                
+                PhotonView pvEdifice = edifice.GetComponent<PhotonView>();
+                int viewID = pvEdifice.ViewID;
+                edifice.GetComponent<Edifice>().CallStartFireNeighbor(viewID);
             }
         }
+        #endregion
 
         #endregion // FunctionFire
     }

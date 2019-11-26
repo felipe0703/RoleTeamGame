@@ -79,6 +79,7 @@ namespace Com.BrumaGames.Llamaradas
             //TODO: VER COMO SE PRESENTARA LA INTERFAZ DE CONEXIÓN
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
+            Connect();
         }
         
         #endregion
@@ -180,7 +181,6 @@ namespace Com.BrumaGames.Llamaradas
             //# Crítico: solo cargamos si somos el primer jugador, de lo contrario confiamos en `PhotonNetwork.AutomaticallySyncScene` para sincronizar nuestra escena de instancia
            if (playerCount >= minPlayerPerRoom)
             {
-                Debug.Log("Cargamos 'Game' ");
 
                 // #Critico
                 //carga la habitación del nivel.
