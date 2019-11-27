@@ -1310,97 +1310,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1274730364
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1274730366}
-  - component: {fileID: 1274730365}
-  - component: {fileID: 1274730367}
-  m_Layer: 0
-  m_Name: UIManagerGame
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1274730365
+--- !u!114 &1274730365 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3290913483769236708}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274730364}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb45146f3edb6d7468aab71d376b503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelButtons: {fileID: 214212907}
-  buttons: {fileID: 0}
-  panelUI: {fileID: 194542695}
-  panelActions: {fileID: 1454310758}
-  panelMinimap: {fileID: 866568057}
-  panelNotification: {fileID: 1948732670}
-  textNotification: {fileID: 1046343247}
-  vCam1: {fileID: 1876013728}
-  vCam2: {fileID: 889334204}
-  textTurn: {fileID: 4158228529586742965}
-  textPlayer: {fileID: 3990238685281482064}
-  textSetTurn: {fileID: 3144545599561092538}
-  up: {fileID: 0}
-  right: {fileID: 0}
-  down: {fileID: 0}
-  left: {fileID: 0}
-  upRight: {fileID: 0}
-  upLeft: {fileID: 0}
-  downRight: {fileID: 0}
-  downLeft: {fileID: 0}
-  rightUp: {fileID: 0}
-  rightDown: {fileID: 0}
-  leftUp: {fileID: 0}
-  leftDown: {fileID: 0}
-  boton: {fileID: 214212911}
---- !u!4 &1274730366
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274730364}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 601.51935, y: 472.20163, z: -8.070567}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1274730367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274730364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 2
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1277698937 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 786466355175568615, guid: b84ef0ec08dde594ab461c60b69a1a16,
@@ -2364,6 +2285,140 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &3290913483769236708
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3290913484956572568, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_Name
+      value: UIManagerGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 601.51935
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 472.20163
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.070567
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572570, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: panelButtons
+      value: 
+      objectReference: {fileID: 214212907}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: panelUI
+      value: 
+      objectReference: {fileID: 194542695}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: panelActions
+      value: 
+      objectReference: {fileID: 1454310758}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: panelMinimap
+      value: 
+      objectReference: {fileID: 866568057}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: panelNotification
+      value: 
+      objectReference: {fileID: 1948732670}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: textNotification
+      value: 
+      objectReference: {fileID: 1046343247}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: vCam1
+      value: 
+      objectReference: {fileID: 1876013728}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: vCam2
+      value: 
+      objectReference: {fileID: 889334204}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: textTurn
+      value: 
+      objectReference: {fileID: 4158228529586742965}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: textPlayer
+      value: 
+      objectReference: {fileID: 3990238685281482064}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: textSetTurn
+      value: 
+      objectReference: {fileID: 3144545599561092538}
+    - target: {fileID: 3290913484956572569, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: boton
+      value: 
+      objectReference: {fileID: 214212911}
+    - target: {fileID: 3290913484956572571, guid: 890ea6bd1077fd24eabba6f798babbeb,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 890ea6bd1077fd24eabba6f798babbeb, type: 3}
 --- !u!1001 &3302059196268615881
 PrefabInstance:
   m_ObjectHideFlags: 0
