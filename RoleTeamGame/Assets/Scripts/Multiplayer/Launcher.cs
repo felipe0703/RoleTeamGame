@@ -184,7 +184,7 @@ namespace Com.BrumaGames.Llamaradas
 
                 // #Critico
                 //carga la habitación del nivel.
-                PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
+                PhotonNetwork.LoadLevel("Game");
             }
 
         }

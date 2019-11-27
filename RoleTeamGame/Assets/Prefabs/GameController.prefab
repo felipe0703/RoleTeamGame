@@ -49,10 +49,8 @@ MonoBehaviour:
     type: 3}
   turnSystemManager: {fileID: 1487560886613959084, guid: 2f81371bd7716604c9b420ff7316fc93,
     type: 3}
-  maxNumbersActions: 4
   tiempoInicial: 30
   escalaDeTiempo: -1
-  numbersActions: 4
   textTimer: {fileID: 0}
   buttonShowActions: {fileID: 0}
   canvasActions: {fileID: 0}

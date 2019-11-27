@@ -56,7 +56,7 @@ namespace Com.BrumaGames.Llamaradas
         public GUIAnimFREE boton;
         private bool showingPanel = false;
 
-        GameObject player;
+        public GameObject player;
         PlayerController controller;
         PhotonView pv;
         PhotonView pvUI;

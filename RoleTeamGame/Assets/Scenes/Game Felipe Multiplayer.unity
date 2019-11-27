@@ -1851,11 +1851,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MinimapCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 5728858367597006746, guid: 08f5450d321f968438eb1a44589403b2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5728858367597006749, guid: 08f5450d321f968438eb1a44589403b2,
         type: 3}
       propertyPath: m_LocalPosition.x

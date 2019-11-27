@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1487560886613959084
+--- !u!1 &237845763852581302
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,66 +8,74 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1487560886613959082}
-  - component: {fileID: 1487560886613959085}
-  - component: {fileID: 2924688502458047375}
+  - component: {fileID: 237845763852581300}
+  - component: {fileID: 237845763852581303}
+  - component: {fileID: 237845763852581301}
   m_Layer: 0
-  m_Name: TurnSystemManager
-  m_TagString: TurnSystem
+  m_Name: UIManagerGame
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1487560886613959082
+--- !u!4 &237845763852581300
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487560886613959084}
+  m_GameObject: {fileID: 237845763852581302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 88.47553, y: 11.022947, z: -0.2421875}
+  m_LocalPosition: {x: 601.51935, y: 472.20163, z: -8.070567}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1487560886613959085
+--- !u!114 &237845763852581303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487560886613959084}
+  m_GameObject: {fileID: 237845763852581302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29eca9de211ba0449341bc4ee8374c4, type: 3}
+  m_Script: {fileID: 11500000, guid: eb45146f3edb6d7468aab71d376b503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTurnGame: 1
-  playerTurn: 0
-  players: []
-  controllers: []
-  turnBoolsPlayer: 0000000000000000
-  avisoFuego: {fileID: 0}
-  avisoP1: {fileID: 0}
-  avisoP2: {fileID: 0}
-  avisoP3: {fileID: 0}
-  avisoP4: {fileID: 0}
-  fuego: {fileID: 0}
-  p1: {fileID: 0}
-  p2: {fileID: 0}
-  p3: {fileID: 0}
-  p4: {fileID: 0}
-  avisos: []
-  turno: {fileID: 0}
---- !u!114 &2924688502458047375
+  panelButtons: {fileID: 0}
+  buttons: {fileID: 0}
+  panelUI: {fileID: 0}
+  panelActions: {fileID: 0}
+  panelMinimap: {fileID: 0}
+  panelNotification: {fileID: 0}
+  textNotification: {fileID: 0}
+  vCam1: {fileID: 0}
+  vCam2: {fileID: 0}
+  textTurn: {fileID: 0}
+  textPlayer: {fileID: 0}
+  textSetTurn: {fileID: 0}
+  up: {fileID: 0}
+  right: {fileID: 0}
+  down: {fileID: 0}
+  left: {fileID: 0}
+  upRight: {fileID: 0}
+  upLeft: {fileID: 0}
+  downRight: {fileID: 0}
+  downLeft: {fileID: 0}
+  rightUp: {fileID: 0}
+  rightDown: {fileID: 0}
+  leftUp: {fileID: 0}
+  leftDown: {fileID: 0}
+  boton: {fileID: 0}
+--- !u!114 &237845763852581301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487560886613959084}
+  m_GameObject: {fileID: 237845763852581302}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
