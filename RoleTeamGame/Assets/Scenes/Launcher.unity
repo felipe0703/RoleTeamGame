@@ -849,7 +849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c8d21d03a62694585ca9396ece89c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pvCache: {fileID: 0}
   maxPlayersPerRoom: 4
   minPlayerPerRoom: 1
   controlPanel: {fileID: 1468653690}
@@ -857,9 +856,6 @@ MonoBehaviour:
   log: {fileID: 621028906}
   countLabel: {fileID: 740815023}
   countText: {fileID: 740815024}
-  gameVersion: 1
-  isConnecting: 0
-  playerCount: 0
 --- !u!4 &971560644
 Transform:
   m_ObjectHideFlags: 0
