@@ -49,5 +49,6 @@ MonoBehaviour:
   - FireLevel4
   - FireLevel
   - SetTurn
+  - PositionPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0

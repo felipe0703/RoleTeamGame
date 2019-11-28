@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8190501808170272725}
   - component: {fileID: 8190501808170272726}
+  - component: {fileID: 3094010484907781786}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
     type: 3}
   turnSystemManager: {fileID: 1487560886613959084, guid: 2f81371bd7716604c9b420ff7316fc93,
     type: 3}
+  initialPositionPlayer: 000000000000000000000000
   tiempoInicial: 30
   escalaDeTiempo: -1
   textTimer: {fileID: 0}
@@ -62,3 +64,25 @@ MonoBehaviour:
     type: 3}
   person: {fileID: 9126926093658832263, guid: a3ee178628964b14c987fd686411ccd0, type: 3}
   pet: {fileID: 9126926093658832263, guid: 0f5809732556bfa459a31432c33df19b, type: 3}
+--- !u!114 &3094010484907781786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8190501808170272727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

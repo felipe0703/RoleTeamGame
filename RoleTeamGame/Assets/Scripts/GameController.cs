@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 #endregion // Namespace
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class GameController : MonoBehaviour
+    public class GameController : MonoBehaviourPunCallbacks
     {
         // ########################################
         // Variables
@@ -27,9 +28,12 @@ namespace Com.BrumaGames.Llamaradas
         [Tooltip("Prefab del turnSystemManager que se instanciara al iniciar la partida")]
         public GameObject turnSystemManager;
 
+        public GameObject loadingScenes;
+
         //  POSICIONES DEL JUGADOR AL INICIAR
-        int[] positionA = { 20, 140 };
-        int[] positionB = { 30, 50, 70, 90, 110, 130 };
+        int[] positionX = { 20, 140 }; // posición en X
+        int[] positionY = { 30, 50, 70, 90, 110, 130 }; //posición en Y
+        public bool[] initialPositionPlayer = new bool[12];
 
 
        // public int maxNumbersActions = 5;
@@ -85,6 +89,7 @@ namespace Com.BrumaGames.Llamaradas
                 Destroy(gameObject);
             }
 
+
             //INSTANCIAR BOARMANAGER
             if(boarManagerPrefab == null)
             {
@@ -121,10 +126,38 @@ namespace Com.BrumaGames.Llamaradas
                 if (PlayerController.LocalPlayerInstance == null)
                 {
                     // instanciar player
-                    //GameObject iPlayer = Instantiate(playerPrefab);
-                    int i1 = Random.Range(0, 2);
-                    int i2 = Random.Range(0, 5);
-                    Vector3 positionPlayer = new Vector3(positionA[i1], positionB[i2], 0);
+                    bool selectPosition = false;
+                    int i3 = 0;
+                    Vector3 positionPlayer = new Vector3();
+
+                    do
+                    {
+                        int i1 = Random.Range(0, 2);
+                        int i2 = Random.Range(0, 5);
+                        positionPlayer = new Vector3(positionX[i1], positionY[i2], 0);
+
+                        if (i1 == 0)
+                        {
+                            i3 = i2;
+                        }
+                        else
+                        {
+                            i3 = i2 + 6;
+                        }
+
+                        if (!initialPositionPlayer[i3])
+                        {
+                            Debug.Log("posicion vacia");
+                            selectPosition = true;
+                        }else
+                        {
+                            Debug.Log("posicion ocupada");
+                        }
+                    } while (!selectPosition);                    
+
+
+                    PhotonView pv = GetComponent<PhotonView>();
+                    pv.RPC("PositionPlayer", RpcTarget.AllBuffered, i3);
                     PhotonNetwork.Instantiate(this.playerPrefab.name, positionPlayer, Quaternion.identity, 0);
                 }
             }
@@ -155,6 +188,35 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
         #endregion // MonoBehaviour        
+
+        #region sincrizacionPositionPlayer
+
+        [PunRPC]
+        void PositionPlayer(int i)
+        {
+            initialPositionPlayer[i] = true; 
+        }
+
+        #endregion
+
+        #region Photon Callbacks
+
+        //Llamado cuando el jugador local salió de la sala. Necesitamos cargar la escena del lanzador.
+        public override void OnLeftRoom()
+        {
+            loadingScenes.GetComponent<LoadingScene>().LoadLevel(1);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        #endregion
 
         // ########################################
         // función de manejo del tiempo

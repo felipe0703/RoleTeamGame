@@ -30,7 +30,7 @@ namespace Com.BrumaGames.Llamaradas
         public DirectionOfTheWind currentDirectionWind = DirectionOfTheWind.west;
 
         public static int directionWind;
-        public Image arrowDirectionWind;
+        //public Image arrowDirectionWind;
 
         public int xSize, ySize;                                //  tamaño del tablero
 
@@ -103,7 +103,7 @@ namespace Com.BrumaGames.Llamaradas
         }
         private void Update()
         {
-            Debug.Log(directionWind);
+            //Debug.Log(directionWind);
             UIManagerGame.sharedInstance.textSetTurn.text = directionWind.ToString();
         }
         #endregion //MonoBehaviour
@@ -377,6 +377,7 @@ namespace Com.BrumaGames.Llamaradas
                 int i = Random.Range(0, 3);
 
                 directionWind = groupDirection[i];
+                //UIManagerGame.sharedInstance.SetArrowWind();
                 pv.RPC("WindGeneration", RpcTarget.AllBuffered, directionWind);
             }                
         }

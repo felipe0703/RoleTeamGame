@@ -66,21 +66,44 @@ public class ManagerSettingTheGame : MonoBehaviour
 
     public void SetActionTurn(int option)
     {
-        int action = 0;
-        if (option == 0)
-        {
-            action = 3;
-        }
-        else if (option == 1)
-        {
-            action = 4;
-        }
-        else if (option == 2)
-        {
-            action = 5;
-        }
+        int action = option + 2;
 
         GameManager.sharedInstance.maxNumbersActions = action;
+    }
+
+    public void SetLimitPlayers(int option)
+    {
+        byte limit = 2;
+
+        switch (option)
+        {
+            case 1:
+                limit = 2;
+                break;
+            case 2:
+                limit = 3;
+                break;
+            case 3:
+                limit = 4;
+                break;
+            case 4:
+                limit = 5;
+                break;
+            case 5:
+                limit = 6;
+                break;
+            case 6:
+                limit = 7;
+                break;
+            case 7:
+                limit = 8;
+                break;
+            default:
+                break;            
+        }
+        Debug.Log(option);
+        Debug.Log(limit);
+        GameManager.sharedInstance.limitPlayers = limit;
     }
     #endregion  //time/actions
 }

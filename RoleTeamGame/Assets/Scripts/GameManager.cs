@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     // SETTINGS
     public int maxNumbersActions;
     public int timeTurn;
+    public byte limitPlayers = 2;
 
 
     // AUDIO

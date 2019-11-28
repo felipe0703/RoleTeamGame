@@ -20,9 +20,13 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField]
         private byte minPlayerPerRoom = 1;
 
-        [Tooltip("El panel de la interfaz de usuario para permitir al usuario ingresar el nombre, conectarse y jugar")]
+        [Tooltip("El panel de la interfaz de usuario para permitir al usuario conectarse y jugar")]
         [SerializeField]
         private GameObject controlPanel;
+
+        [Tooltip("El panel de la interfaz de usuario para permitir al usuario volver al menu")]
+        [SerializeField]
+        private GameObject buttonMenu;
 
         [Tooltip("La etiqueta UI para informar al usuario que la conexión está en progreso")]
         [SerializeField]
@@ -39,6 +43,9 @@ namespace Com.BrumaGames.Llamaradas
         [Tooltip("La etiqueta UI para informar al usuario cuantos se han conectado")]
         [SerializeField]
         private TextMeshProUGUI countText;
+
+
+        private bool isLoading = false;
 
         #endregion
 
@@ -77,12 +84,36 @@ namespace Com.BrumaGames.Llamaradas
         private void Start()
         {
             //TODO: VER COMO SE PRESENTARA LA INTERFAZ DE CONEXIÓN
+            //minPlayerPerRoom = maxPlayersPerRoom = GameManager.sharedInstance.limitPlayers;
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
             Connect();
         }
-        
+
+        private void FixedUpdate()
+        {
+            if (PhotonNetwork.CurrentRoom != null)
+            {
+                playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+                countText.text = playerCount + "/" + maxPlayersPerRoom;
+            }
+
+            if (!isLoading && playerCount >= minPlayerPerRoom)
+            {
+                //carga la habitación del nivel.
+                //PhotonNetwork.LoadLevel("Game");
+                Debug.Log("a cargar escena");
+                LoadingLevel();
+            }
+        }
+
         #endregion
+
+        void LoadingLevel()
+        {
+            isLoading = true;
+            PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
+        }
 
         #region Public Methods
 
@@ -101,6 +132,7 @@ namespace Com.BrumaGames.Llamaradas
             //UI
             progressLabel.SetActive(true);
             controlPanel.SetActive(false);
+            buttonMenu.SetActive(false);
 
 
             // comprobamos si estamos conectados o no, nos unimos si lo estamos, de lo contrario iniciamos la conexión con el servidor.
@@ -120,6 +152,7 @@ namespace Com.BrumaGames.Llamaradas
                 else
                 {
                     log.text = "Error en la conexión con el servidor...";
+                    Debug.Log("error en la conexión con el servidor");
                 }
             }
         }
@@ -142,7 +175,12 @@ namespace Com.BrumaGames.Llamaradas
                 if (!PhotonNetwork.JoinRandomRoom())
                 {
                     log.text = "Eror en la unión a una sala...";
+                    Debug.Log("Error en la unión a una sala");
                 }
+            }
+            else
+            {
+                Debug.Log("error en la conexión con el master");
             }
 
         }
@@ -151,6 +189,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
+            buttonMenu.SetActive(true);
 
             Debug.LogWarningFormat("PUN Basics Launcher Llamaradas: OnDisconnected() fue llamado por PUN con causa {0}", cause);
         }
@@ -163,6 +202,7 @@ namespace Com.BrumaGames.Llamaradas
             if(!PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom }))
             {
                 log.text = "Error en la creación de una sala...";
+                Debug.Log("Error en la cración de la una sala");
             }
         }
 
@@ -172,21 +212,15 @@ namespace Com.BrumaGames.Llamaradas
             log.text = "Unidos a la sala...";
             countLabel.SetActive(true);
 
-            if(PhotonNetwork.CurrentRoom != null)
-            {
-                playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-                countText.text = playerCount + "/" + maxPlayersPerRoom;
-            }
+            
 
             //# Crítico: solo cargamos si somos el primer jugador, de lo contrario confiamos en `PhotonNetwork.AutomaticallySyncScene` para sincronizar nuestra escena de instancia
-           if (playerCount >= minPlayerPerRoom)
+           /*if (playerCount >= minPlayerPerRoom)
             {
 
                 // #Critico
-                //carga la habitación del nivel.
-                //PhotonNetwork.LoadLevel("Game");
-                PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
-            }
+                
+            }*/ 
 
         }
         #endregion

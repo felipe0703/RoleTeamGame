@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using Cinemachine;
 #endregion //Namespaces
 
 namespace Com.BrumaGames.Llamaradas
@@ -28,6 +29,9 @@ namespace Com.BrumaGames.Llamaradas
         public TextMeshProUGUI textNotification;
         public GameObject vCam1;
         public GameObject vCam2;
+        public GameObject vCamMaster;
+        public CinemachineVirtualCamera cine;
+        public GameObject arrow;
 
         [Space(10)]
         public TextMeshProUGUI textTurn;
@@ -97,25 +101,41 @@ namespace Com.BrumaGames.Llamaradas
                     }
                     SetButtons(allButtons);
                 }
+                ChangeCam();
             }
         }
 
-        //USADO PARA PRUEBAS
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.F))
-            {
-                pvUI.RPC("TestRPC", RpcTarget.AllViaServer);
-            }
+            SetArrowWind();
         }
         #endregion
 
-        //USADO PARA PRUEBAS
-        [PunRPC]
-        private void TestRPC()
+        public void SetArrowWind()
         {
-            panelNotification.SetActive(true);
-            textNotification.text = "esto es una prueba de rpc";
+            Debug.Log("cambio de flecha");
+            int directionWind = BoardManager.directionWind;
+            int grade = 0;
+            switch (directionWind)
+            {
+                case 0:
+                    grade = 0;
+                    break;
+                case 1:
+                    grade = -90;
+                    break;
+                case 2:
+                    grade = 180;
+                    break;
+                case 3:
+                    grade = 90;
+                    break;
+                default:
+                    break;
+            }
+
+            RectTransform transform = arrow.GetComponent<RectTransform>();
+            transform.localRotation =  Quaternion.Euler(0,0,grade);
         }
 
         #region Methods Call
@@ -172,12 +192,28 @@ namespace Com.BrumaGames.Llamaradas
         #endregion
 
         #region Animation
-
+        void ChangeCam()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //vCamMaster.SetActive(true);
+                vCam1.SetActive(true);
+                vCam2.SetActive(false);
+                cine.m_Lens.OrthographicSize = 50f;
+            }
+            else
+            {
+                vCam1.SetActive(true);
+                cine.m_Lens.OrthographicSize = 14f;
+                //vCamMaster.SetActive(false);
+                vCam2.SetActive(false);
+            }
+        }
         public void TogglePanel()
         {
 
-            vCam1.SetActive(true);
-            vCam2.SetActive(false);
+            ChangeCam();
+
             if (!boton.gameObject.activeSelf)
             {
                 boton.gameObject.SetActive(true);

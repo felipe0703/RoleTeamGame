@@ -716,9 +716,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GUISpeed: 1
-  m_AutoAnimation: 0
+  m_AutoAnimation: 1
   m_AnimationMode: 4
-  m_IdleTime: 8
+  m_IdleTime: 80
 --- !u!4 &417494165
 Transform:
   m_ObjectHideFlags: 0
