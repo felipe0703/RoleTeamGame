@@ -24,4 +24,12 @@ public class UIManagerMainMenu : MonoBehaviour
         buttonCredits.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
     }
 
+    public void clickAnim(){
+        bkgr.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonCreateGame.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonJoinGame.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonAudio.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonCredits.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+    }
+
 }

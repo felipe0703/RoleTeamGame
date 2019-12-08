@@ -13,6 +13,8 @@ public class ManagerSettingTheGame : MonoBehaviour
     #region Variables
     public static ManagerSettingTheGame sharedInstance;
 
+    public GUIAnimFREE bkgr,panelSettings,buttonOk,buttonBck,mapTxt,map1,map2,map3;
+
     #endregion // Variables
 
     // ########################################
@@ -23,6 +25,14 @@ public class ManagerSettingTheGame : MonoBehaviour
 
     void Start()
     {
+        bkgr.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        panelSettings.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonOk.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonBck.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        mapTxt.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        map1.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        map2.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        map3.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         // SINGLETON
         if (sharedInstance == null)
         {
@@ -33,6 +43,17 @@ public class ManagerSettingTheGame : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+    }
+    public void clickAnims(){
+        bkgr.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        panelSettings.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonOk.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonBck.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        mapTxt.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        map1.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        map2.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        map3.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
 
     }
     #endregion // Monobehaviour
