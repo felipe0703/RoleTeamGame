@@ -9,8 +9,7 @@ public class UIManager : MonoBehaviour
     //public RectTransform botonStart;
    // public RectTransform title;
 
-    public GUIAnimFREE botonStart;
-    public GUIAnimFREE title;
+    public GUIAnimFREE botonStart,title,bckgr;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +18,11 @@ public class UIManager : MonoBehaviour
         //botonStart.DOAnchorPosX(0, 0.5f);
         botonStart.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         title.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+    }
+    public void clickAnims(){
+        botonStart.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        title.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        bckgr.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
     }
 
 }
