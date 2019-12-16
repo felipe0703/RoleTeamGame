@@ -1383,6 +1383,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 173353723}
+        m_MethodName: clickAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &897388105
@@ -1673,7 +1684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GUISpeed: 1
-  m_AutoAnimation: 1
+  m_AutoAnimation: 0
   m_AnimationMode: 4
   m_IdleTime: 8
 --- !u!4 &1242598624
@@ -1772,6 +1783,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 25640331}
         m_MethodName: PlayClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 173353723}
+        m_MethodName: clickAnim
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1948,7 +1970,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -2108,6 +2130,17 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 173353723}
+        m_MethodName: clickAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2279,7 +2312,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -2439,6 +2472,17 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 173353723}
+        m_MethodName: clickAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2610,7 +2654,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0

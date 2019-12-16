@@ -575,7 +575,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -1001,7 +1001,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -1312,6 +1312,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1524394873}
+        m_MethodName: clickAnims
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &896420370
@@ -1479,7 +1490,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -1895,6 +1906,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1103706782653531243, guid: 2a0ce500b0f410f44bd1c80cf10ebaed,
+        type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 777736134}
+    - target: {fileID: 1103706782653531243, guid: 2a0ce500b0f410f44bd1c80cf10ebaed,
+        type: 3}
+      propertyPath: titlePartida
+      value: 
+      objectReference: {fileID: 2140243631}
+    - target: {fileID: 1103706782653531243, guid: 2a0ce500b0f410f44bd1c80cf10ebaed,
+        type: 3}
+      propertyPath: inputTxt
+      value: 
+      objectReference: {fileID: 235285954}
+    - target: {fileID: 1103706782653531243, guid: 2a0ce500b0f410f44bd1c80cf10ebaed,
+        type: 3}
+      propertyPath: buttonOk
+      value: 
+      objectReference: {fileID: 896420372}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0ce500b0f410f44bd1c80cf10ebaed, type: 3}
 --- !u!114 &1524394873 stripped
@@ -2262,7 +2293,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
