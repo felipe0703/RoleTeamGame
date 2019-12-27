@@ -29,7 +29,6 @@ namespace Com.BrumaGames.Llamaradas
         public TextMeshProUGUI textNotification;
         public GameObject vCam1;
         public GameObject vCam2;
-        public GameObject vCamMaster;
         public CinemachineVirtualCamera cine;
         public GameObject arrow;
 
@@ -38,12 +37,17 @@ namespace Com.BrumaGames.Llamaradas
         public TextMeshProUGUI textPlayer;
         public TextMeshProUGUI textSetTurn;
 
+        public TextMeshProUGUI textScoreSaved;
+        public TextMeshProUGUI textScoreDead;
+
 
 
         // public GameObject[] panelButtonsMove;
 
         // BUTTONS        
         private GameObject[] allButtons = new GameObject[12];
+        [Space(10)]
+        [Header("Buttons")]
         [Space(10)]
         public GameObject up;
         public GameObject right;
@@ -61,6 +65,7 @@ namespace Com.BrumaGames.Llamaradas
         private bool showingPanel = false;
 
         public GameObject player;
+        bool foundPlayer = false;
         PlayerController controller;
         PhotonView pv;
         PhotonView pvUI;
@@ -84,36 +89,49 @@ namespace Com.BrumaGames.Llamaradas
 
             pvUI = GetComponent<PhotonView>();
 
-            if (player == null)
-            {
-                player = GameObject.FindGameObjectWithTag("Player"); 
-                pv = player.GetComponent<PhotonView>();
-
-                if (pv.IsMine)
-                {
-                    controller = player.GetComponent<PlayerController>();
-                    GameObject canvasPlayer = player.transform.GetChild(1).gameObject;
-                    buttons = canvasPlayer.transform.GetChild(1).gameObject;
-
-                    for (int i = 0; i < buttons.transform.childCount; i++)
-                    {
-                        allButtons[i] = buttons.transform.GetChild(i).gameObject;
-                    }
-                    SetButtons(allButtons);
-                }
-                ChangeCam();
-            }
         }
 
         private void Update()
         {
+            if (!foundPlayer)
+            {
+               foundPlayer = FindPlayer();
+            }
+
             SetArrowWind();
         }
         #endregion
 
+        #region FindPlayer
+        bool FindPlayer()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player == null)
+                return false;
+
+            pv = player.GetComponent<PhotonView>();
+
+            if (pv.IsMine)
+            {
+                controller = player.GetComponent<PlayerController>();
+                GameObject canvasPlayer = player.transform.GetChild(1).gameObject;
+                buttons = canvasPlayer.transform.GetChild(1).gameObject;
+
+                for (int i = 0; i < buttons.transform.childCount; i++)
+                {
+                    allButtons[i] = buttons.transform.GetChild(i).gameObject;
+                }
+                SetButtons(allButtons);
+            }
+            ChangeCam();
+            return true;
+        }
+        #endregion
+        
+        #region Directionwind
         public void SetArrowWind()
         {
-            Debug.Log("cambio de flecha");
             int directionWind = BoardManager.directionWind;
             int grade = 0;
             switch (directionWind)
@@ -137,6 +155,7 @@ namespace Com.BrumaGames.Llamaradas
             RectTransform transform = arrow.GetComponent<RectTransform>();
             transform.localRotation =  Quaternion.Euler(0,0,grade);
         }
+        #endregion
 
         #region Methods Call
         //TODO: BUSCAR EL PLAYERCONTROLLER PARA LLAMAR AL METODO DE DETECCION DE EDIFICIO
@@ -191,24 +210,26 @@ namespace Com.BrumaGames.Llamaradas
         }
         #endregion
 
-        #region Animation
+        #region ChangeCam
         void ChangeCam()
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                //vCamMaster.SetActive(true);
                 vCam1.SetActive(true);
                 vCam2.SetActive(false);
-                cine.m_Lens.OrthographicSize = 50f;
+                cine.m_Lens.OrthographicSize = 45f;
             }
             else
             {
                 vCam1.SetActive(true);
-                cine.m_Lens.OrthographicSize = 14f;
-                //vCamMaster.SetActive(false);
+                cine.m_Lens.OrthographicSize = 45f;
                 vCam2.SetActive(false);
             }
         }
+        #endregion
+
+        #region Animation        
+
         public void TogglePanel()
         {
 
@@ -327,6 +348,17 @@ namespace Com.BrumaGames.Llamaradas
             panelNotification.SetActive(false);
         }
 
+
+        // PANEL SCORE
+        public void UpdateScoreSavedText(int score)
+        {
+            textScoreSaved.text = score.ToString();
+        }
+
+        public void UpdateScoreDeadText(int score)
+        {
+            textScoreDead.text = score.ToString();
+        }
         #endregion
 
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 #endregion //Namespace
 
 
@@ -30,18 +31,25 @@ namespace Com.BrumaGames.Llamaradas
         #region Variables
 
         public int id;
+        public int idTypeOfEdifice;
+        [SerializeField]
+        Sprite spriteBurnedEdifice;
+
         PhotonView pv;
 
         public GameObject btn;
-
         public Transform street2;
+        public bool BurnedEdifice;
 
-
+        [Space(10)]
+        [Header("Level Fire")]
         public GameObject level1;
         public GameObject level2;
         public GameObject level3;
         public GameObject level4;
 
+        [Space(10)]
+        [Header("Habitants")]
         public Button[] habitants;
         public Sprite[] imageHabitants;
 
@@ -50,16 +58,27 @@ namespace Com.BrumaGames.Llamaradas
         public int contPerson;
         public int contPet;
 
+        [Space(10)]
+        [Header("Fire")]
         public int maxFire;
         public int contFire;
+
 
         public bool isInspected = false;
         public int idPositionEdifice = -1;
 
         //AUDIO
         private AudioSource edificeAudio;
+        [Space(10)]
+        [Header("Audio")]
         public AudioClip[] clips;
         SfxControl ScriptEfectos;
+
+
+        //TEST
+        [Space(10)]
+        [Header("TEST")]
+        public TextMeshProUGUI[] texts;
 
         #endregion // Variables
 
@@ -76,70 +95,41 @@ namespace Com.BrumaGames.Llamaradas
             edificeAudio.pitch = 1.36f;
             ScriptEfectos = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
 
-            int disabledPerson = GameController.sharedInstance.totalDisabledPerson;
-            int person = GameController.sharedInstance.totalPerson;
-            int pet = GameController.sharedInstance.totalPet;
+            int disabledPerson = GameController.totalDisabledPerson;
+            int person = GameController.totalPerson;
+            int pet = GameController.totalPet;
             int population = disabledPerson + person + pet;
             idPositionEdifice = -1;
-            //TODO: ANTES DE GENERAR EL NUMERO RANDOM PREGUNTE SI AUN QUEDAN PERSONAS DISPONIBLES
 
-            // PREGUNTAR POR CADA HABITANTE
-            if (population > 0)
-            {
-
-                int maxPopulationInEdifice = 0;
-
-                if (population >= 3)
-                {
-                    maxPopulationInEdifice = 3;
-                }
-                else if (population == 2)
-                {
-                    maxPopulationInEdifice = 2;
-                }
-                else
-                {
-                    maxPopulationInEdifice = 1;
-                }
-
-                //TODO: ver si hay edificios sin personas
-                contPopulation = Random.Range(1, maxPopulationInEdifice + 1);
-
-                if (contPopulation > 0)
-                {
-                    int i = contPopulation;
-                    do
-                    {
-                        int numRandom = Random.Range(1, 4);
-                        // TODO: confirmar si hay del habitante que salio si no intentar sacar otro
-                        if (numRandom == 1 && disabledPerson > 0)
-                        {
-                            contDisabledPerson++;
-                            GameController.sharedInstance.totalDisabledPerson--;
-                            i--;
-                        }
-
-                        if (numRandom == 2 && person > 0)
-                        {
-                            contPerson++;
-                            GameController.sharedInstance.totalPerson--;
-                            i--;
-                        }
-
-                        if (numRandom == 3 && pet > 0)
-                        {
-                            contPet++;
-                            GameController.sharedInstance.totalPet--;
-                            i--;
-                        }
-
-                    } while (i > 0);
-                }
-            }
         }
-        
+
+        private void Update()
+        {
+            //TEXTO DE PRUEBA
+            
+            for (int i = 0; i < texts.Length; i++)
+            {
+                texts[i].text = "-";
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                texts[0].text = GameController.sharedInstance.populationInEdifices[id, 0].ToString();
+                texts[1].text = GameController.sharedInstance.populationInEdifices[id, 1].ToString();
+                texts[2].text = GameController.sharedInstance.populationInEdifices[id, 2].ToString();
+            }
+            else
+            {
+                texts[0].text = GameController.sharedInstance.populationInEdificesClient[id, 0].ToString();
+                texts[1].text = GameController.sharedInstance.populationInEdificesClient[id, 1].ToString();
+                texts[2].text = GameController.sharedInstance.populationInEdificesClient[id, 2].ToString();
+            }
+            
+        }
+
         #endregion // Monobehaviour
 
+        
         // ########################################
         // Funciones IsSelected y Audio
         // ########################################
@@ -158,59 +148,77 @@ namespace Com.BrumaGames.Llamaradas
         //TODO: EVALUAR SI ES CONVENIENTE TENER ESTA FUNCIONALIDAD EN ESTE SCRIPT O EN EL GAMECONTROLLER
         public void IsSelectedTakeOut(int id)
         {
-            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
-            GameObject habitant = null;
-
-            // detecto que tipo de habitante seleccione
-            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
+            if (!BurnedEdifice) //si el edificio no esta quemado
             {
-                habitant = GameController.sharedInstance.disabledPerson;
-            }
-            else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
-            {
-                habitant = GameController.sharedInstance.person;
-            }
-            else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
-            {
-                habitant = GameController.sharedInstance.pet;
-            }
-            habitants[id].image.enabled = false;
-            habitants[id].gameObject.SetActive(false);
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-            HabitantsNotInteractable();
+                PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                GameObject habitant = null;
+                int scoreHabitant = 0;
 
+                Debug.Log("presione un habitante");
 
-            // tamaño de un arreglo de booleanos que determina si la calle esta ocupada
-            int sizePosition = controller.street.GetComponent<HabitantsInTheStreet>().positions.Length;
-
-            // recorre el arreglo de booleanos de las posiciones de las calles
-            // si encuentra una calle vacia posiciona ahí al habitante del edificio
-            // si es un edificio sobre el jugador posiciona al habitante arriba en la calle
-            // si es un edificio bajo el jugador posiciona al habitante abajo en la calle
-            for (int i = 0; i < sizePosition; i++)
-            {
-                if (!controller.street.GetComponent<HabitantsInTheStreet>().positions[i])
+                // detecto que tipo de habitante seleccione
+                if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
                 {
-                    if ((idPositionEdifice == 0 || idPositionEdifice == 3) && i < 3)
-                    {
-                        Instantiate(habitant, controller.street.transform.GetChild(i).transform);
-                        controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
-                        ScriptEfectos.PlayDoorFx(id);
-                        return;
-                    }
+                    habitant = GameController.sharedInstance.disabledPerson;
+                    scoreHabitant = 3;
+                }
+                else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
+                {
+                    habitant = GameController.sharedInstance.person;
+                    scoreHabitant = 2;
+                }
+                else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
+                {
+                    habitant = GameController.sharedInstance.pet;
+                    scoreHabitant = 1;
+                }
 
-                    if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
+                pv = GetComponent<PhotonView>();
+                pv.RPC("UpdatePopulationInEdifice", RpcTarget.AllBuffered, this.id, habitants[id].GetComponent<ButtonHabitant>().idHabitant, id);
+
+                // PUNTUACIÓN
+                controller.UpdateScoreSaved(scoreHabitant);
+
+
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);//vuelve el edificio a su color original
+                HabitantsNotInteractable();
+
+                //SPAWNEAR HABITANTES EN LAS CALLES
+                // tamaño de un arreglo de booleanos que determina si la calle esta ocupada
+                int sizePosition = controller.street.GetComponent<HabitantsInTheStreet>().positions.Length;
+
+                // recorre el arreglo de booleanos de las posiciones de las calles
+                // si encuentra una calle vacia posiciona ahí al habitante del edificio
+                // si es un edificio sobre el jugador posiciona al habitante arriba en la calle
+                // si es un edificio bajo el jugador posiciona al habitante abajo en la calle
+                for (int i = 0; i < sizePosition; i++)
+                {
+                    if (!controller.street.GetComponent<HabitantsInTheStreet>().positions[i])
                     {
-                        Instantiate(habitant, controller.street.transform.GetChild(i).transform);
-                        controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
-                        ScriptEfectos.PlayDoorFx(id);
-                        return;
+                        if ((idPositionEdifice == 0 || idPositionEdifice == 3) && i < 3)
+                        {
+                            //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
+                            PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
+                            controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
+                            ScriptEfectos.PlayDoorFx(id);
+                            controller.UpdateNumberOfActions();
+                            return;
+                        }
+
+                        if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
+                        {
+                            //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
+                            PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
+                            controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
+                            ScriptEfectos.PlayDoorFx(id);
+                            controller.UpdateNumberOfActions();
+                            return;
+                        }
+
                     }
                 }
-            }
+            }            
         }
-
 
         void HabitantsNotInteractable()
         {
@@ -219,18 +227,60 @@ namespace Com.BrumaGames.Llamaradas
                 habitants[i].interactable = false;
             }
         }
+
+        [PunRPC]
+        void UpdatePopulationInEdifice(int idEdifice, int idHabitant, int id)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //Debug.Log("cantidad: " + GameController.sharedInstance.populationInEdifices[idEdifice, idHabitant]);
+
+                GameController.sharedInstance.populationInEdifices[idEdifice, idHabitant]--;
+                //Debug.Log("idEdifice: " + idEdifice + " IdHabitant: " + idHabitant + " habitants: " +GameController.sharedInstance.populationInEdifices[idEdifice, idHabitant]);
+            }
+            else
+            {
+                //Debug.Log("cantidad: " + GameController.sharedInstance.populationInEdificesClient[idEdifice, idHabitant]);
+
+                GameController.sharedInstance.populationInEdificesClient[idEdifice, idHabitant]--;
+                //Debug.Log("idEdifice: " + idEdifice + " IdHabitant: " + idHabitant + " habitants: " + GameController.sharedInstance.populationInEdificesClient[idEdifice, idHabitant]);
+
+            }
+            habitants[id].image.enabled = false;
+            habitants[id].gameObject.SetActive(false);
+
+        }
+
+
         public void PlayClickSound()
         {
             edificeAudio.PlayOneShot(clips[0]);
         }
 
-
+        // rellena los sprite de los habitantes en el edificio
         void FillHabitant()
         {
-            int disabledPerson = contDisabledPerson;
-            int person = contPerson;
-            int pet = contPet;
+            int disabledPerson = 0;
+            int person = 0;
+            int pet = 0;
+            //TODO: buscar los contadores de cada edificio y asignarlos
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //Debug.Log("boton fill");
+                disabledPerson = GameController.sharedInstance.populationInEdifices[id, 0];
+                person = GameController.sharedInstance.populationInEdifices[id, 1];
+                pet = GameController.sharedInstance.populationInEdifices[id, 2];
+            }
+            else
+            {
+                //Debug.Log("no soy el master");
+                disabledPerson = GameController.sharedInstance.populationInEdificesClient[id, 0];
+                person = GameController.sharedInstance.populationInEdificesClient[id, 1];
+                pet = GameController.sharedInstance.populationInEdificesClient[id, 2];
+            }
+           
 
+            //Debug.Log("disabled: " + disabledPerson + " person: " + person + " pet: " + pet);
             for (int i = 0; i < 3; i++)
             {
                 if (disabledPerson > 0)
@@ -258,7 +308,7 @@ namespace Com.BrumaGames.Llamaradas
                 // habitants[i].preserveAspect = true;
             }
         }
-
+        
 
         #endregion // Audio
 
@@ -351,6 +401,7 @@ namespace Com.BrumaGames.Llamaradas
         //fuego en el primer edificio, donde comienza el incendio
         public void CallFireStart()
         {
+            
             pv = GetComponent<PhotonView>();
             pv.RPC("FireStartInEdifice", RpcTarget.AllBuffered);
         }
@@ -358,11 +409,31 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         void FireStartInEdifice()
         {
-            if (id == 1)
+            bool  next = false;
+
+            /* do
+             {
+                 Debug.Log("no lo encuentro");
+                 if (BoardManager.sharedInstance != null)
+                 {
+                     next = true;
+                     Debug.Log("en el while");
+                 }
+                 else
+                     Debug.Log("no seta");
+             } while (!next);
+             */
+            
+            ChangeSprite();
+            BurnedEdifice = true;
+
+            BoardManager.sharedInstance.setCont = true;
+
+            if (idTypeOfEdifice == 1)
             {
                 StartFireLevel3();
             }
-            else if (id == 2)
+            else if (idTypeOfEdifice == 2)
             {
                 StartFireLevel4();
             }
@@ -388,7 +459,6 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         void StartFireNeighbor(int viewId)
         {
-            //TODO: PROBAR ADQUIRIENDO DIRECTAMENTE LOS GAMEOBJECT
             level1.SetActive(true);
             level2.SetActive(false);
             level3.SetActive(false);
@@ -400,6 +470,15 @@ namespace Com.BrumaGames.Llamaradas
         
         public void CallFireLevel()
         {
+            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            if (contFire == maxFire)
+            {
+                controller.UpdateScoreDead(TotalScoreDeadHabitant());
+                ChangeSprite();
+                BurnedEdifice = true;
+                GameController.sharedInstance.UpdateTotalBurnedEdifice();
+            }
+
             pv = GetComponent<PhotonView>();
             pv.RPC("FireLevel", RpcTarget.AllBuffered);
         }
@@ -424,5 +503,40 @@ namespace Com.BrumaGames.Llamaradas
 
         #endregion
 
+        void ChangeSprite()
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = spriteBurnedEdifice;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+
+            for (int i = 0; i < habitants.Length; i++)
+            {
+                habitants[i].gameObject.SetActive(false);
+            }
+        }
+
+        int TotalScoreDeadHabitant()
+        {
+            int disabledPerson;
+            int person;
+            int pet;
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                disabledPerson = GameController.sharedInstance.populationInEdifices[id, 0];
+                person = GameController.sharedInstance.populationInEdifices[id, 1];
+                pet = GameController.sharedInstance.populationInEdifices[id, 2];
+            }
+            else
+            {
+                disabledPerson = GameController.sharedInstance.populationInEdificesClient[id, 0];
+                person = GameController.sharedInstance.populationInEdificesClient[id, 1];
+                pet = GameController.sharedInstance.populationInEdificesClient[id, 2];
+            }            
+
+            int score = disabledPerson + person + pet;
+
+            return score;
+        }
     }
+    
 }
