@@ -43,6 +43,8 @@ namespace Com.BrumaGames.Llamaradas
         public int maxHouse = 12;
         public int maxEdifice = 18;
         public int maxPark = 6;
+        public int cont = 0;
+        public bool setCont = false;
 
 
         [Space(10)]
@@ -97,14 +99,25 @@ namespace Com.BrumaGames.Llamaradas
             Vector2 offset = currenteEdifice.GetComponent<BoxCollider2D>().size; // obtengo el tamaño del edificio
 
             CreateInitialBoard(offset); //  inicio el tablero
-            
 
             directionWind = 3;
+
+            
         }
         private void Update()
         {
             //Debug.Log(directionWind);
             UIManagerGame.sharedInstance.textSetTurn.text = directionWind.ToString();
+        }
+
+        private void LateUpdate()
+        {
+            if (setCont && !PhotonNetwork.IsMasterClient)
+            {
+                SetIdEdifice();
+                GameController.sharedInstance.FillPopulationList(GameController.sharedInstance.listPopulationInEdifice);
+                setCont = false;
+            }
         }
         #endregion //MonoBehaviour
 
@@ -157,7 +170,7 @@ namespace Com.BrumaGames.Llamaradas
                             do
                             {
                                 edifice = prefabs[Random.Range(0, prefabs.Count)];
-                                idX = edifice.GetComponent<Edifice>().id;
+                                idX = edifice.GetComponent<Edifice>().idTypeOfEdifice;
 
                             } while ((idX == 1 && contHouse > maxHouse - 1)
                                     || (idX == 2 && contEdifice > maxEdifice - 1)
@@ -175,8 +188,10 @@ namespace Com.BrumaGames.Llamaradas
                             {
                                 contPark++;
                             }
-
+                           
                             currenteEdifice = edifice;
+
+                            
 
                             //  GENERACIÓN EDIFICIOS
                             Vector3 edificePosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
@@ -184,6 +199,9 @@ namespace Com.BrumaGames.Llamaradas
                             //GameObject newEdifice = Instantiate(currenteEdifice,positionEdifice, currenteEdifice.transform.rotation);
 
                             GameObject newEdifice = PhotonNetwork.Instantiate("Edifices/" + currenteEdifice.name, edificePosition, Quaternion.identity);
+
+                            newEdifice.GetComponent<Edifice>().id = cont;
+                            cont++;
 
                             // Formato al nombre de los objetos
                             newEdifice.name = string.Format("Edifice[{0}][{1}]", x, y);
@@ -292,13 +310,27 @@ namespace Com.BrumaGames.Llamaradas
 
                         //borders[x, y] = newBorder;
                     }
-                }
+                }                
             }
             SaveEdificesInMatrix();
             FireStart();
-
+            
         }
         #endregion
+
+                            
+        public void SetIdEdifice()
+        {
+            if (!PhotonNetwork.IsMasterClient && allEdifices.Count == 0)
+            {
+                GameObject[] edifices = GameObject.FindGameObjectsWithTag("Edifice");
+                for (int i = 0; i < 36; i++)
+                {
+                    allEdifices.Add(edifices[i]);
+                    allEdifices[i].GetComponent<Edifice>().id = i;
+                }
+            }
+        }
 
         // ####################################################
         // FUNCIONES COMPLEMENTARIAS EN LA CREACION DEL TABLERO
@@ -325,7 +357,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             int xSizeHalf = xSize / 2;
             int ySizeHalf = ySize / 2;
-
+            
             // Obtención de edificios centrales
             for (int i = xSizeHalf - 1; i < xSizeHalf + 1; i++)
             {
@@ -340,7 +372,7 @@ namespace Com.BrumaGames.Llamaradas
             // Obtener el edificio donde iniciará el fuego
             edifice = centralEdifices[Random.Range(0, centralEdifices.Count)];
 
-            int idEdifice = edifice.GetComponent<Edifice>().id;
+            int idEdifice = edifice.GetComponent<Edifice>().idTypeOfEdifice;
 
             edifice.GetComponent<Edifice>().CallFireStart();
         }
@@ -473,7 +505,6 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         void IncreaseFire()
         {
-            Debug.Log("en el metodo increase");
             GameObject edifice;
             int contFire;
             int maxFire;

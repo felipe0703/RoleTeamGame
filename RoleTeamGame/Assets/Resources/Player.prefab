@@ -2044,6 +2044,8 @@ MonoBehaviour:
   myTurn: 0
   finishTurn: 0
   MyTurn: 1
+  savedHabitants: 0
+  deadHabitants: 0
   FireSound: {fileID: 0}
   ScriptEfectos: {fileID: 0}
 --- !u!114 &4509734137207561815

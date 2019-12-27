@@ -102,7 +102,6 @@ namespace Com.BrumaGames.Llamaradas
             {
                 //carga la habitación del nivel.
                 //PhotonNetwork.LoadLevel("Game");
-                Debug.Log("a cargar escena");
                 LoadingLevel();
             }
         }
@@ -114,6 +113,21 @@ namespace Com.BrumaGames.Llamaradas
             isLoading = true;
             PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
         }
+        // TODO: PROBAR ESTE METODO DE CARGA
+        /*
+        private IEnumerator MoveToGameScene()
+        {
+            // Temporary disable processing of futher network messages
+            PhotonNetwork.IsMessageQueueRunning = false;
+            LoadNewScene(newSceneName); // custom method to load the new scene by name
+            while (newSceneDidNotFinishLoading)
+            {
+                yield return null;
+            }
+            PhotonNetwork.IsMessageQueueRunning = true;
+        }
+        */
+
 
         #region Public Methods
 
