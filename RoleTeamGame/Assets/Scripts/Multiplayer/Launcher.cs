@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 
 namespace Com.BrumaGames.Llamaradas
@@ -44,6 +45,9 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField]
         private TextMeshProUGUI countText;
 
+        [Tooltip("La etiqueta UI para informar al usuario la espera de jugadores")]
+        [SerializeField]
+        private TextMeshProUGUI waitingPlayersText;
 
         private bool isLoading = false;
 
@@ -63,8 +67,7 @@ namespace Com.BrumaGames.Llamaradas
         int playerCount = 0;
 
         #endregion
-
-
+        
         #region MonoBehaviour CallBacks
         /*    
          * El método MonoBehaviour llamado en GameObject por Unity durante la fase de inicialización temprana.
@@ -103,7 +106,14 @@ namespace Com.BrumaGames.Llamaradas
                 //carga la habitación del nivel.
                 //PhotonNetwork.LoadLevel("Game");
                 LoadingLevel();
+                //StartCoroutine(LoadScene());
             }
+            if (PhotonNetwork.LevelLoadingProgress > 0 && PhotonNetwork.LevelLoadingProgress < 1)
+            {
+                Debug.Log(PhotonNetwork.LevelLoadingProgress);
+            }
+
+
         }
 
         #endregion
@@ -112,7 +122,14 @@ namespace Com.BrumaGames.Llamaradas
         {
             isLoading = true;
             PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
+
+            
         }
+        /*
+        IEnumerator LoadScene()
+        {
+            AsyncOperation operation = scenem
+        }*/
         // TODO: PROBAR ESTE METODO DE CARGA
         /*
         private IEnumerator MoveToGameScene()
@@ -223,7 +240,8 @@ namespace Com.BrumaGames.Llamaradas
         public override void OnJoinedRoom()
         {
             Debug.Log("PUN Basics Launcher Llamaradas: OnJoinedRoom() llamado por PUN. Ahora este cliente esta en la sala.");
-            log.text = "Unidos a la sala...";
+            log.text = "Unido a la sala...";
+            waitingPlayersText.gameObject.SetActive(true);
             countLabel.SetActive(true);
 
             
