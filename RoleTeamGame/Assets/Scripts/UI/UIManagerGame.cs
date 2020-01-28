@@ -29,6 +29,10 @@ namespace Com.BrumaGames.Llamaradas
         public TextMeshProUGUI textNotification;
         public GameObject vCam1;
         public GameObject vCam2;
+        public GameObject minimapCamera;
+        public GameObject vCamMinimap;
+        public GameObject vCamHabitant;
+        
         public CinemachineVirtualCamera cine;
         public GameObject arrow;
 
@@ -124,7 +128,9 @@ namespace Com.BrumaGames.Llamaradas
                 }
                 SetButtons(allButtons);
             }
+
             ChangeCam();
+
             return true;
         }
         #endregion
@@ -162,8 +168,9 @@ namespace Com.BrumaGames.Llamaradas
         public void CallDetectEdificeToMove()
         {
             if (player != null && pv.IsMine)
-            {                
-                controller.DetectEdificeToMove();
+            {
+                //controller.DetectEdificeToMove();
+                controller.GetComponent<DetectEdifice>().DetectEdificeToMovePerson();
             }
         }
 
@@ -171,7 +178,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (player != null && pv.IsMine)
             {
-                controller.DetectEdificeTakeOutHabitant();
+                controller.GetComponent<DetectEdifice>().DetectEdificeTakeOutHabitant();
             }
         }
 
@@ -179,7 +186,8 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (player != null && pv.IsMine)
             {
-                controller.DetectEdificeToInspect();
+                //controller.DetectEdificeToInspect();
+                controller.GetComponent<DetectEdifice>().DetectEdificeToInspect();
             }
         }
 
@@ -187,7 +195,8 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (player != null && pv.IsMine)
             {
-                controller.HideAllButtonsInspect();
+                //controller.HideAllButtonsInspect();
+                controller.GetComponent<DetectEdifice>().HideAllButtonsInspect();
             }
         }
         #endregion
@@ -211,25 +220,54 @@ namespace Com.BrumaGames.Llamaradas
         #endregion
 
         #region ChangeCam
-        void ChangeCam()
+        public void ActivateDeactivateCams(bool cam1, bool cam2, bool minimap, bool habitant)
+        {
+            vCam1.SetActive(cam1);
+            vCam2.SetActive(cam2);
+            vCamMinimap.SetActive(minimap);
+            vCamHabitant.SetActive(habitant);
+        }
+
+        public void ChangeCam()
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                vCam1.SetActive(true);
-                vCam2.SetActive(false);
-                cine.m_Lens.OrthographicSize = 45f;
+                ActivateDeactivateCams(true, false, false, false);
+                cine.m_Lens.OrthographicSize = 15f;
             }
             else
             {
-                vCam1.SetActive(true);
-                cine.m_Lens.OrthographicSize = 45f;
-                vCam2.SetActive(false);
+                ActivateDeactivateCams(true, false, false, false);
+                cine.m_Lens.OrthographicSize = 15f;
             }
         }
+
+
+        public void ChangeCamMinimap(string target)
+        {
+            ActivateDeactivateCams(false, false, true, false);
+            // Asigno al player como objetivo para que la camara lo siga
+            CinemachineVirtualCamera vCam = vCamMinimap.GetComponent<CinemachineVirtualCamera>();
+            vCam.m_Lens.OrthographicSize = 30f;
+            if (vCam.Follow == null)
+                vCam.Follow = GameObject.FindGameObjectWithTag(target).transform;
+            GameObject player = GameObject.FindGameObjectWithTag(target);
+            player.GetComponent<ActivatingDectectionZone>().ActivateZone();
+        }
+        public void ChangeCamMinimapTransform(Transform position)
+        {
+            ActivateDeactivateCams(false, false, false, true);
+            // Asigno al target como objetivo para que la camara lo siga
+            CinemachineVirtualCamera vCam = vCamHabitant.GetComponent<CinemachineVirtualCamera>();
+            vCam.m_Lens.OrthographicSize = 20f;
+            if (vCam.Follow == null)
+                vCam.Follow = position;
+        }
+
         #endregion
 
         #region Animation        
-
+        
         public void TogglePanel()
         {
 
@@ -329,11 +367,15 @@ namespace Com.BrumaGames.Llamaradas
         public void ShowPanelMinimap()
         {
             panelMinimap.SetActive(true);
+            minimapCamera.SetActive(true);
+            minimapCamera.GetComponent<Minimap>().FindPlayer();
         }
 
         public void HidePanelMinimap()
         {
             panelMinimap.SetActive(false);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<ActivatingDectectionZone>().DeactivateZone();
         }
 
         //PANEL NOTIFICATIONS

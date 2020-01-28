@@ -87,7 +87,7 @@ namespace Com.BrumaGames.Llamaradas
         private void Start()
         {
             //TODO: VER COMO SE PRESENTARA LA INTERFAZ DE CONEXIÓN
-            //minPlayerPerRoom = maxPlayersPerRoom = GameManager.sharedInstance.limitPlayers;
+            minPlayerPerRoom = maxPlayersPerRoom = GameManager.sharedInstance.limitPlayers;
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
             Connect();
@@ -181,10 +181,7 @@ namespace Com.BrumaGames.Llamaradas
                     log.text = "Conectando con el servidor...";
                 }
                 else
-                {
                     log.text = "Error en la conexión con el servidor...";
-                    Debug.Log("error en la conexión con el servidor");
-                }
             }
         }
 
@@ -210,10 +207,7 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
             else
-            {
                 Debug.Log("error en la conexión con el master");
-            }
-
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -243,17 +237,6 @@ namespace Com.BrumaGames.Llamaradas
             log.text = "Unido a la sala...";
             waitingPlayersText.gameObject.SetActive(true);
             countLabel.SetActive(true);
-
-            
-
-            //# Crítico: solo cargamos si somos el primer jugador, de lo contrario confiamos en `PhotonNetwork.AutomaticallySyncScene` para sincronizar nuestra escena de instancia
-           /*if (playerCount >= minPlayerPerRoom)
-            {
-
-                // #Critico
-                
-            }*/ 
-
         }
         #endregion
     }

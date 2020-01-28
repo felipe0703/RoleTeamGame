@@ -200,13 +200,13 @@ namespace Com.BrumaGames.Llamaradas
         {
             if(totalBurnedEdifice >= 5)
             {
-                Debug.Log("Juego terminado");
+                //Debug.Log("Juego terminado");
                 GameOver();
                 
             }
             else
             {
-                Debug.Log("aun no termina");
+                //Debug.Log("aun no termina");
             }
 
 
@@ -362,10 +362,10 @@ namespace Com.BrumaGames.Llamaradas
         #region Photon Callbacks
 
         //Llamado cuando el jugador local salió de la sala. Necesitamos cargar la escena del lanzador.
-        public override void OnLeftRoom()
+        /*public override void OnLeftRoom()
         {
             loadingScenes.GetComponent<LoadingScene>().LoadLevel(1);
-        }
+        }*/
 
         #endregion
 

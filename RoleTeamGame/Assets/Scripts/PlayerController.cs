@@ -267,13 +267,15 @@ namespace Com.BrumaGames.Llamaradas
         // obtengo el vecino
         private GameObject GetNeighbor(Vector2 direction, string layerMask)
         {
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, LayerMask.GetMask(layerMask));
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 400f, LayerMask.GetMask(layerMask));
             if (hit.collider != null)
             {
+                Debug.Log(hit.collider.gameObject.name);
                 return hit.collider.gameObject;
             }
             else
             {
+                Debug.Log("no detecte nada");
                 return null;
             }
         }
@@ -293,7 +295,7 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
-        public void HideAllButtonsInspect()
+       /* public void HideAllButtonsInspect()
         {
             GameObject edifice;
 
@@ -306,8 +308,9 @@ namespace Com.BrumaGames.Llamaradas
                     edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                 }
             }
-        }
+        }*/
 
+        /*
         public void DetectEdificeToMove()
         {
             //  EDIFICIOS A LA DERECHA E IZQUIERDA
@@ -461,8 +464,11 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
         }
+        */
+
 
         // detecta si tenemos algun edificio a los lados y activa el boton del edificio
+        /*
         public void DetectEdificeToInspect()
         {
             GameObject edifice;
@@ -487,12 +493,12 @@ namespace Com.BrumaGames.Llamaradas
             {
                 UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
             }
-        }
+        }*/
 
         
 
         // detecta si tenemos algun edificio a los lados y activa el boton del edificio
-        public void DetectEdificeTakeOutHabitant()
+        /*public void DetectEdificeTakeOutHabitant()
         {
             GameObject edifice;
             bool detected = false;
@@ -525,7 +531,7 @@ namespace Com.BrumaGames.Llamaradas
                 UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
             }
         }
-
+        */
 
         #endregion //DetectEdifices
 

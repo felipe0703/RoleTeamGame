@@ -141,7 +141,8 @@ namespace Com.BrumaGames.Llamaradas
             FillHabitant();
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             controller.UpdateNumberOfActions();
-            controller.HideAllButtonsInspect();
+            //controller.HideAllButtonsInspect();
+            controller.GetComponent<DetectEdifice>().HideAllButtonsInspect();
             isInspected = true;
         }
 
