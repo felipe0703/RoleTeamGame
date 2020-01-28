@@ -50,5 +50,12 @@ MonoBehaviour:
   - FireLevel
   - SetTurn
   - PositionPlayer
+  - SetPopulation
+  - AddCont
+  - SetPopulationInEdifice
+  - RpcWithObjectArray
+  - AddDatePopulationList
+  - UpdatePopulationInEdifice
+  - PostScorePlayers
   DisableAutoOpenWizard: 1
   ShowSettings: 0

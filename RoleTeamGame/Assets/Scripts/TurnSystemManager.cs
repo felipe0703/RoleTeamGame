@@ -5,9 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 
 namespace Com.BrumaGames.Llamaradas
-{
-
-    
+{   
 
     public enum TurnGame
     {
@@ -94,8 +92,8 @@ namespace Com.BrumaGames.Llamaradas
 
             DetectedPlayers();
 
-            SetTurnText(turn); // muestra en pantalla en que turno estan
-            Debug.Log("Turno: " + turn);
+            //SetTurnText(turn); // muestra en pantalla en que turno estan
+            //Debug.Log("Turno: " + turn);
             //Debug.Log("Limite de turno: " + turnLimit);
 
             if (turn > turnLimit)
@@ -143,7 +141,6 @@ namespace Com.BrumaGames.Llamaradas
             StartCoroutine(AnimacionTurnos());
     */
         }
-
         public void StartTurnPlayer2()
         {
             SetTurnGame(TurnGame.player2);
@@ -301,6 +298,7 @@ namespace Com.BrumaGames.Llamaradas
                     break;
             }
         }
+
         void SetTurnPlayer(int playerturn)
         {
             //buscar el player que necesito en el turno
@@ -354,16 +352,12 @@ namespace Com.BrumaGames.Llamaradas
                 //controller.numbersActions = GameManager.sharedInstance.maxNumbersActions;
                 //controller.myTurn = false;
             }
-
+            // arreglo de booleanos para manejar el turno de los jugadores
             for (int i = 0; i < players.Length; i++)
             {
                 if(players[i] != null)
                     turnBoolsPlayer[i] = players[i].GetComponent<PlayerController>().myTurn;
             }
-
-            //TODO:  crear metodo que ordene a los players
-
-
 
         }
         #endregion

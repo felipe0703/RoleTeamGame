@@ -3,195 +3,337 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// TODO: codigo repedido en el player controller, mejorar
-public class DetectEdifice : MonoBehaviour
+namespace Com.BrumaGames.Llamaradas
 {
-    #region Variables
-    [Space(10)]
-    [Header("Movement")]
-    public Transform target;
-    public Transform target2;
-    Transform[] targets;
-
-    //buttons
-    public GameObject up;
-    public GameObject right;
-    public GameObject down;
-    public GameObject left;
-    public GameObject upRight;
-    public GameObject upLeft;
-    public GameObject downRight;
-    public GameObject downLeft;
-    public GameObject rightUp;
-    public GameObject rightDown;
-    public GameObject leftUp;
-    public GameObject leftDown;
-
-    //Detectar los edificios adyacentes
-    private Vector2[] adjacentDirections = new Vector2[]
+    // TODO: codigo repedido en el player controller, mejorar
+    public class DetectEdifice : MonoBehaviour
     {
-        Vector2.up,
-        Vector2.right,
-        Vector2.down,
-        Vector2.left
-    };
+        #region Variables
+        [Space(10)]
+        [Header("Movement")]
+        public Transform target;
+        public Transform target2;
+        Transform[] targets;
 
-    #endregion
+        //buttons
+        [Header("Buttons")]
+        public GameObject[] buttons = new GameObject[12];
 
-    #region DetectEdifices
+        [Header("Layer")]
+        public LayerMask mask;
 
-    // obtengo el vecino
-    private GameObject GetNeighbor(Vector2 direction)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction);
-        if (hit.collider != null)
+        //Detectar los edificios adyacentes
+        private Vector2[] adjacentDirections = new Vector2[]
         {
-            return hit.collider.gameObject;
-        }
-        else
-        {
-            return null;
-        }
-    }
+            Vector2.up,
+            Vector2.right,
+            Vector2.down,
+            Vector2.left
+        };
 
-    public void DetectEdificeToMovePerson()
-    {
-        //  EDIFICIOS A LA DERECHA E IZQUIERDA
-        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" && GetNeighbor(adjacentDirections[3]).tag == "Edifice")
+        #endregion
+
+        #region DetectEdifices
+
+        // obtengo el vecino
+        private GameObject GetNeighbor(Vector2 direction, LayerMask mask)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 400f, mask);
+            if (hit.collider != null)
+            {
+                return hit.collider.gameObject;
+            }
+            else
+            {
+                Debug.Log("no detecto nada en Detectedifice");
+                return null;
+            }
+        }
+
+        private GameObject DetectionAddress(string direction)
+        {
+            switch (direction)
+            {
+                case "up":
+                    return GetNeighbor(adjacentDirections[0], mask);
+                case "right":
+                    return GetNeighbor(adjacentDirections[1], mask);
+                case "down":
+                    return GetNeighbor(adjacentDirections[2], mask);
+                case "left":
+                    return GetNeighbor(adjacentDirections[3], mask);
+
+                default:
+                    return null;
+            }
+        }
+
+        private GameObject GetButton(string btn)
+        {
+            switch (btn)
+            {
+                case "up":
+                    return buttons[0];
+                case "down":
+                    return buttons[1];
+                case "right":
+                    return buttons[2];
+                case "left":
+                    return buttons[3];
+                case "upRight":
+                    return buttons[4];
+                case "upLeft":
+                    return buttons[5];
+                case "downRight":
+                    return buttons[6];
+                case "downLeft":
+                    return buttons[7];
+                case "leftUp":
+                    return buttons[8];
+                case "rightUp":
+                    return buttons[9];
+                case "leftDown":
+                    return buttons[10];
+                case "rightDown":
+                    return buttons[11];
+
+                default:
+                    return null;
+            }
+        }
+
+        private void DetectionCornerUpDown()
+        {
+            // si tengo una esquina arriba
+            if (DetectionAddress("up").GetComponent<Street>().isCorner)
+            {
+                GetButton("up").SetActive(true);
+            }// si tengo una esquina abajo
+            else if (DetectionAddress("down").GetComponent<Street>().isCorner)
+            {
+                GetButton("up").SetActive(true);
+            }
+            else
+            {
+                GetButton("up").SetActive(true);
+                GetButton("down").SetActive(true);
+            }
+        }
+        private void DetectionCornerRightLeft()
+        {
+            // si tengo una esquina derecha
+            if (DetectionAddress("right").GetComponent<Street>().isCorner)
+            {
+                GetButton("left").SetActive(true);
+            }// si tengo una esquina izquierda
+            else if (DetectionAddress("left").GetComponent<Street>().isCorner)
+            {
+                GetButton("right").SetActive(true);
+            }
+            else
+            {
+                GetButton("right").SetActive(true);
+                GetButton("left").SetActive(true);
+            }
+        }
+        private void DetectionBorderUpDown()
         {
             // HAY BORDE ARRIBA
-            if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isBorder)
+            if (DetectionAddress("up").GetComponent<Street>().isBorder)
             {
-                down.SetActive(true);
+                GetButton("down").SetActive(true);
             }// HAY BORDE ABAJO
-            else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isBorder)
+            else if (DetectionAddress("down").GetComponent<Street>().isBorder)
             {
-                up.SetActive(true);
+                GetButton("up").SetActive(true);
             }
             else
             {
-                up.SetActive(true);
-                down.SetActive(true);
+                GetButton("up").SetActive(true);
+                GetButton("down").SetActive(true);
             }
-            upRight.SetActive(true);
-            upLeft.SetActive(true);
-            downRight.SetActive(true);
-            downLeft.SetActive(true);
         }
-
-        // EDIFICIOS ARRIBA Y ABAJO
-        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" && GetNeighbor(adjacentDirections[2]).tag == "Edifice")
+        private void DetectionBorderRightLeft()
         {
             // HAY BORDE DERECHA
-            if (GetNeighbor(adjacentDirections[1]).tag == "Street" && GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isBorder)
+            if (DetectionAddress("right").GetComponent<Street>().isBorder)
             {
-                left.SetActive(true);
+                GetButton("left").SetActive(true);
             }// HAY BORDE IZQUIERDA
-            else if (GetNeighbor(adjacentDirections[3]).tag == "Street" && GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isBorder)
+            else if (DetectionAddress("left").GetComponent<Street>().isBorder)
             {
-                right.SetActive(true);
+                GetButton("right").SetActive(true);
             }
             else
             {
-                right.SetActive(true);
-                left.SetActive(true);
+                GetButton("right").SetActive(true);
+                GetButton("left").SetActive(true);
             }
-            rightUp.SetActive(true);
-            rightDown.SetActive(true);
-            leftUp.SetActive(true);
-            leftDown.SetActive(true);
         }
-
-
-        //EDIFICIO A LA DERECHA y BOSQUE A LA IZQUIERDA
-        if (GetNeighbor(adjacentDirections[1]).tag == "Edifice" && GetNeighbor(adjacentDirections[3]).tag == "Border")
+        private void ActivateDownRightAndUpRight()
         {
-            // si tengo una esquina arriba
-            if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isCorner)
-            {
-                down.SetActive(true);
-            }// si tengo una esquina abajo
-            else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isCorner)
-            {
-                up.SetActive(true);
-            }
-            else
-            {
-                up.SetActive(true);
-                down.SetActive(true);
-            }
-
-            downRight.SetActive(true);
-            upRight.SetActive(true);
+            GetButton("downRight").SetActive(true);
+            GetButton("upRight").SetActive(true);
         }
-
-        //EDIFICIO A LA IZQUIEDA y AGUA A LA DERECHA
-        if (GetNeighbor(adjacentDirections[3]).tag == "Edifice" && GetNeighbor(adjacentDirections[1]).tag == "River")
+        private void ActivateDonwLeftAndUpLeft()
         {
-            // si tengo una esquina arriba
-            if (GetNeighbor(adjacentDirections[0]).GetComponent<Street>().isCorner)
-            {
-                down.SetActive(true);
-            }// si tengo una esquina abajo
-            else if (GetNeighbor(adjacentDirections[2]).GetComponent<Street>().isCorner)
-            {
-                up.SetActive(true);
-            }
-            else
-            {
-                up.SetActive(true);
-                down.SetActive(true);
-            }
-
-            downLeft.SetActive(true);
-            upLeft.SetActive(true);
+            GetButton("downLeft").SetActive(true);
+            GetButton("upLeft").SetActive(true);
         }
-
-        //EDIFICIO ABAJO && BORDE ARRIBA
-        if (GetNeighbor(adjacentDirections[2]).tag == "Edifice" && GetNeighbor(adjacentDirections[0]).tag == "Border")
+        private void ActivateRightDownAndLeftDown()
         {
-            // si tengo una esquina derecha
-            if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isCorner)
-            {
-                left.SetActive(true);
-            }// si tengo una esquina izquierda
-            else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isCorner)
-            {
-                right.SetActive(true);
-            }
-            else
-            {
-                right.SetActive(true);
-                left.SetActive(true);
-            }
-
-            rightDown.SetActive(true);
-            leftDown.SetActive(true);
+            GetButton("rightDown").SetActive(true);
+            GetButton("leftDown").SetActive(true);
         }
-
-        //EDIFICIO ARRIBA y BORDE ABAJO
-        if (GetNeighbor(adjacentDirections[0]).tag == "Edifice" && GetNeighbor(adjacentDirections[2]).tag == "Border")
+        private void ActivateRightUpAndLeftUp()
         {
-            // si tengo una esquina derecha
-            if (GetNeighbor(adjacentDirections[1]).GetComponent<Street>().isCorner)
-            {
-                left.SetActive(true);
-            }// si tengo una esquina izquierda
-            else if (GetNeighbor(adjacentDirections[3]).GetComponent<Street>().isCorner)
-            {
-                right.SetActive(true);
-            }
-            else
-            {
-                right.SetActive(true);
-                left.SetActive(true);
-            }
-            rightUp.SetActive(true);
-            leftUp.SetActive(true);
+            GetButton("rightUp").SetActive(true);
+            GetButton("leftUp").SetActive(true);
         }
+
+        public void DetectEdificeToMovePerson()
+        {
+            //EDIFICIO A LA DERECHA y BOSQUE A LA IZQUIERDA
+            if (DetectionAddress("right").tag == "Edifice" && DetectionAddress("left").tag == "Border")
+            {
+                DetectionCornerUpDown();
+                ActivateDownRightAndUpRight();
+                return;
+            }
+
+            //EDIFICIO A LA IZQUIEDA y AGUA A LA DERECHA
+            if (DetectionAddress("left").tag == "Edifice" && DetectionAddress("right").tag == "River")
+            {
+                DetectionCornerUpDown();
+                ActivateDonwLeftAndUpLeft();
+                return;
+            }
+
+            //  EDIFICIOS A LA DERECHA E IZQUIERDA
+            if (DetectionAddress("right").tag == "Edifice" && DetectionAddress("left").tag == "Edifice")
+            {
+                DetectionBorderUpDown();
+                ActivateDonwLeftAndUpLeft();
+                ActivateDownRightAndUpRight();
+                return;
+            }
+
+            // EDIFICIOS ARRIBA Y ABAJO
+            if (DetectionAddress("up").tag == "Edifice" && DetectionAddress("down").tag == "Edifice")
+            {
+                DetectionBorderRightLeft();
+                ActivateRightUpAndLeftUp();
+                ActivateRightDownAndLeftDown();
+                return;
+            }
+
+            //EDIFICIO ABAJO && BORDE ARRIBA
+            if (DetectionAddress("down").tag == "Edifice" && DetectionAddress("up").tag == "Border")
+            {
+                DetectionCornerRightLeft();
+                ActivateRightDownAndLeftDown();
+                return;
+            }
+
+            //EDIFICIO ARRIBA y BORDE ABAJO
+            if (DetectionAddress("up").tag == "Edifice" && DetectionAddress("down").tag == "Border")
+            {
+                DetectionCornerRightLeft();
+                ActivateRightUpAndLeftUp();
+                return;
+            }
+        }
+
+
+        // detecta si tenemos algun edificio a los lados y activa el boton del edificio
+        public void DetectEdificeToInspect()
+        {
+            GameObject edifice;
+            bool detected = false;
+
+            for (int i = 0; i < adjacentDirections.Length; i++)
+            {
+                if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], mask);
+
+                    if (!edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice)
+                    {
+                        edifice.GetComponent<Edifice>().btn.SetActive(true);
+                        edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                        detected = true;
+                    }
+                }
+            }
+
+            if (!detected)
+            {
+                UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
+            }
+        }
+
+        public void HideAllButtonsInspect()
+        {
+            GameObject edifice;
+
+            for (int i = 0; i < adjacentDirections.Length; i++)
+            {
+                if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], mask);
+                    edifice.GetComponent<Edifice>().btn.SetActive(false);
+                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                }
+            }
+        }
+
+        public void DetectEdificeTakeOutHabitant()
+        {
+            GameObject edifice;
+            bool detected = false;
+            //ver en las 4 direcciones
+            for (int i = 0; i < adjacentDirections.Length; i++)
+            {
+                if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], mask);
+
+                    if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
+                    {
+                        //ScriptEfectos.DetectEdifice(edifice);
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
+                            {
+                                edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                                edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                                detected = true;
+                            }
+                        }
+                        edifice.GetComponent<Edifice>().idPositionEdifice = i;
+                    }
+                }
+            }
+
+            if (!detected)
+            {
+                UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
+            }
+        }
+
+        #endregion
+
+        public void DeactivateButtons()
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].SetActive(false);
+            }
+
+            UIManagerGame.sharedInstance.ChangeCam();
+            UIManagerGame.sharedInstance.HidePanelMinimap();
+            UIManagerGame.sharedInstance.ActivateDeactivateCams(false, false, true, false);
+        }
+
     }
-
-
-    #endregion
-
 }

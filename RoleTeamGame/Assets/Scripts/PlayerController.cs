@@ -29,6 +29,8 @@ namespace Com.BrumaGames.Llamaradas
         Transform[] targets;
         public float speed;
 
+        [Space(10)]
+        [Header("Actions")]
         // NUMERO DE ACCIONES
         public GameObject canvas;
         public GameObject canvasUI;
@@ -67,11 +69,20 @@ namespace Com.BrumaGames.Llamaradas
         private Vector2 animDir = Vector2.zero;
         private Vector2 animDir2 = Vector2.zero;
 
+        [Space(10)]
+        [Header("Turn System")]
         //Sistema de turno
         public bool myTurn = false;
         public bool finishTurn = false;
         public int MyTurn;
 
+        [Space(10)]
+        [Header("Score")]
+        // Sistema de puntuación
+        public int savedHabitants = 0;
+        public int deadHabitants = 0;
+
+        
         //Para corrutina de audio del fuego 'DetectFireEdifice'
         int fireLvl;
         bool detectFire = true;
@@ -79,8 +90,15 @@ namespace Com.BrumaGames.Llamaradas
         GameObject vecino;
         GameObject bufferNvlFgo;
         GameObject fireGmObj;
+
+        [Space(10)]
+        [Header("Audio")]
         public FireSoundControl FireSound;
         public SfxControl ScriptEfectos;
+
+
+
+        
 
         #endregion
 
@@ -147,12 +165,13 @@ namespace Com.BrumaGames.Llamaradas
             //obtener el boton de acciones
             GameObject canvasActions = canvas.transform.GetChild(1).gameObject;
             buttonShowActions = canvasActions.transform.GetChild(2).gameObject;
+
+            UpdateScoreSaved(savedHabitants);
+            UpdateScoreDead(0);
+            //BoardManager.sharedInstance.SetIdEdifice();
         }
 
-        private void Update()
-        {
-            
-        }
+        
         // Update is called once per frame
         void FixedUpdate()
         {
@@ -221,16 +240,21 @@ namespace Com.BrumaGames.Llamaradas
         private void LateUpdate()
         {
             // DetectFireLevel();
-            if (PhotonNetwork.LocalPlayer.ActorNumber == TurnSystemManager.sharedInstance.playerTurn )
+            //TODO: detecta una referencia nula
+
+            if(TurnSystemManager.sharedInstance != null)
             {
-                //UIManagerGame.sharedInstance.textSetTurn.text = "Es mi turno";
-                buttonShowActions.SetActive(true);
-            }
-            else
-            {
-                //UIManagerGame.sharedInstance.textSetTurn.text = "No es mi turno";
-                buttonShowActions.SetActive(false);
-            }
+                if (PhotonNetwork.LocalPlayer.ActorNumber == TurnSystemManager.sharedInstance.playerTurn)
+                {
+                    //UIManagerGame.sharedInstance.textSetTurn.text = "Es mi turno";
+                    buttonShowActions.SetActive(true);
+                }
+                else
+                {
+                    //UIManagerGame.sharedInstance.textSetTurn.text = "No es mi turno";
+                    buttonShowActions.SetActive(false);
+                }
+            }            
         }
         #endregion // MonoBehaviour
 
@@ -243,13 +267,15 @@ namespace Com.BrumaGames.Llamaradas
         // obtengo el vecino
         private GameObject GetNeighbor(Vector2 direction, string layerMask)
         {
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, LayerMask.GetMask(layerMask));
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 400f, LayerMask.GetMask(layerMask));
             if (hit.collider != null)
             {
+                Debug.Log(hit.collider.gameObject.name);
                 return hit.collider.gameObject;
             }
             else
             {
+                Debug.Log("no detecte nada");
                 return null;
             }
         }
@@ -269,7 +295,7 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
-        public void HideAllButtonsInspect()
+       /* public void HideAllButtonsInspect()
         {
             GameObject edifice;
 
@@ -282,8 +308,9 @@ namespace Com.BrumaGames.Llamaradas
                     edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                 }
             }
-        }
+        }*/
 
+        /*
         public void DetectEdificeToMove()
         {
             //  EDIFICIOS A LA DERECHA E IZQUIERDA
@@ -437,7 +464,11 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
         }
+        */
+
+
         // detecta si tenemos algun edificio a los lados y activa el boton del edificio
+        /*
         public void DetectEdificeToInspect()
         {
             GameObject edifice;
@@ -448,7 +479,8 @@ namespace Com.BrumaGames.Llamaradas
                 if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
                 {
                     edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-                    if (!edifice.GetComponent<Edifice>().isInspected)
+                
+                    if (!edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice)
                     {
                         edifice.GetComponent<Edifice>().btn.SetActive(true);
                         edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
@@ -461,23 +493,23 @@ namespace Com.BrumaGames.Llamaradas
             {
                 UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
             }
-        }
+        }*/
 
         
 
         // detecta si tenemos algun edificio a los lados y activa el boton del edificio
-        public void DetectEdificeTakeOutHabitant()
+        /*public void DetectEdificeTakeOutHabitant()
         {
             GameObject edifice;
             bool detected = false;
-
+            //ver en las 4 direcciones
             for (int i = 0; i < adjacentDirections.Length; i++)
             {
                 if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
                 {
                     edifice = GetNeighbor(adjacentDirections[i], "Edifice");
 
-                    if (edifice.GetComponent<Edifice>().isInspected) // el edificio fue inspeccionado 
+                    if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
                     {
                         //ScriptEfectos.DetectEdifice(edifice);
                         for (int j = 0; j < 3; j++)
@@ -499,7 +531,7 @@ namespace Com.BrumaGames.Llamaradas
                 UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
             }
         }
-
+        */
 
         #endregion //DetectEdifices
 
@@ -670,6 +702,8 @@ namespace Com.BrumaGames.Llamaradas
         //Activa UI Actions(Energias), recargo mis acciones y activo mi turno        
         public void ActiveActions()
         {
+            //TODO: en el cliente no se carga al iniciar, el pv
+            pv = GetComponent<PhotonView>();
             if (pv.IsMine)
             {
                 numbersActions = GameManager.sharedInstance.maxNumbersActions;
@@ -706,7 +740,7 @@ namespace Com.BrumaGames.Llamaradas
                 numbersActions--;
             }
         }
-
+        
         public void UpdateNumberOfActions()
         {
             //GameController.sharedInstance.SubtractActions();
@@ -715,7 +749,7 @@ namespace Com.BrumaGames.Llamaradas
             // int i = GameController.sharedInstance.numbersActions;
             int i = numbersActions;
             actions[i].SetActive(false);
-        }       
+        }
 
         #endregion //Acciones    
 
@@ -818,6 +852,38 @@ namespace Com.BrumaGames.Llamaradas
 
         #endregion
 
+
+        public void UpdateScoreSaved(int score)
+        {
+            savedHabitants += score;
+            UIManagerGame.sharedInstance.UpdateScoreSavedText(savedHabitants);
+        }
+        
+        public void UpdateScoreDead(int score)
+        {
+            deadHabitants += score; 
+            UIManagerGame.sharedInstance.UpdateScoreDeadText(deadHabitants);
+        }
+
+        public void CallPostScorePlayer()
+        {
+            Debug.Log("llamando a post score");
+            pv = GetComponent<PhotonView>();
+            pv.RPC("PostScorePlayers", RpcTarget.AllBuffered, savedHabitants);
+        }
+
+        [PunRPC]
+        void PostScorePlayers(int score)
+        {
+            Debug.Log("Puntaje enviado: " + score);
+            GameController.sharedInstance.listScorePlayers.Add(score);
+            
+        }
+
+        public int PostScoreText()
+        {
+            return savedHabitants;
+        }
         #endregion // Public Methods
 
         #region Private Methods

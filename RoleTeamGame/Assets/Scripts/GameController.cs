@@ -61,13 +61,30 @@ namespace Com.BrumaGames.Llamaradas
         public Canvas canvasActions;
 
         // HABITANTES DE EDIFICIOS    
-        public int totalPopulation = 90;
-        public int totalDisabledPerson = 40;
-        public int totalPerson = 30;
-        public int totalPet = 20;
+        public int[,] populationInEdifices = new int[36, 3];
+        public int[,] populationInEdificesClient = new int[36, 3];
+        public List<int> listPopulationInEdifice = new List<int>();
+        int contPopulation;
+        public int contDisabledPerson;
+        public int contPerson;
+        public int contPet;
+
+        public static int totalPopulation = 90;
+        public static int totalDisabledPerson = 40;
+        public static int totalPerson = 30;
+        public static int totalPet = 20;
         public GameObject disabledPerson;
         public GameObject person;
         public GameObject pet;
+
+        public int totalBurnedEdifice = 0;
+        public List<int> listScorePlayers = new List<int>();
+
+        //objetos instanciados?
+        bool instantiatedTurnSystem = false;
+
+        //TEST
+        //public TextMeshProUGUI prueba;
 
 
         #endregion // Variables
@@ -89,6 +106,7 @@ namespace Com.BrumaGames.Llamaradas
                 Destroy(gameObject);
             }
 
+            
 
             //INSTANCIAR BOARMANAGER
             if(boarManagerPrefab == null)
@@ -125,6 +143,8 @@ namespace Com.BrumaGames.Llamaradas
             {
                 if (PlayerController.LocalPlayerInstance == null)
                 {
+                    if (turnSystemManager == null)
+                        Debug.Log("no esta nah");
                     // instanciar player
                     bool selectPosition = false;
                     int i3 = 0;
@@ -147,11 +167,11 @@ namespace Com.BrumaGames.Llamaradas
 
                         if (!initialPositionPlayer[i3])
                         {
-                            Debug.Log("posicion vacia");
+                            //Debug.Log("posicion vacia");
                             selectPosition = true;
                         }else
                         {
-                            Debug.Log("posicion ocupada");
+                            //Debug.Log("posicion ocupada");
                         }
                     } while (!selectPosition);                    
 
@@ -162,21 +182,34 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
 
-            //  ACTIONS se cambio a playerController
-            //numbersActions = GameManager.sharedInstance.maxNumbersActions;
-
             //  TIMER
             escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
             tiempoAMostrarEnSegundos = GameManager.sharedInstance.timeTurn;         //  Inicializamos la variables que acumular
             ActualizarReloj(tiempoInicial);
 
-            //turnSystem = GameObject.FindGameObjectWithTag("TurnSystem").GetComponent<TurnSystemManager>();
-            //turnSystem.StartTurnPlayer1();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                SetPopulationInEdifice();
+            }
+
+            //prueba.text = "";
         }
 
 
         void Update()
         {
+            if(totalBurnedEdifice >= 5)
+            {
+                //Debug.Log("Juego terminado");
+                GameOver();
+                
+            }
+            else
+            {
+                //Debug.Log("aun no termina");
+            }
+
+
             if (!estaPausado)
             {
                 //  La siguiente variable representa el tiempo de cada frame considerando la escala de tiempo
@@ -189,7 +222,134 @@ namespace Com.BrumaGames.Llamaradas
         }
         #endregion // MonoBehaviour        
 
-        #region sincrizacionPositionPlayer
+        #region SynchronizationPopulationInEdifices
+        void SetPopulationInEdifice()
+        {            
+            // bucle para designar los habitantes en cada edificio
+            for (int i = 0; i < 36; i++)
+            {
+                //contadores de habitantes en el edificio
+                contPopulation = 0;
+                contDisabledPerson = 0;
+                contPerson = 0;
+                contPet = 0;
+
+                //personas y mascotas disponibles
+                int disabledPerson = totalDisabledPerson;
+                int person = totalPerson;
+                int pet = totalPet;
+                int population = disabledPerson + person + pet;
+
+                //asignar maximo de personas en el edificio
+                int maxPopulationInEdifice = 0;
+
+                if (population >= 3)
+                {
+                    maxPopulationInEdifice = 3;
+                }
+                else if (population == 2)
+                {
+                    maxPopulationInEdifice = 2;
+                }
+                else
+                {
+                    maxPopulationInEdifice = 1;
+                }
+
+                
+                //TODO: ver si hay edificios sin personas
+                contPopulation = Random.Range(1, maxPopulationInEdifice + 1); // personas que habrá en este edificio
+
+                if (contPopulation > 0)
+                {
+                    int j = contPopulation;
+                    //int j = 0;
+                    do
+                    {
+                        int numRandom = Random.Range(0, 3);// número que asigna el habitante, (0=disablePerson, 1=person, 2=pet)
+
+                        // TODO: confirmar si hay del habitante que salio si no intentar sacar otro
+                        if (numRandom == 0 && disabledPerson > 0)
+                        {
+                            contDisabledPerson++;
+                            //texts[j].text = "0";
+                            totalDisabledPerson--;
+                            j--;
+                        }
+
+                        if (numRandom == 1 && person > 0)
+                        {
+                            contPerson++;
+                            //texts[j].text = "1";
+                            totalPerson--;
+                            j--;
+                        }
+
+                        if (numRandom == 2 && pet > 0)
+                        {
+                            contPet++;
+                            //texts[j].text = "2";
+                            totalPet--;
+                            j--;
+                        }
+                        //j++;
+                    } while (j > 0);
+                }
+                //TODO: HAY QUE ASIGNAR LOS CONTADORES DE HABITANTES A ESTE EDIFICIO
+
+                for (int j = 0; j < 3; j++)
+                {
+                    int set = 0;
+
+                    if (j == 0)
+                    {
+                        set = contDisabledPerson;
+                    }
+                    else if (j == 1)
+                    {
+                        set = contPerson;
+                    }
+                    else
+                    {
+                        set = contPet;
+                    }
+
+                    populationInEdifices[i, j] = set;
+                    /*
+                    string p1 = i.ToString() + set.ToString(); 
+                    prueba.text += p1.ToString() + " - ";
+                    */
+                    //enviar para sincronizar con el cliente
+                    PhotonView pv = GetComponent<PhotonView>();
+                    pv.RPC("AddDatePopulationList", RpcTarget.AllBuffered, set);
+
+                    //Debug.Log("Edifice: " + i + " position: " + j + " = " + populationInEdifices[i, j] + " - Disabled: " + contDisabledPerson + " Person: " + contPerson + " pet: " + contPet);
+                }
+            }            
+        }
+
+        [PunRPC]
+        void AddDatePopulationList(int dato)
+        {
+            listPopulationInEdifice.Add(dato);
+        }
+        
+        public void FillPopulationList(List<int> listPopulationInEdifice)
+        {
+            int contador = 0;
+            for (int i = 0; i < 36; i++)
+            {
+                populationInEdificesClient[i, 0] = listPopulationInEdifice[0 + contador];
+                populationInEdificesClient[i, 1] = listPopulationInEdifice[1 + contador ];
+                populationInEdificesClient[i, 2] = listPopulationInEdifice[2 + contador ];
+
+                contador = contador + 3;
+            }
+        }
+        
+        #endregion
+
+        #region SynchronizationPositionPlayer
 
         [PunRPC]
         void PositionPlayer(int i)
@@ -202,10 +362,10 @@ namespace Com.BrumaGames.Llamaradas
         #region Photon Callbacks
 
         //Llamado cuando el jugador local salió de la sala. Necesitamos cargar la escena del lanzador.
-        public override void OnLeftRoom()
+        /*public override void OnLeftRoom()
         {
             loadingScenes.GetComponent<LoadingScene>().LoadLevel(1);
-        }
+        }*/
 
         #endregion
 
@@ -216,7 +376,30 @@ namespace Com.BrumaGames.Llamaradas
             PhotonNetwork.LeaveRoom();
         }
 
+        public void UpdateTotalBurnedEdifice()
+        {
+            totalBurnedEdifice++;
+        }
+
+        public void GameOver()
+        {
+
+            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); // busco jugador
+            Debug.Log("Tu puntaje es: " + controller.PostScoreText().ToString());
+           /* 
+            controller.CallPostScorePlayer();//envio los puntajes
+
+            Debug.Log("tamaño de la lista: " + listScorePlayers.Count);
+            //imprimir puntajes
+            for (int i = 0; i < listScorePlayers.Count; i++)
+            {
+                //Debug.Log("tamaño de la lista: " + scorePlayers.Count);
+                Debug.Log("puntaje jugador: " + listScorePlayers[i]);
+            }*/
+        }
         #endregion
+
+        
 
         // ########################################
         // función de manejo del tiempo

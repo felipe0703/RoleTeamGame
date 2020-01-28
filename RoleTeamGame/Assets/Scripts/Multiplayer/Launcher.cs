@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 
 namespace Com.BrumaGames.Llamaradas
@@ -44,6 +45,9 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField]
         private TextMeshProUGUI countText;
 
+        [Tooltip("La etiqueta UI para informar al usuario la espera de jugadores")]
+        [SerializeField]
+        private TextMeshProUGUI waitingPlayersText;
 
         private bool isLoading = false;
 
@@ -63,8 +67,7 @@ namespace Com.BrumaGames.Llamaradas
         int playerCount = 0;
 
         #endregion
-
-
+        
         #region MonoBehaviour CallBacks
         /*    
          * El método MonoBehaviour llamado en GameObject por Unity durante la fase de inicialización temprana.
@@ -84,7 +87,7 @@ namespace Com.BrumaGames.Llamaradas
         private void Start()
         {
             //TODO: VER COMO SE PRESENTARA LA INTERFAZ DE CONEXIÓN
-            //minPlayerPerRoom = maxPlayersPerRoom = GameManager.sharedInstance.limitPlayers;
+            minPlayerPerRoom = maxPlayersPerRoom = GameManager.sharedInstance.limitPlayers;
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
             Connect();
@@ -102,9 +105,15 @@ namespace Com.BrumaGames.Llamaradas
             {
                 //carga la habitación del nivel.
                 //PhotonNetwork.LoadLevel("Game");
-                Debug.Log("a cargar escena");
                 LoadingLevel();
+                //StartCoroutine(LoadScene());
             }
+            if (PhotonNetwork.LevelLoadingProgress > 0 && PhotonNetwork.LevelLoadingProgress < 1)
+            {
+                Debug.Log(PhotonNetwork.LevelLoadingProgress);
+            }
+
+
         }
 
         #endregion
@@ -113,7 +122,29 @@ namespace Com.BrumaGames.Llamaradas
         {
             isLoading = true;
             PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
+
+            
         }
+        /*
+        IEnumerator LoadScene()
+        {
+            AsyncOperation operation = scenem
+        }*/
+        // TODO: PROBAR ESTE METODO DE CARGA
+        /*
+        private IEnumerator MoveToGameScene()
+        {
+            // Temporary disable processing of futher network messages
+            PhotonNetwork.IsMessageQueueRunning = false;
+            LoadNewScene(newSceneName); // custom method to load the new scene by name
+            while (newSceneDidNotFinishLoading)
+            {
+                yield return null;
+            }
+            PhotonNetwork.IsMessageQueueRunning = true;
+        }
+        */
+
 
         #region Public Methods
 
@@ -150,10 +181,7 @@ namespace Com.BrumaGames.Llamaradas
                     log.text = "Conectando con el servidor...";
                 }
                 else
-                {
                     log.text = "Error en la conexión con el servidor...";
-                    Debug.Log("error en la conexión con el servidor");
-                }
             }
         }
 
@@ -179,10 +207,7 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
             else
-            {
                 Debug.Log("error en la conexión con el master");
-            }
-
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -209,19 +234,9 @@ namespace Com.BrumaGames.Llamaradas
         public override void OnJoinedRoom()
         {
             Debug.Log("PUN Basics Launcher Llamaradas: OnJoinedRoom() llamado por PUN. Ahora este cliente esta en la sala.");
-            log.text = "Unidos a la sala...";
+            log.text = "Unido a la sala...";
+            waitingPlayersText.gameObject.SetActive(true);
             countLabel.SetActive(true);
-
-            
-
-            //# Crítico: solo cargamos si somos el primer jugador, de lo contrario confiamos en `PhotonNetwork.AutomaticallySyncScene` para sincronizar nuestra escena de instancia
-           /*if (playerCount >= minPlayerPerRoom)
-            {
-
-                // #Critico
-                
-            }*/ 
-
         }
         #endregion
     }

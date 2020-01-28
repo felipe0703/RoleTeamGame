@@ -8,33 +8,26 @@ namespace Com.BrumaGames.Llamaradas
     public class Minimap : MonoBehaviour
     {
         #region Public Fields
+
         [Tooltip("El player al que el minimapa hara el seguimiento")]
         public GameObject player;
+
         #endregion // Public Fields
 
         #region Private Fields
+
         PhotonView pv;
-        bool isFolliwing;
+        [SerializeField] bool isFolliwing;
+
         #endregion // Private Fields
 
         #region MonoBehaviours CallBacks
-        private void Start()
-        {
-            if(player == null && !isFolliwing)
-            {
-
-                player = GameObject.Find("Player");
-                pv = player.GetComponent<PhotonView>();
-            }
-            else
-            {
-                Debug.Log("no lo encontre");
-            }
-            
-        }
-
+        
         private void LateUpdate()
         {
+            if (player == null)
+                return;                
+
             if (pv.IsMine)
             {
                 Vector3 newPosition = player.transform.position;
@@ -42,6 +35,16 @@ namespace Com.BrumaGames.Llamaradas
                 transform.position = newPosition;
                 isFolliwing = true;
             }            
+        }
+
+        public void FindPlayer()
+        {
+            if (player == null && !isFolliwing)
+            {                
+                player = GameObject.FindGameObjectWithTag("Player"); 
+                if(player != null)
+                    pv = player.GetComponent<PhotonView>();
+            }
         }
         #endregion  // MonoBehaviours CallBacks
     }

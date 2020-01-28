@@ -43,6 +43,8 @@ public class ManagerSettingTheGame : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        GameManager.sharedInstance.maxNumbersActions = 2;
+        GameManager.sharedInstance.limitPlayers = 1;
 
     }
     public void clickAnims(){
@@ -88,16 +90,19 @@ public class ManagerSettingTheGame : MonoBehaviour
     public void SetActionTurn(int option)
     {
         int action = option + 2;
-
+        Debug.Log(option);
         GameManager.sharedInstance.maxNumbersActions = action;
     }
 
     public void SetLimitPlayers(int option)
     {
-        byte limit = 2;
+        byte limit = 1;
 
         switch (option)
         {
+            case 0:
+                limit = 1;
+                break;
             case 1:
                 limit = 2;
                 break;
