@@ -3653,6 +3653,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1973702812}
+        m_MethodName: clickAnims
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &841470804
@@ -3820,7 +3831,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -5767,6 +5778,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1973702812}
+        m_MethodName: clickAnims
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1322248576
@@ -5934,7 +5956,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -6361,7 +6383,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -7887,7 +7909,7 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
@@ -7978,6 +8000,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f1c2a30fdb5ec34d87d371cfc8dd1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bkgr: {fileID: 1970920304}
+  panelSettings: {fileID: 1373615777}
+  buttonOk: {fileID: 1322248578}
+  buttonBck: {fileID: 841470806}
+  mapTxt: {fileID: 610768558}
+  map1: {fileID: 1794944823}
+  map2: {fileID: 36260394}
+  map3: {fileID: 668427900}
 --- !u!4 &1973702813
 Transform:
   m_ObjectHideFlags: 0
