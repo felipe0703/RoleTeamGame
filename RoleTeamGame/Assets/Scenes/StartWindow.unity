@@ -182,7 +182,7 @@ PrefabInstance:
     - target: {fileID: 3302059196082601140, guid: 26a4427eb9263bc45903194fc57e406d,
         type: 3}
       propertyPath: maxNumbersActions
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a4427eb9263bc45903194fc57e406d, type: 3}
@@ -1131,6 +1131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botonStart: {fileID: 171095728}
   title: {fileID: 1753335335}
+  bckgr: {fileID: 0}
 --- !u!4 &1405483499
 Transform:
   m_ObjectHideFlags: 0
