@@ -18,6 +18,11 @@ namespace Com.BrumaGames.Llamaradas
         int currentWaypoint = 0;
         bool reachedEndPath = false;
 
+        //animacion
+        private Animator animator;
+        //private Vector2 animDir = Vector2.zero;
+        //private Vector2 animDir2 = Vector2.zero;
+
         [SerializeField]
         Seeker seeker;
         [SerializeField]
@@ -29,6 +34,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             seeker = GetComponent<Seeker>();
             rb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
             //InvokeRepeating("UpdatePath", 0f,0.5f);
             //UpdatePath();
         }
@@ -47,6 +53,7 @@ namespace Com.BrumaGames.Llamaradas
             if (currentWaypoint >= path.vectorPath.Count)
             {
                 reachedEndPath = true;
+                StopAnim();
                 return;
             }
             else
@@ -59,6 +66,12 @@ namespace Com.BrumaGames.Llamaradas
             Vector2 force = direction * speed * Time.deltaTime;
 
             rb.AddForce(force);
+
+            animator.SetBool("isMoving", true);
+            animator.SetFloat("MoveX", force.x);
+            animator.SetFloat("MoveY", force.y);
+            //Debug.Log("x = "+force.x+", y = "+force.y);
+            
 
             float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -102,6 +115,12 @@ namespace Com.BrumaGames.Llamaradas
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             controller.UpdateNumberOfActions();
             UpdatePath();
+        }
+        private void StopAnim()
+        {
+            animator.SetBool("isMoving", false);
+            animator.SetFloat("MoveX", 0);
+            animator.SetFloat("MoveY", 0);
         }
 
     }

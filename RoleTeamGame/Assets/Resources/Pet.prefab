@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 8555406927260693051}
   - component: {fileID: 8497335695770798960}
   - component: {fileID: 8110710148430684904}
+  - component: {fileID: 472962624625948768}
   m_Layer: 11
   m_Name: Pet
   m_TagString: Person
@@ -282,3 +283,22 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!95 &472962624625948768
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126926093658832263}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e2c414a071d9bea44834384b43da6b29, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
