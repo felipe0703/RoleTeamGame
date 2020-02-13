@@ -57,5 +57,7 @@ MonoBehaviour:
   - AddDatePopulationList
   - UpdatePopulationInEdifice
   - PostScorePlayers
+  - DiactivatePanelLoalLevel
+  - DeactivatePanelLoalLevel
   DisableAutoOpenWizard: 1
   ShowSettings: 0

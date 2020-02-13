@@ -20,6 +20,7 @@ namespace Com.BrumaGames.Llamaradas
         #region Variables
         public static UIManagerGame sharedInstance;
 
+        public GameObject panelLoadLevel;
         public GameObject panelButtons;
         public GameObject buttons;
         public GameObject panelUI;
@@ -93,6 +94,8 @@ namespace Com.BrumaGames.Llamaradas
 
             pvUI = GetComponent<PhotonView>();
 
+            if (PhotonNetwork.IsMasterClient)
+                CallDesactivatePanelLevel();
         }
 
         private void Update()
@@ -401,6 +404,21 @@ namespace Com.BrumaGames.Llamaradas
         {
             textScoreDead.text = score.ToString();
         }
+
+        //PANEL LOAD LEVEL
+
+        void CallDesactivatePanelLevel()
+        {
+            PhotonView pv = GetComponent<PhotonView>();
+            pv.RPC("DeactivatePanelLoalLevel", RpcTarget.AllBuffered);
+        }
+        [PunRPC]
+        void DeactivatePanelLoalLevel()
+        {
+            Debug.Log("desactivar panel");
+            panelLoadLevel.SetActive(false);
+        }
+
         #endregion
 
     }

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public int maxNumbersActions;
     public int timeTurn;
     public byte limitPlayers = 2;
+    public bool JoinRoom = false;
 
 
     // AUDIO

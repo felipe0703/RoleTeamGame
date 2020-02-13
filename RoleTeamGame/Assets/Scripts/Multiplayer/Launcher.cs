@@ -108,6 +108,7 @@ namespace Com.BrumaGames.Llamaradas
                 LoadingLevel();
                 //StartCoroutine(LoadScene());
             }
+
             if (PhotonNetwork.LevelLoadingProgress > 0 && PhotonNetwork.LevelLoadingProgress < 1)
             {
                 Debug.Log(PhotonNetwork.LevelLoadingProgress);
@@ -121,10 +122,9 @@ namespace Com.BrumaGames.Llamaradas
         void LoadingLevel()
         {
             isLoading = true;
-            PhotonNetwork.LoadLevel("Game Felipe Multiplayer");
-
-            
+            PhotonNetwork.LoadLevel("Game Felipe Multiplayer");            
         }
+
         /*
         IEnumerator LoadScene()
         {
@@ -199,6 +199,7 @@ namespace Com.BrumaGames.Llamaradas
             if (isConnecting)
             {
                 log.text = "Conectado al servidor...";
+                
                 // # Crítico: lo primero que intentamos hacer es unirnos a una sala existente potencial. Si hay, bueno, de lo contrario, seremos llamados de nuevo con OnJoinRandomFailed ()
                 if (!PhotonNetwork.JoinRandomRoom())
                 {
@@ -224,11 +225,16 @@ namespace Com.BrumaGames.Llamaradas
             Debug.Log("PUN Basisc Launcher Llamaradas: OnJoinRandomFailed() fue llamado por PUN. No habia sala disponible, creamos una.\nLlamamos a: PhotonNetwork.CreateRoom ");
 
             // # Crítico: no pudimos unirnos a una sala aleatoria, quizás no exista ninguno o estén todos llenos. No te preocupes, creamos una nueva sala
-            if(!PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom }))
+            if (!GameManager.sharedInstance.JoinRoom)
             {
-                log.text = "Error en la creación de una sala...";
-                Debug.Log("Error en la cración de la una sala");
-            }
+                Debug.Log("if: " +maxPlayersPerRoom);
+                if (!PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom }))
+                {
+                    Debug.Log("otro if: " +maxPlayersPerRoom);
+                    log.text = "Error en la creación de una sala...";
+                    Debug.Log("Error en la cración de la una sala");
+                }
+            }            
         }
 
         public override void OnJoinedRoom()
@@ -236,7 +242,7 @@ namespace Com.BrumaGames.Llamaradas
             Debug.Log("PUN Basics Launcher Llamaradas: OnJoinedRoom() llamado por PUN. Ahora este cliente esta en la sala.");
             log.text = "Unido a la sala...";
             waitingPlayersText.gameObject.SetActive(true);
-            countLabel.SetActive(true);
+            //countLabel.SetActive(true);
         }
         #endregion
     }
