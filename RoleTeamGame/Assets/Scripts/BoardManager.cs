@@ -83,7 +83,7 @@ namespace Com.BrumaGames.Llamaradas
         // ########################################
 
         #region MonoBehaviour
-        void Start()
+        private void Awake()
         {
             //      SINGLETON
             if (sharedInstance == null)
@@ -94,6 +94,10 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Destroy(gameObject);
             }
+        }
+
+        void Start()
+        {
             pv = gameObject.GetComponent<PhotonView>();
 
             Vector2 offset = currenteEdifice.GetComponent<BoxCollider2D>().size; // obtengo el tamaño del edificio
@@ -101,8 +105,6 @@ namespace Com.BrumaGames.Llamaradas
             CreateInitialBoard(offset); //  inicio el tablero
 
             directionWind = 3;
-
-            
         }
         private void Update()
         {
@@ -242,7 +244,7 @@ namespace Com.BrumaGames.Llamaradas
                             // Formato al nombre de los objetos
                             newStreet.name = string.Format("Street[{0}][{1}]", x, y);
 
-                            newStreet.transform.parent = GameObject.Find("Streets").transform;
+                            newStreet.transform.SetParent( GameObject.Find("Streets").transform, false);
                             //streets[x, y] = newStreet;
 
                             currentStreet.GetComponent<Street>().isBorder = false;
@@ -323,6 +325,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (!PhotonNetwork.IsMasterClient && allEdifices.Count == 0)
             {
+                Debug.Log("ejecutando setIdEdifice");
                 GameObject[] edifices = GameObject.FindGameObjectsWithTag("Edifice");
                 for (int i = 0; i < 36; i++)
                 {

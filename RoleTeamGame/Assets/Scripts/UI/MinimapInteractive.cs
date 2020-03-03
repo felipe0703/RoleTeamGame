@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class MinimapInteractive : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private Transform mainCam;
+    //[SerializeField] private Transform mainCam;
     public Transform pointer;
 
     public void OnPointerClick(PointerEventData EventData)
@@ -21,9 +21,7 @@ public class MinimapInteractive : MonoBehaviour, IPointerClickHandler
         float minimapToWorldX = diffMinimapX / scale;
         float minimapToWorldY = diffMinimapY / scale;
         
-        newPos = new Vector3(mainCam.position.x + minimapToWorldX, 
-                            mainCam.position.y + minimapToWorldY, 
-                            0f);     
+        //newPos = new Vector3(mainCam.position.x + minimapToWorldX, mainCam.position.y + minimapToWorldY, 0f);     
 
         pointer.position = newPos;
 

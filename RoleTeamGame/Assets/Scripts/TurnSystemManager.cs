@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Com.BrumaGames.Llamaradas
 {   
@@ -21,7 +23,7 @@ namespace Com.BrumaGames.Llamaradas
         fire
     }
 
-    public class TurnSystemManager : MonoBehaviour
+    public class TurnSystemManager : MonoBehaviourPunCallbacks
     {
         public TurnGame currentTurnGame = TurnGame.noTurn;
 
@@ -29,6 +31,7 @@ namespace Com.BrumaGames.Llamaradas
         public static int turn = 0;
         public int playerTurn;
         int turnLimit;
+        int turnInit;
 
         GameObject player;
         PlayerController controller;
@@ -68,7 +71,31 @@ namespace Com.BrumaGames.Llamaradas
                 Destroy(gameObject);
             }
 
-            turn = 1;
+            
+            Player[] players = PhotonNetwork.PlayerList;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (players.Length > 1)
+                {
+                    players[1].SetCustomProperties(
+                            new Hashtable{
+                            { LlamaradaGame.PLAYER_TURN, true }
+                            }
+                        );
+                }
+                else
+                {
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(
+                            new Hashtable{
+                            { LlamaradaGame.PLAYER_TURN, true }
+                            }
+                        );
+                }
+            }
+            
+
+
+           /* turn = 1;
             DetectedPlayers();
             WhoseTurnIsIt(turn);
 
@@ -81,30 +108,62 @@ namespace Com.BrumaGames.Llamaradas
                 {
                     controller = player.GetComponent<PlayerController>();
                 }
-            }
+            }*/
         }
 
         // Update is called once per frame
-        void Update()
+        /*void Update()
+       {
+           //cuanta cuantos jugadores hay conectado en la sala y determinas la cantidad de turnos
+          turnLimit = PhotonNetwork.CurrentRoom.PlayerCount;
+
+           DetectedPlayers();
+
+           //SetTurnText(turn); // muestra en pantalla en que turno estan
+           //Debug.Log("Turno: " + turn);
+           //Debug.Log("Limite de turno: " + turnLimit);
+
+           if (turn > turnLimit)
+           {
+               turn = 1;
+               if (PhotonNetwork.IsMasterClient)
+               {
+                   StartTurnFire();
+               }
+           }  
+    } */
+
+        #region PUN CALLBACKS
+
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            //cuanta cuantos jugadores hay conectado en la sala y determinas la cantidad de turnos
-            turnLimit = PhotonNetwork.CurrentRoom.PlayerCount;
-
-            DetectedPlayers();
-
-            //SetTurnText(turn); // muestra en pantalla en que turno estan
-            //Debug.Log("Turno: " + turn);
-            //Debug.Log("Limite de turno: " + turnLimit);
-
-            if (turn > turnLimit)
+            if (changedProps.ContainsKey(LlamaradaGame.PLAYER_TURN))
             {
-                turn = 1;
-                if (PhotonNetwork.IsMasterClient)
+                Player[] players = PhotonNetwork.PlayerList;
+
+                if (targetPlayer.ActorNumber == players.Length  && !(bool)targetPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
                 {
-                    StartTurnFire();
+                    Debug.Log("se modifico el turno: " + targetPlayer.ActorNumber);
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        BoardManager.sharedInstance.CallIncreaseFire();
+                        BoardManager.sharedInstance.CallWindGeneration();
+                        BoardManager.sharedInstance.CallEdificeNeighborWithFire();
+                    }
                 }
-            }   
+                return;
+            }
+
+            /*if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }*/
+
+            
         }
+
+        #endregion
 
         #region Turn
 
@@ -128,7 +187,7 @@ namespace Com.BrumaGames.Llamaradas
                 avisos[i].SetActive(false);
             }
         }
-
+        /*
         public void StartTurnPlayer1()
         {
             SetTurnGame(TurnGame.player1);
@@ -139,7 +198,7 @@ namespace Com.BrumaGames.Llamaradas
             DesactivarAvisos();
             avisos[1].SetActive(true);
             StartCoroutine(AnimacionTurnos());
-    */
+    
         }
         public void StartTurnPlayer2()
         {
@@ -169,9 +228,10 @@ namespace Com.BrumaGames.Llamaradas
         {
             SetTurnGame(TurnGame.player8);
         }
+    */
         public void StartTurnFire()
         {
-            SetTurnGame(TurnGame.fire);
+            //SetTurnGame(TurnGame.fire);
 
             //TODO: IMPLEMENTAR TODO ESTO
            /* avisoFuego.SetActive(true);
@@ -187,119 +247,119 @@ namespace Com.BrumaGames.Llamaradas
         }
 
 
-        void SetTurnGame(TurnGame newTurnGame)
-        {
-            if (newTurnGame == TurnGame.noTurn)
-            {
-                Debug.Log("Turno jugador: 0");
-                currentTurnGame = TurnGame.noTurn;
-            }
+        /* void SetTurnGame(TurnGame newTurnGame)
+         {
+             if (newTurnGame == TurnGame.noTurn)
+             {
+                 Debug.Log("Turno jugador: 0");
+                 currentTurnGame = TurnGame.noTurn;
+             }
 
-            if (newTurnGame == TurnGame.player1)
-            {
-                currentTurnGame = TurnGame.player1;
-                playerTurn = 1;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player1)
+             {
+                 currentTurnGame = TurnGame.player1;
+                 playerTurn = 1;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player2)
-            {
-                currentTurnGame = TurnGame.player2;
-                playerTurn = 2;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player2)
+             {
+                 currentTurnGame = TurnGame.player2;
+                 playerTurn = 2;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player3)
-            {
-                currentTurnGame = TurnGame.player3;
-                playerTurn = 3;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player3)
+             {
+                 currentTurnGame = TurnGame.player3;
+                 playerTurn = 3;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player4)
-            {
-                currentTurnGame = TurnGame.player4;
-                playerTurn = 4;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player4)
+             {
+                 currentTurnGame = TurnGame.player4;
+                 playerTurn = 4;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player5)
-            {
-                currentTurnGame = TurnGame.player5;
-                playerTurn = 5;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player5)
+             {
+                 currentTurnGame = TurnGame.player5;
+                 playerTurn = 5;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player6)
-            {
-                currentTurnGame = TurnGame.player6;
-                playerTurn = 6;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player6)
+             {
+                 currentTurnGame = TurnGame.player6;
+                 playerTurn = 6;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player7)
-            {
-                currentTurnGame = TurnGame.player7;
-                playerTurn = 7;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player7)
+             {
+                 currentTurnGame = TurnGame.player7;
+                 playerTurn = 7;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.player8)
-            {
-                currentTurnGame = TurnGame.player8;
-                playerTurn = 8;
-                SetTurnPlayer(playerTurn);
-            }
+             if (newTurnGame == TurnGame.player8)
+             {
+                 currentTurnGame = TurnGame.player8;
+                 playerTurn = 8;
+                 SetTurnPlayer(playerTurn);
+             }
 
-            if (newTurnGame == TurnGame.fire )
-            {
-                Debug.Log("Turno Fuego");
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    currentTurnGame = TurnGame.fire;
-                    BoardManager.sharedInstance.CallIncreaseFire();
-                    BoardManager.sharedInstance.CallWindGeneration();
-                    BoardManager.sharedInstance.CallEdificeNeighborWithFire();
-                }               
-            }
-        }
+             if (newTurnGame == TurnGame.fire )
+             {
+                 Debug.Log("Turno Fuego");
+                 if (PhotonNetwork.IsMasterClient)
+                 {
+                     currentTurnGame = TurnGame.fire;
+                     BoardManager.sharedInstance.CallIncreaseFire();
+                     BoardManager.sharedInstance.CallWindGeneration();
+                     BoardManager.sharedInstance.CallEdificeNeighborWithFire();
+                 }               
+             }
+         }
 
-        //Método que pregunto de quien es el turno
+         //Método que pregunto de quien es el turno
         public void WhoseTurnIsIt(int turn)
-        {
-            switch (turn)
-            {
-                case 1:
-                    StartTurnPlayer1();
-                    break;
-                case 2:
-                    StartTurnPlayer2();
-                    break;
-                case 3:
-                    StartTurnPlayer3();
-                    break;
-                case 4:
-                    StartTurnPlayer4();
-                    break;
-                case 5:
-                    StartTurnPlayer5();
-                    break;
-                case 6:
-                    StartTurnPlayer6();
-                    break;
-                case 7:
-                    StartTurnPlayer7();
-                    break;
-                case 8:
-                    StartTurnPlayer8();
-                    break;
+         {
+             switch (turn)
+             {
+                 case 1:
+                     StartTurnPlayer1();
+                     break;
+                 case 2:
+                     StartTurnPlayer2();
+                     break;
+                 case 3:
+                     StartTurnPlayer3();
+                     break;
+                 case 4:
+                     StartTurnPlayer4();
+                     break;
+                 case 5:
+                     StartTurnPlayer5();
+                     break;
+                 case 6:
+                     StartTurnPlayer6();
+                     break;
+                 case 7:
+                     StartTurnPlayer7();
+                     break;
+                 case 8:
+                     StartTurnPlayer8();
+                     break;
 
-                default:
-                    break;
-            }
-        }
-
-        void SetTurnPlayer(int playerturn)
+                 default:
+                     break;
+             }
+         }
+        
+       void SetTurnPlayer(int playerturn)
         {
             //buscar el player que necesito en el turno
             int i = 0;
@@ -313,6 +373,7 @@ namespace Com.BrumaGames.Llamaradas
                 if (!controllers[i].myTurn)
                 {
                     controllers[i].ActiveActions();
+                    //controllers[i].gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.AllViaServer);
                 }
             }
             else
@@ -320,19 +381,19 @@ namespace Com.BrumaGames.Llamaradas
                 Debug.Log("algo paso");
             }
         }
-
+        
         //meotdo que pregunto si llegaste al ultimo turno o no
-        public void ExceedTurnLimit()
-        {
-            if(turn <= turnLimit)
-            {
-                WhoseTurnIsIt(turn);
-            }
-            else
-            {
-                WhoseTurnIsIt(1);
-            }
-        }
+         public void ExceedTurnLimit()
+         {
+             if(turn <= turnLimit)
+             {
+                 WhoseTurnIsIt(turn);
+             }
+             else
+             {
+                 WhoseTurnIsIt(1);
+             }
+         }
         #endregion
 
 
@@ -359,8 +420,9 @@ namespace Com.BrumaGames.Llamaradas
                     turnBoolsPlayer[i] = players[i].GetComponent<PlayerController>().myTurn;
             }
 
-        }
+        }*/
         #endregion
+
     }
 
 }

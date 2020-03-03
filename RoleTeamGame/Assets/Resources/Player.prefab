@@ -2105,13 +2105,6 @@ MonoBehaviour:
   canvas: {fileID: 0}
   canvasUI: {fileID: 0}
   panelActions: {fileID: 0}
-  actions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  numbersActions: 0
   buttonShowActions: {fileID: 0}
   detectedByThePlayer:
     serializedVersion: 2
@@ -2123,6 +2116,7 @@ MonoBehaviour:
   deadHabitants: 0
   FireSound: {fileID: 0}
   ScriptEfectos: {fileID: 0}
+  isMyTurn: 0
 --- !u!114 &4509734137207561815
 MonoBehaviour:
   m_ObjectHideFlags: 0

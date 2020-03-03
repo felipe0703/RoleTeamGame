@@ -16,7 +16,7 @@ namespace Com.BrumaGames.Llamaradas
 
         Path path;// ruta actual
         int currentWaypoint = 0;
-        bool reachedEndPath = false;
+       // bool reachedEndPath = false;
 
         //animacion
         private Animator animator;
@@ -52,14 +52,14 @@ namespace Com.BrumaGames.Llamaradas
             //si los puntos necesarios para llegar son mayor a los que faltan, es porque llegué
             if (currentWaypoint >= path.vectorPath.Count)
             {
-                reachedEndPath = true;
+                //reachedEndPath = true;
                 StopAnim();
                 return;
             }
             else
             {
                 //Debug.Log("No he Llegado");
-                reachedEndPath = false;
+                //reachedEndPath = false;
             }
 
             Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -113,7 +113,8 @@ namespace Com.BrumaGames.Llamaradas
         {
             this.target = target.transform;
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            controller.UpdateNumberOfActions();
+            //controller.UpdateNumberOfActions();
+            controller.UpdateActions();
             UpdatePath();
         }
         private void StopAnim()

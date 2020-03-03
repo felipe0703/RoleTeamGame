@@ -16,10 +16,10 @@ public class LoadingScene : MonoBehaviour
         //Iniciamos una corrutina, que es un método que se ejecuta 
         //en una línea de tiempo diferente al flujo principal del programa
         // LoadLevel(sceneToLoad);
-        panel.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        /*panel.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         titlePartida.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         inputTxt.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonOk.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        buttonOk.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);*/
     }
 
     public void LoadLevel(int sceneIndex)
@@ -47,10 +47,10 @@ public class LoadingScene : MonoBehaviour
             yield return null;
         }
     }
-    public void clickAnims(){
+    /*public void clickAnims(){
         panel.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         titlePartida.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         inputTxt.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         buttonOk.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-    }
+    }*/
 }

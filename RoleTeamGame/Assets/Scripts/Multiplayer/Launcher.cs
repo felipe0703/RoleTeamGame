@@ -105,6 +105,7 @@ namespace Com.BrumaGames.Llamaradas
             {
                 //carga la habitación del nivel.
                 //PhotonNetwork.LoadLevel("Game");
+                Debug.Log("Player count: " + playerCount);
                 LoadingLevel();
                 //StartCoroutine(LoadScene());
             }
@@ -227,7 +228,7 @@ namespace Com.BrumaGames.Llamaradas
             // # Crítico: no pudimos unirnos a una sala aleatoria, quizás no exista ninguno o estén todos llenos. No te preocupes, creamos una nueva sala
             if (!GameManager.sharedInstance.JoinRoom)
             {
-                Debug.Log("if: " +maxPlayersPerRoom);
+                Debug.Log("maximo players en joinrandom: " + maxPlayersPerRoom);
                 if (!PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom }))
                 {
                     Debug.Log("otro if: " +maxPlayersPerRoom);

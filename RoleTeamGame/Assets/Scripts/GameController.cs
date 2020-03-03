@@ -6,6 +6,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 #endregion // Namespace
 
 namespace Com.BrumaGames.Llamaradas
@@ -31,8 +32,8 @@ namespace Com.BrumaGames.Llamaradas
         public GameObject loadingScenes;
 
         //  POSICIONES DEL JUGADOR AL INICIAR
-        int[] positionX = { 20, 140 }; // posición en X
-        int[] positionY = { 30, 50, 70, 90, 110, 130 }; //posición en Y
+        //int[] positionX = { 20, 140 }; // posición en X
+        //int[] positionY = { 30, 50, 70, 90, 110, 130 }; //posición en Y
         public bool[] initialPositionPlayer = new bool[12];
 
 
@@ -79,12 +80,9 @@ namespace Com.BrumaGames.Llamaradas
 
         public int totalBurnedEdifice = 0;
         public List<int> listScorePlayers = new List<int>();
-
-        //objetos instanciados?
-        bool instantiatedTurnSystem = false;
-
-        //TEST
+        
         //public TextMeshProUGUI prueba;
+        //TEST
 
 
         #endregion // Variables
@@ -94,7 +92,8 @@ namespace Com.BrumaGames.Llamaradas
         // ########################################
 
         #region MonoBehaviour
-        void Start()
+
+        private void Awake()
         {
             //      SINGLETON
             if (sharedInstance == null)
@@ -105,11 +104,30 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Destroy(gameObject);
             }
+        }
 
-            
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            Debug.Log("iniciar timer");
+            CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
+        }
+        
+        void Start()
+        {
+            //actualizando propiedades personalizadas
+            Hashtable props = new Hashtable
+            {
+                {LlamaradaGame.PLAYER_LOADED_LEVEL, true}
+            };
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+
+
 
             //INSTANCIAR BOARMANAGER
-            if(boarManagerPrefab == null)
+            if (boarManagerPrefab == null)
             {
                 Debug.LogError("<Color=Red><a>Missing</a></Color> boarManagerPrefab Reference. Please set it up in GameObject 'Game Controller'", this);
             }
@@ -143,56 +161,51 @@ namespace Com.BrumaGames.Llamaradas
             {
                 if (PlayerController.LocalPlayerInstance == null)
                 {
-                    if (turnSystemManager == null)
-                        Debug.Log("no esta nah");
-                    // instanciar player
-                    bool selectPosition = false;
-                    int i3 = 0;
-                    Vector3 positionPlayer = new Vector3();
+                    Player[] players = PhotonNetwork.PlayerList;
+                    Debug.Log("cuantos jugadores hay: " + players.Length);
 
-                    do
+                    if(players.Length > 1)
                     {
-                        int i1 = Random.Range(0, 2);
-                        int i2 = Random.Range(0, 5);
-                        positionPlayer = new Vector3(positionX[i1], positionY[i2], 0);
-
-                        if (i1 == 0)
+                        if (!PhotonNetwork.IsMasterClient)
                         {
-                            i3 = i2;
+                            Vector3 positionPlayer = new Vector3();
+
+                            positionPlayer = LlamaradaGame.GetPosition(PhotonNetwork.LocalPlayer.GetPlayerNumber());
+
+                            PhotonNetwork.Instantiate(this.playerPrefab.name, positionPlayer, Quaternion.identity, 0);
                         }
-                        else
-                        {
-                            i3 = i2 + 6;
-                        }
+                    }
+                    else
+                    {
+                        Vector3 positionPlayer = new Vector3();
 
-                        if (!initialPositionPlayer[i3])
-                        {
-                            //Debug.Log("posicion vacia");
-                            selectPosition = true;
-                        }else
-                        {
-                            //Debug.Log("posicion ocupada");
-                        }
-                    } while (!selectPosition);                    
+                        positionPlayer = LlamaradaGame.GetPosition(PhotonNetwork.LocalPlayer.GetPlayerNumber());
 
-
-                    PhotonView pv = GetComponent<PhotonView>();
-                    pv.RPC("PositionPlayer", RpcTarget.AllBuffered, i3);
-                    PhotonNetwork.Instantiate(this.playerPrefab.name, positionPlayer, Quaternion.identity, 0);
+                        PhotonNetwork.Instantiate(this.playerPrefab.name, positionPlayer, Quaternion.identity, 0);
+                    }
+                    
                 }
             }
+
 
             //  TIMER
             escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
             tiempoAMostrarEnSegundos = GameManager.sharedInstance.timeTurn;         //  Inicializamos la variables que acumular
             ActualizarReloj(tiempoInicial);
 
+
             if (PhotonNetwork.IsMasterClient)
             {
                 SetPopulationInEdifice();
             }
+        }
 
-            //prueba.text = "";
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+
+            CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
         }
 
 
@@ -367,14 +380,66 @@ namespace Com.BrumaGames.Llamaradas
             loadingScenes.GetComponent<LoadingScene>().LoadLevel(1);
         }*/
 
-        #endregion
-
-        #region Public Methods
-
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
         }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        }
+
+        public override void OnLeftRoom()
+        {
+            PhotonNetwork.Disconnect();
+        }
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
+            {
+                //StartCoroutine(SpawnAsteroid());
+            }
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+           // CheckEndOfGame();
+        }
+
+        //se llama cuando se actualiza una propiedad personalizada
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        {
+            /*if (changedProps.ContainsKey(LlamaradaGame.PLAYER_LIVES))
+            {
+                //CheckEndOfGame();
+                return;
+            }*/
+
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+
+            if (changedProps.ContainsKey(LlamaradaGame.PLAYER_LOADED_LEVEL))
+            {
+                if (CheckAllPlayerLoadedLevel())
+                {
+                    Hashtable props = new Hashtable
+                    {
+                        {CountdownTimer.CountdownStartTime, (float) PhotonNetwork.Time}
+                    };
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        
 
         public void UpdateTotalBurnedEdifice()
         {
@@ -470,7 +535,46 @@ namespace Com.BrumaGames.Llamaradas
             tiempoAMostrarEnSegundos = tiempoInicial;
             ActualizarReloj(tiempoAMostrarEnSegundos);
         }
-        #endregion //TIMER
-    }
 
+
+       
+        #endregion //TIMER
+
+
+        private void StartGame()
+        {
+            //instanciar jugador
+            
+
+            //sistema de turno iniciar
+        }
+
+        private bool CheckAllPlayerLoadedLevel()
+        {
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                object playerLoadedLevel;
+
+                if (p.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_LOADED_LEVEL, out playerLoadedLevel))
+                {
+                    if ((bool)playerLoadedLevel)
+                    {
+                        continue;
+                    }
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void OnCountdownTimerIsExpired()
+        {
+            StartGame();
+        }
+
+
+
+    }
 }

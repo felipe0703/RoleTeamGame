@@ -12,7 +12,7 @@ MonoImporter:
   - disabledPerson: {instanceID: 0}
   - person: {instanceID: 0}
   - pet: {instanceID: 0}
-  executionOrder: 0
+  executionOrder: 200
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

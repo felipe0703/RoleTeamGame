@@ -13,7 +13,7 @@ public class EnemyIA : MonoBehaviour
     
     Path path;// ruta actual
     int currentWaypoint = 0;
-    bool reachedEndPath = false;
+   // bool reachedEndPath = false;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -40,13 +40,13 @@ public class EnemyIA : MonoBehaviour
         if(currentWaypoint >= path.vectorPath.Count)
         {
             Debug.Log("llege");
-            reachedEndPath = true;
+            //reachedEndPath = true;
             return;
         }
         else
         {
             //Debug.Log("No he Llegado");
-            reachedEndPath = false;
+            //reachedEndPath = false;
         }
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;

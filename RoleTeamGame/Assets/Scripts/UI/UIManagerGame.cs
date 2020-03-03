@@ -6,12 +6,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 using Cinemachine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 #endregion //Namespaces
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class UIManagerGame : MonoBehaviour
+    public class UIManagerGame : MonoBehaviourPunCallbacks
     {
         // ########################################
         // Variables
@@ -74,6 +76,14 @@ namespace Com.BrumaGames.Llamaradas
         PlayerController controller;
         PhotonView pv;
         PhotonView pvUI;
+
+        public TextMeshProUGUI energies;
+        public Dictionary<int, GameObject> playerListEntries;
+        public GameObject[] actions;
+
+        public GameObject canvasMaster;
+        public GameObject canvasClient;
+        Camera camera;
         #endregion
 
         // ########################################
@@ -81,7 +91,7 @@ namespace Com.BrumaGames.Llamaradas
         // ########################################
 
         #region MonoBehaviour
-        private void Start()
+        private void Awake()
         {
             if (sharedInstance == null)
             {
@@ -92,10 +102,39 @@ namespace Com.BrumaGames.Llamaradas
                 Destroy(gameObject);
             }
 
-            pvUI = GetComponent<PhotonView>();
+            playerListEntries = new Dictionary<int, GameObject>();
 
-            if (PhotonNetwork.IsMasterClient)
-                CallDesactivatePanelLevel();
+        }
+
+        private void Start()
+        {
+            pvUI = GetComponent<PhotonView>();
+            camera = Camera.main;
+
+            Player[] players = PhotonNetwork.PlayerList;
+
+            if (players.Length > 1)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    canvasMaster.SetActive(true);
+                    canvasClient.SetActive(false);
+                }
+                else
+                {
+                    canvasMaster.SetActive(false);
+                    canvasClient.SetActive(true);
+                }
+                //CallDesactivatePanelLevel();
+            }
+            else
+            {
+                canvasMaster.SetActive(false);
+                canvasClient.SetActive(true);
+            }
+
+
+            ActiveActions();
         }
 
         private void Update()
@@ -106,8 +145,35 @@ namespace Com.BrumaGames.Llamaradas
             }
 
             SetArrowWind();
+
+            energies.text = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN].ToString();
+            
         }
         #endregion
+
+        public void ActiveActions()
+        {
+            object maxEnergies = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_ENERGIES];
+            for (int i = 0; i < 5; i++)
+            {
+                if(i < (int)maxEnergies)
+                    actions[i].gameObject.SetActive(true);
+                else
+                    actions[i].gameObject.SetActive(false);
+            }
+        }
+
+        #region PUN CALLBACKS
+        
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        {
+            ActiveActions();
+            Debug.Log("se actualizo una propiedad personalizada");
+        }
+
+        
+        
+        #endregion  
 
         #region FindPlayer
         bool FindPlayer()
@@ -119,6 +185,7 @@ namespace Com.BrumaGames.Llamaradas
 
             pv = player.GetComponent<PhotonView>();
 
+            //activo botones 
             if (pv.IsMine)
             {
                 controller = player.GetComponent<PlayerController>();
@@ -233,16 +300,24 @@ namespace Com.BrumaGames.Llamaradas
 
         public void ChangeCam()
         {
-            if (PhotonNetwork.IsMasterClient)
+            if(PhotonNetwork.PlayerList.Length > 1)
             {
-                ActivateDeactivateCams(true, false, false, false);
-                cine.m_Lens.OrthographicSize = 15f;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    ActivateDeactivateCams(true, false, false, false);
+                    cine.m_Lens.FieldOfView = 165f;
+                    cine.transform.localPosition = new Vector3(70f, 80, -10f);
+                    camera.GetComponent<Camera>().orthographic = false;
+
+                }
+                else
+                {
+                    ActivateDeactivateCams(true, false, false, false);
+                    cine.m_Lens.OrthographicSize = 15f;
+                    camera.GetComponent<Camera>().orthographic = true;
+                }
             }
-            else
-            {
-                ActivateDeactivateCams(true, false, false, false);
-                cine.m_Lens.OrthographicSize = 15f;
-            }
+            
         }
 
 
@@ -331,8 +406,7 @@ namespace Com.BrumaGames.Llamaradas
             ShowButtonsActions();
             HideAllButtonsMove();
         }
-
-
+        
         //  PANEL UI
         public void ShowPanelUI()
         {
@@ -422,5 +496,4 @@ namespace Com.BrumaGames.Llamaradas
         #endregion
 
     }
-
 }

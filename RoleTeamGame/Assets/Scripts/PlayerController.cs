@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 #endregion // Namespaces
 
 namespace Com.BrumaGames.Llamaradas
@@ -13,7 +16,7 @@ namespace Com.BrumaGames.Llamaradas
         // ########################################
         // Variables
         // ########################################
-
+        
         #region Variables 
 
         [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
@@ -35,14 +38,14 @@ namespace Com.BrumaGames.Llamaradas
         public GameObject canvas;
         public GameObject canvasUI;
         public GameObject panelActions;
-        public GameObject[] actions;        
-        public int numbersActions = 0;
+       //public GameObject[] actions;        
+        //public int numbersActions = 0;
 
         //button ShowAActions
         public GameObject buttonShowActions;
 
         // VARIABLES PRIVADAS    
-        float distanceEdifice = 8f;
+        //float distanceEdifice = 8f;
         bool moveTarget1, moveTarget2 = false;
 
 
@@ -97,6 +100,7 @@ namespace Com.BrumaGames.Llamaradas
         public SfxControl ScriptEfectos;
 
 
+        public bool isMyTurn = false;
 
         
 
@@ -116,6 +120,11 @@ namespace Com.BrumaGames.Llamaradas
             {
                 PlayerController.LocalPlayerInstance = this.gameObject;
             }
+
+            // control de acciones del jugador
+            canvas = GameObject.Find("Canvas");
+            canvasUI = canvas.transform.GetChild(0).gameObject;
+            panelActions = canvasUI.transform.GetChild(0).gameObject;
         }
 
         void Start()
@@ -148,22 +157,10 @@ namespace Com.BrumaGames.Llamaradas
                 target2.parent = null;
                 targets = target.GetComponentsInChildren<Transform>();
             }
-
-            // control de acciones del jugador
-            canvas = GameObject.Find("Canvas");
-            canvasUI = canvas.transform.GetChild(0).gameObject;
-            panelActions = canvasUI.transform.GetChild(0).gameObject;
-
-            for(int i = 0; i < panelActions.transform.childCount; i++)
-            {
-                actions[i] = panelActions.transform.GetChild(i).gameObject;
-            }
-
-            //activar visualización de las energías
-            //ActiveActions();
-
+            
             //obtener el boton de acciones
-            GameObject canvasActions = canvas.transform.GetChild(1).gameObject;
+            GameObject canvasClient = canvas.transform.GetChild(0).gameObject;
+            GameObject canvasActions = canvasClient.transform.GetChild(1).gameObject;
             buttonShowActions = canvasActions.transform.GetChild(2).gameObject;
 
             UpdateScoreSaved(savedHabitants);
@@ -171,7 +168,33 @@ namespace Com.BrumaGames.Llamaradas
             //BoardManager.sharedInstance.SetIdEdifice();
         }
 
-        
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (photonView.IsMine)
+                {
+                    gameObject.GetComponent<PhotonView>().RPC("UpdateActions", RpcTarget.All);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                if (photonView.IsMine)
+                {
+                    gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                if (photonView.IsMine)
+                {
+                    GetNext();
+                }
+            }
+        }
+
         // Update is called once per frame
         void FixedUpdate()
         {
@@ -220,7 +243,10 @@ namespace Com.BrumaGames.Llamaradas
                 // si llegue al destino y no tengo mas acciones finaliza mi turno
                 if (pv.IsMine)
                 {
-                    if (numbersActions == 0 && myTurn)
+                    object energies = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_ENERGIES];
+                    object myTurnn = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN];
+                    //if (numbersActions == 0 && myTurn)
+                    if ((int)energies == 0 && (bool)myTurnn)
                     {
                         finishTurn = true;
                         myTurn = false;
@@ -229,7 +255,9 @@ namespace Com.BrumaGames.Llamaradas
                     if (finishTurn)
                     {
                         finishTurn = false;
-                        pv.RPC("SetTurn", RpcTarget.AllViaServer);
+                        //pv.RPC("SetTurn", RpcTarget.AllViaServer);
+                        GetNext();
+                        gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
                     }
                 }
             }
@@ -242,7 +270,16 @@ namespace Com.BrumaGames.Llamaradas
             // DetectFireLevel();
             //TODO: detecta una referencia nula
 
-            if(TurnSystemManager.sharedInstance != null)
+            if((bool)PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
+            {
+                buttonShowActions.SetActive(true);
+            }
+            else
+            {
+                buttonShowActions.SetActive(false);
+            }
+
+            /*if(TurnSystemManager.sharedInstance != null)
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == TurnSystemManager.sharedInstance.playerTurn)
                 {
@@ -254,7 +291,7 @@ namespace Com.BrumaGames.Llamaradas
                     //UIManagerGame.sharedInstance.textSetTurn.text = "No es mi turno";
                     buttonShowActions.SetActive(false);
                 }
-            }            
+            }       */     
         }
         #endregion // MonoBehaviour
 
@@ -550,8 +587,9 @@ namespace Com.BrumaGames.Llamaradas
         void InAllMovements(Vector3 targetPosition)
         {
             target.position = targetPosition;
-            moveTarget1 = true;
-            UpdateNumberOfActions();
+            moveTarget1 = true; 
+            //UpdateNumberOfActions();
+            UpdateActions();
             UIManagerGame.sharedInstance.HidePanelMove();
             UIManagerGame.sharedInstance.HideButtonsActions();
         }
@@ -690,7 +728,7 @@ namespace Com.BrumaGames.Llamaradas
         }
         #endregion // Animación
 
-        #region Public Methods
+        
 
         // ########################################
         // Funciones de Contador Acciones
@@ -706,17 +744,19 @@ namespace Com.BrumaGames.Llamaradas
             pv = GetComponent<PhotonView>();
             if (pv.IsMine)
             {
-                numbersActions = GameManager.sharedInstance.maxNumbersActions;
+               // numbersActions = GameManager.sharedInstance.maxNumbersActions;
                 myTurn = true;
-                for (int i = 0; i < numbersActions; i++)
+                RestartActions();
+                /*for (int i = 0; i < numbersActions; i++)
                 {
-                    actions[i].SetActive(true);
-                }
+                    //actions[i].SetActive(true);
+                }*/
             }            
         }
 
+       
         //   AGREGAR ACCION USADA
-        public void AddActions()
+        /*public void AddActions()
         {
             if (numbersActions >= GameManager.sharedInstance.maxNumbersActions)
             {
@@ -726,10 +766,10 @@ namespace Com.BrumaGames.Llamaradas
             {
                 numbersActions++;
             }
-        }
+        }*/
 
         //  RESTAR ACCION
-        public void SubtractActions()
+        /*public void SubtractActions()
         {
             if (numbersActions <= 0)
             {
@@ -739,21 +779,112 @@ namespace Com.BrumaGames.Llamaradas
             {
                 numbersActions--;
             }
-        }
-        
-        public void UpdateNumberOfActions()
+        }*/
+
+        /* public void UpdateNumberOfActions()
+         {
+             //GameController.sharedInstance.SubtractActions();
+             //SubtractActions();
+             //animacion de restar acción
+             // int i = GameController.sharedInstance.numbersActions;
+             //int i = numbersActions;
+             //actions[i].SetActive(false);
+         }*/
+
+        [PunRPC]
+        public void UpdateActions()
         {
-            //GameController.sharedInstance.SubtractActions();
-            SubtractActions();
-            //animacion de restar acción
-            // int i = GameController.sharedInstance.numbersActions;
-            int i = numbersActions;
-            actions[i].SetActive(false);
+
+            if (pv.IsMine)
+            {
+                object energies;
+                if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_ENERGIES, out energies))
+                {
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(
+                        new Hashtable{
+                            { LlamaradaGame.PLAYER_ENERGIES, ((int)energies <= 1) ? 0 : ((int)energies - 1) }
+                        }
+                    );
+
+                }
+            }
+        }
+
+        [PunRPC]
+        public void RestartActions()
+        {
+            if (pv.IsMine)
+            {
+                PhotonNetwork.LocalPlayer.SetCustomProperties(
+                    new Hashtable{
+                        { LlamaradaGame.PLAYER_ENERGIES, LlamaradaGame.PLAYER_MAX_ENERGIES }
+                    }
+                );
+            }
+        }
+
+        public void GetNext()
+        {
+            if (PhotonNetwork.LocalPlayer.GetNext() == null) //solo un jugador
+                return;
+            else
+            {
+                if (photonView.IsMine)
+                    gameObject.GetComponent<PhotonView>().RPC("ItsMyTurn", RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        public void ItsMyTurn()
+        {
+            Player player = PhotonNetwork.LocalPlayer.GetNext();       
+
+            if (pv.IsMine)
+            {
+
+                object turn;
+                // si el siguiente jugador es el master paso al cliente 2
+                if (player.ActorNumber == 1)
+                {
+                    Player[] players = PhotonNetwork.PlayerList;
+
+                    if (players[1].CustomProperties.TryGetValue(LlamaradaGame.PLAYER_TURN, out turn))
+                    {
+                        players[1].SetCustomProperties(
+                            new Hashtable{
+                            { LlamaradaGame.PLAYER_TURN, ( (bool)turn ? false : true )}
+                            }
+                        );
+                    }
+                }
+                else
+                {
+                    //cambio turno siguiente jugador
+                    if (player.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_TURN, out turn))
+                    {
+                        player.SetCustomProperties(
+                            new Hashtable{
+                            { LlamaradaGame.PLAYER_TURN, ( (bool)turn ? false : true )}
+                            }
+                        );
+                    }                    
+                }
+
+                //cambio turno jugador local
+                if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_TURN, out turn))
+                {
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(
+                        new Hashtable{
+                            { LlamaradaGame.PLAYER_TURN, ( (bool)turn ? false : true )}
+                        }
+                    );
+                } 
+            }
         }
 
         #endregion //Acciones    
 
-        #region DectectFireMusic
+        #region DectectFire Music
         //IMPLEMENTAR ACA Y EN TURNSYSTEM
 
         /* public void DetectFireLevel()
@@ -852,7 +983,7 @@ namespace Com.BrumaGames.Llamaradas
 
         #endregion
 
-
+        #region Score
         public void UpdateScoreSaved(int score)
         {
             savedHabitants += score;
@@ -894,7 +1025,7 @@ namespace Com.BrumaGames.Llamaradas
         void SetTurn()
         {
             TurnSystemManager.turn++;
-            TurnSystemManager.sharedInstance.ExceedTurnLimit();
+            //TurnSystemManager.sharedInstance.ExceedTurnLimit();
         }
         #endregion // Turn
 
@@ -911,5 +1042,4 @@ namespace Com.BrumaGames.Llamaradas
         #endregion //Private Methods
 
     }
-
 }

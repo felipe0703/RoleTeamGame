@@ -32,8 +32,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public int id;
         public int idTypeOfEdifice;
-        [SerializeField]
-        Sprite spriteBurnedEdifice;
+        [SerializeField] Sprite spriteBurnedEdifice;
 
         PhotonView pv;
 
@@ -140,7 +139,9 @@ namespace Com.BrumaGames.Llamaradas
         {
             FillHabitant();
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            controller.UpdateNumberOfActions();
+
+            controller.UpdateActions();
+            
             //controller.HideAllButtonsInspect();
             controller.GetComponent<DetectEdifice>().HideAllButtonsInspect();
             isInspected = true;
@@ -202,7 +203,7 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
-                            controller.UpdateNumberOfActions();
+                            controller.UpdateActions();
                             return;
                         }
 
@@ -212,7 +213,7 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
-                            controller.UpdateNumberOfActions();
+                            controller.UpdateActions();
                             return;
                         }
 
@@ -410,8 +411,8 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         void FireStartInEdifice()
         {
-            bool  next = false;
-
+            //bool  next = false;
+            //encontrar el boarmanager
             /* do
              {
                  Debug.Log("no lo encuentro");
@@ -427,6 +428,11 @@ namespace Com.BrumaGames.Llamaradas
             
             ChangeSprite();
             BurnedEdifice = true;
+
+            if (GameObject.Find("BoardManager(Clone)") == null)
+                Debug.Log("no hay boardmanager");
+            else
+                Debug.Log("encontre el boarmanager");
 
             BoardManager.sharedInstance.setCont = true;
 

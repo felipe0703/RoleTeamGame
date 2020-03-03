@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour
 
     private void SetGameState(GameState newGameState)
     {
-        Debug.Log(newGameState);
         if (newGameState == GameState.welcome)
         {
             //  TODO: colocar logica del login
