@@ -70,8 +70,36 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Destroy(gameObject);
             }
+        }
 
-            
+
+        #region PUN CALLBACKS
+
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        {
+            if (changedProps.ContainsKey(LlamaradaGame.PLAYER_TURN))
+            {
+                Player[] players = PhotonNetwork.PlayerList;
+
+                if (targetPlayer.ActorNumber == players.Length  && !(bool)targetPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
+                {
+                    Debug.Log("se modifico el turno: " + targetPlayer.ActorNumber);
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        BoardManager.sharedInstance.CallIncreaseFire();
+                        BoardManager.sharedInstance.CallEdificeNeighborWithFire();
+                        BoardManager.sharedInstance.CallWindGeneration();
+                    }
+                }
+                return;
+            }            
+        }
+
+        #endregion
+
+        public void SetTurnInit()
+        {
             Player[] players = PhotonNetwork.PlayerList;
             if (PhotonNetwork.IsMasterClient)
             {
@@ -92,78 +120,7 @@ namespace Com.BrumaGames.Llamaradas
                         );
                 }
             }
-            
-
-
-           /* turn = 1;
-            DetectedPlayers();
-            WhoseTurnIsIt(turn);
-
-            if (player == null)
-            {
-                player = GameObject.FindGameObjectWithTag("Player");
-                pv = player.GetComponent<PhotonView>();
-
-                if (pv.IsMine)
-                {
-                    controller = player.GetComponent<PlayerController>();
-                }
-            }*/
         }
-
-        // Update is called once per frame
-        /*void Update()
-       {
-           //cuanta cuantos jugadores hay conectado en la sala y determinas la cantidad de turnos
-          turnLimit = PhotonNetwork.CurrentRoom.PlayerCount;
-
-           DetectedPlayers();
-
-           //SetTurnText(turn); // muestra en pantalla en que turno estan
-           //Debug.Log("Turno: " + turn);
-           //Debug.Log("Limite de turno: " + turnLimit);
-
-           if (turn > turnLimit)
-           {
-               turn = 1;
-               if (PhotonNetwork.IsMasterClient)
-               {
-                   StartTurnFire();
-               }
-           }  
-    } */
-
-        #region PUN CALLBACKS
-
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-        {
-            if (changedProps.ContainsKey(LlamaradaGame.PLAYER_TURN))
-            {
-                Player[] players = PhotonNetwork.PlayerList;
-
-                if (targetPlayer.ActorNumber == players.Length  && !(bool)targetPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
-                {
-                    Debug.Log("se modifico el turno: " + targetPlayer.ActorNumber);
-
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        BoardManager.sharedInstance.CallIncreaseFire();
-                        BoardManager.sharedInstance.CallWindGeneration();
-                        BoardManager.sharedInstance.CallEdificeNeighborWithFire();
-                    }
-                }
-                return;
-            }
-
-            /*if (!PhotonNetwork.IsMasterClient)
-            {
-                return;
-            }*/
-
-            
-        }
-
-        #endregion
 
         #region Turn
 

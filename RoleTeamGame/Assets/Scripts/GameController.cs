@@ -80,9 +80,14 @@ namespace Com.BrumaGames.Llamaradas
 
         public int totalBurnedEdifice = 0;
         public List<int> listScorePlayers = new List<int>();
-        
+
         //public TextMeshProUGUI prueba;
         //TEST
+
+
+        //botones para aumentar o disminuir fuego
+        public bool buttonAddFire = false;
+        public bool buttonSubtractFire = false;
 
 
         #endregion // Variables
@@ -109,7 +114,6 @@ namespace Com.BrumaGames.Llamaradas
         public override void OnEnable()
         {
             base.OnEnable();
-            Debug.Log("iniciar timer");
             CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
         }
         
@@ -122,9 +126,6 @@ namespace Com.BrumaGames.Llamaradas
             };
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-
-
 
             //INSTANCIAR BOARMANAGER
             if (boarManagerPrefab == null)
@@ -161,8 +162,8 @@ namespace Com.BrumaGames.Llamaradas
             {
                 if (PlayerController.LocalPlayerInstance == null)
                 {
+                    //lista de jugadores
                     Player[] players = PhotonNetwork.PlayerList;
-                    Debug.Log("cuantos jugadores hay: " + players.Length);
 
                     if(players.Length > 1)
                     {
@@ -362,15 +363,6 @@ namespace Com.BrumaGames.Llamaradas
         
         #endregion
 
-        #region SynchronizationPositionPlayer
-
-        [PunRPC]
-        void PositionPlayer(int i)
-        {
-            initialPositionPlayer[i] = true; 
-        }
-
-        #endregion
 
         #region Photon Callbacks
 
@@ -387,11 +379,13 @@ namespace Com.BrumaGames.Llamaradas
 
         public override void OnDisconnected(DisconnectCause cause)
         {
+            Debug.Log("se desconecto un jugador");
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
 
         public override void OnLeftRoom()
         {
+            Debug.Log("salio de sala");
             PhotonNetwork.Disconnect();
         }
 
@@ -399,24 +393,18 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
             {
-                //StartCoroutine(SpawnAsteroid());
+
             }
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-           // CheckEndOfGame();
+            Debug.Log("salio un jugdor de la sala");
         }
 
         //se llama cuando se actualiza una propiedad personalizada
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            /*if (changedProps.ContainsKey(LlamaradaGame.PLAYER_LIVES))
-            {
-                //CheckEndOfGame();
-                return;
-            }*/
-
             if (!PhotonNetwork.IsMasterClient)
             {
                 return;
@@ -462,9 +450,23 @@ namespace Com.BrumaGames.Llamaradas
                 Debug.Log("puntaje jugador: " + listScorePlayers[i]);
             }*/
         }
+
+
+        public void CallAddFireCoach()
+        {
+            BoardManager.sharedInstance.ActiveAddFireCoach();
+        }
+        public void CallSubtractFireCoach()
+        {
+            BoardManager.sharedInstance.ActiveSubtractFireCoach();
+        }
+        public void CallChangeWind()
+        {
+            BoardManager.sharedInstance.ActiveChangeWind();
+        }
         #endregion
 
-        
+
 
         // ########################################
         // función de manejo del tiempo
@@ -543,8 +545,7 @@ namespace Com.BrumaGames.Llamaradas
 
         private void StartGame()
         {
-            //instanciar jugador
-            
+            TurnSystemManager.sharedInstance.SetTurnInit();
 
             //sistema de turno iniciar
         }
