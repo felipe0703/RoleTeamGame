@@ -52,13 +52,26 @@ namespace Com.BrumaGames.Llamaradas
 
         private void Awake()
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
+           
 
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
 
             PlayerNameInput.text = "Jugador " + Random.Range(1000, 10000);
             region = "";
+        }
+
+        private void Start()
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+        }
+
+        private void Update()
+        {
+            if (PhotonNetwork.LevelLoadingProgress > 0 && PhotonNetwork.LevelLoadingProgress < 1)
+            {
+                Debug.Log(PhotonNetwork.LevelLoadingProgress);
+            }
         }
         #endregion
 

@@ -320,10 +320,14 @@ namespace Com.BrumaGames.Llamaradas
 
         #region FireState
 
-       /* public void StartFireLevel1()
+        public void StartFireLevel0()
+        {
+            SetFireState(FireState.level0);
+        }
+        public void StartFireLevel1()
         {
             SetFireState(FireState.level1);
-        }*/
+        }
         public void StartFireLevel2()
         {
             SetFireState(FireState.level2);
@@ -342,13 +346,24 @@ namespace Com.BrumaGames.Llamaradas
         {
             //TODO: cambiar el color de los sprite cuando se comience a quemar
 
+            if (newFireState == FireState.level0)
+            {
+                //CallStartFireNeighbor();
+                level1.SetActive(false);
+                level2.SetActive(false);
+                level3.SetActive(false);
+                level4.SetActive(false);
+                contFire = 0;
+            }
+
             if (newFireState == FireState.level1)
             {
                 //CallStartFireNeighbor();
-                /*level1.SetActive(true);
+                level1.SetActive(true);
                 level2.SetActive(false);
                 level3.SetActive(false);
-                level4.SetActive(false);*/
+                level4.SetActive(false);
+                contFire = 1;
             }
 
             if (newFireState == FireState.level2)
@@ -487,13 +502,23 @@ namespace Com.BrumaGames.Llamaradas
             }
 
             pv = GetComponent<PhotonView>();
+            Debug.Log("ejecutar el level fuego");
             pv.RPC("FireLevel", RpcTarget.AllBuffered);
         }
 
         [PunRPC]
         void FireLevel()
         {
-            if (contFire == 2)
+            Debug.Log("level fuego");
+            if (contFire == 0)
+            {
+                StartFireLevel0();
+            }
+            else if (contFire == 1)
+            {
+                StartFireLevel1();
+            }
+            else if (contFire == 2)
             {
                 StartFireLevel2();
             }
@@ -506,7 +531,49 @@ namespace Com.BrumaGames.Llamaradas
                 StartFireLevel4();
             }
         }
-        
+
+        [PunRPC]
+        public void CallFireLevelAll(bool addFire)
+        {
+
+            if (contFire >= 4)
+                return;
+
+            if (addFire && contFire >= 0)
+                contFire++;
+            else if (contFire > 0)
+                contFire--;
+            else
+                return;
+            
+
+
+            Debug.Log("contador fire: " + contFire);
+            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            if (contFire == maxFire)
+            {
+                controller.UpdateScoreDead(TotalScoreDeadHabitant());
+                ChangeSprite();
+                BurnedEdifice = true;
+                GameController.sharedInstance.UpdateTotalBurnedEdifice();
+            }
+
+            pv = GetComponent<PhotonView>();
+            pv.RPC("FireLevel", RpcTarget.AllBuffered);
+        }
+
+        public void SelectEdificeForIncreaseFire()
+        {
+            pv = GetComponent<PhotonView>();
+            pv.RPC("CallFireLevelAll", RpcTarget.AllViaServer, true);
+
+        }
+
+        public void SelectEdificeForDecreaseFire()
+        {
+            pv = GetComponent<PhotonView>();
+            pv.RPC("CallFireLevelAll", RpcTarget.AllViaServer, false);
+        }
 
         #endregion
 

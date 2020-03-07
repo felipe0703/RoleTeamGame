@@ -66,16 +66,17 @@ namespace Com.BrumaGames.Llamaradas
         //Detectar los edificios adyacentes
         private Vector2[] adjacentDirections = new Vector2[]
         {
-        Vector2.up,
-        Vector2.right,
-        Vector2.down,
-        Vector2.left
+            Vector2.up,
+            Vector2.right,
+            Vector2.down,
+            Vector2.left
         };
 
         public List<GameObject> neighborsEdifices = new List<GameObject>(); // listado con los edificios vecinos al fuego
-
-
+        
         PhotonView pv;
+
+
         #endregion //Variables
 
         // ########################################
@@ -106,6 +107,7 @@ namespace Com.BrumaGames.Llamaradas
 
             directionWind = 3;
         }
+
         private void Update()
         {
             //Debug.Log(directionWind);
@@ -521,6 +523,7 @@ namespace Com.BrumaGames.Llamaradas
                     allEdifices.Add(edifices[i]);
                 }
             }
+
             //a los edificios que tienen fuego se le aumenta aun mas
             for (int i = 0; i < allEdifices.Count; i++)
             {
@@ -598,6 +601,94 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
         #endregion
+
+
+        public void ActiveAddFireCoach()
+        {
+            if (!GameController.sharedInstance.buttonAddFire)
+            {
+                GameController.sharedInstance.buttonAddFire = true;
+                GameController.sharedInstance.buttonSubtractFire = false;
+            }
+            else
+            {
+                GameController.sharedInstance.buttonAddFire = false;
+                GameController.sharedInstance.buttonSubtractFire = false;
+            }
+
+            GameObject edifice;
+            for (int i = 0; i < allEdifices.Count; i++)
+            {
+                edifice = allEdifices[i];
+
+                GameObject canvas = edifice.transform.GetChild(0).gameObject;
+                GameObject buttonAddFire = canvas.transform.GetChild(3).gameObject;
+                GameObject buttonSubtractFire = canvas.transform.GetChild(4).gameObject;
+                SpriteRenderer sprite = edifice.GetComponent<SpriteRenderer>();
+
+                if (GameController.sharedInstance.buttonAddFire)
+                {
+                    sprite.color = new Color(188, 0, 0, 255);
+                    buttonAddFire.SetActive(true);
+                    buttonSubtractFire.SetActive(false);
+                }
+                else
+                {
+                    sprite.color = Color.white;
+                    buttonAddFire.SetActive(false);
+                    buttonSubtractFire.SetActive(false);
+                }
+                
+            }            
+        }
+
+        public void ActiveSubtractFireCoach()
+        {
+            if (!GameController.sharedInstance.buttonSubtractFire)
+            {
+                GameController.sharedInstance.buttonAddFire = false;
+                GameController.sharedInstance.buttonSubtractFire = true;
+            }
+            else
+            {
+                GameController.sharedInstance.buttonAddFire = false;
+                GameController.sharedInstance.buttonSubtractFire = false;
+            }
+
+            GameObject edifice;
+            for (int i = 0; i < allEdifices.Count; i++)
+            {
+                edifice = allEdifices[i];
+
+                GameObject canvas = edifice.transform.GetChild(0).gameObject;
+                GameObject buttonAddFire = canvas.transform.GetChild(3).gameObject;
+                GameObject buttonSubtractFire = canvas.transform.GetChild(4).gameObject;
+                SpriteRenderer sprite = edifice.GetComponent<SpriteRenderer>();
+                int contFire = edifice.GetComponent<Edifice>().contFire;
+                sprite.color = Color.white;
+
+                if (GameController.sharedInstance.buttonSubtractFire)
+                {
+                    if (contFire > 0 && contFire < edifice.GetComponent<Edifice>().maxFire)
+                    {
+                        sprite.color = new Color(0, 159, 253, 255);
+                    }
+                    buttonAddFire.SetActive(false);
+                    buttonSubtractFire.SetActive(true);
+                }
+                else
+                {
+                    sprite.color = Color.white;
+                    buttonAddFire.SetActive(false);
+                    buttonSubtractFire.SetActive(false);
+                }
+            }
+        }
+
+        public void ActiveChangeWind()
+        {
+            CallWindGeneration();
+        }
 
         #endregion // FunctionFire
     }

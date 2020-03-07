@@ -63,5 +63,6 @@ MonoBehaviour:
   - RestartActions
   - IsTurn
   - ItsMyTurn
+  - CallFireLevelAll
   DisableAutoOpenWizard: 1
   ShowSettings: 0

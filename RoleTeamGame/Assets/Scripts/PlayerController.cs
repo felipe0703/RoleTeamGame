@@ -134,22 +134,13 @@ namespace Com.BrumaGames.Llamaradas
             animator = GetComponent<Animator>();
             myTurn = false;
             finishTurn = false;
-            //numbersActions = GameManager.sharedInstance.maxNumbersActions;
 
             if (pv.IsMine)
             {
                 int actor = PhotonNetwork.LocalPlayer.ActorNumber;
                 UIManagerGame.sharedInstance.textPlayer.text = "Soy Jugador: " + actor;
-                //if (actor == 1)// si soy el primer jugador, es mi turno
-                  //  myTurn = true;
             }
             
-
-            // Posicionamiento del player de forma aleatoria
-            // TODO: QUE EL POSICIONAMIENTO DE UN JUGADOR NO SEA IGUAL A OTRO JUGADOR
-            int i1 = Random.Range(0, 2);
-            int i2 = Random.Range(0, 5);
-            //transform.localPosition = new Vector3(positionA[i1], positionB[i2], 0);
 
             if (target != null && target2 != null)
             {
@@ -267,9 +258,6 @@ namespace Com.BrumaGames.Llamaradas
         //IMPLEMENTAR LUEGO
         private void LateUpdate()
         {
-            // DetectFireLevel();
-            //TODO: detecta una referencia nula
-
             if((bool)PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
             {
                 buttonShowActions.SetActive(true);
@@ -277,21 +265,7 @@ namespace Com.BrumaGames.Llamaradas
             else
             {
                 buttonShowActions.SetActive(false);
-            }
-
-            /*if(TurnSystemManager.sharedInstance != null)
-            {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == TurnSystemManager.sharedInstance.playerTurn)
-                {
-                    //UIManagerGame.sharedInstance.textSetTurn.text = "Es mi turno";
-                    buttonShowActions.SetActive(true);
-                }
-                else
-                {
-                    //UIManagerGame.sharedInstance.textSetTurn.text = "No es mi turno";
-                    buttonShowActions.SetActive(false);
-                }
-            }       */     
+            }    
         }
         #endregion // MonoBehaviour
 
