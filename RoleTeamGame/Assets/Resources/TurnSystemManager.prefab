@@ -49,18 +49,7 @@ MonoBehaviour:
   players: []
   controllers: []
   turnBoolsPlayer: 0000000000000000
-  avisoFuego: {fileID: 0}
-  avisoP1: {fileID: 0}
-  avisoP2: {fileID: 0}
-  avisoP3: {fileID: 0}
-  avisoP4: {fileID: 0}
-  fuego: {fileID: 0}
-  p1: {fileID: 0}
-  p2: {fileID: 0}
-  p3: {fileID: 0}
-  p4: {fileID: 0}
   avisos: []
-  turno: {fileID: 0}
 --- !u!114 &2924688502458047375
 MonoBehaviour:
   m_ObjectHideFlags: 0

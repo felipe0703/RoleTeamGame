@@ -41,7 +41,7 @@ namespace Com.BrumaGames.Llamaradas
         public bool[] turnBoolsPlayer = new bool[8];
         PhotonView pv;
 
-        public GameObject avisoFuego;
+        /*public GameObject avisoFuego;
         public GameObject avisoP1;
         public GameObject avisoP2;
         public GameObject avisoP3;
@@ -51,11 +51,14 @@ namespace Com.BrumaGames.Llamaradas
         public GUIAnimFREE p1;
         public GUIAnimFREE p2;
         public GUIAnimFREE p3;
-        public GUIAnimFREE p4;
+        public GUIAnimFREE p4;*/
+
+        //Marco: esto es para guardar el componente del objeto Text_turn que esta en el uimanager
+        private GUIAnimFREE textoTurno;
 
         // marco
 
-        public GameObject[] avisos;
+       public GameObject[] avisos;
 
         public GUIAnimFREE turno;
 
@@ -70,6 +73,8 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Destroy(gameObject);
             }
+            // se consigue el componente del text_turn
+            textoTurno = UIManagerGame.sharedInstance.textTurn.GetComponent<GUIAnimFREE>();
         }
 
 
@@ -124,17 +129,26 @@ namespace Com.BrumaGames.Llamaradas
 
         #region Turn
 
+
+        //Use este metodo para los mensajes de turno, llama a la corutina para activar las animaciones
+        //Faltaria avusar el fuego
+
+        //en cuanto a lo del viento, tengo una sugerencia para que se note hacia a donde va,preguntando, me dijieron 
+        //que se podria agregar una segunda camara que se activa para que muestre en el centro de la pantalla la brujula
+        //con zoom para que se note
+
         private void SetTurnText(int turn)
         {
             UIManagerGame.sharedInstance.textTurn.text = "Turno Jugador: " + turn;
+            StartCoroutine(AnimacionTurnos());
         }
 
        
 
         IEnumerator AnimacionTurnos(){
-            turno.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+            textoTurno.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
             yield return new WaitForSeconds(3.1f);
-            turno.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+            textoTurno.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
         }
 
     
