@@ -3881,6 +3881,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2921507324956932102, guid: b84ef0ec08dde594ab461c60b69a1a16,
+        type: 3}
+      propertyPath: m_MoveIn.Time
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b84ef0ec08dde594ab461c60b69a1a16, type: 3}
 --- !u!224 &1133112036 stripped
@@ -3991,7 +3996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GUISpeed: 2.41
-  m_AutoAnimation: 1
+  m_AutoAnimation: 0
   m_AnimationMode: 4
   m_IdleTime: 8
 --- !u!4 &1156933142
