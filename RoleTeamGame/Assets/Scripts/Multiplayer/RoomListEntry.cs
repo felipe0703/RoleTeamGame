@@ -19,13 +19,19 @@ namespace Com.BrumaGames.Llamaradas
         {
             JoinRoomButton.onClick.AddListener(() =>
             {
-                if (PhotonNetwork.InLobby)
-                {
-                    PhotonNetwork.LeaveLobby();
-                }
-
-                PhotonNetwork.JoinRoom(roomName);
+                StartCoroutine(OnJoinRoom());
             });
+        }
+
+        IEnumerator OnJoinRoom()
+        {
+            yield return new WaitForSeconds(.7f);
+            if (PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.LeaveLobby();
+            }
+
+            PhotonNetwork.JoinRoom(roomName);
         }
 
         public void Initialize(string name, byte currentPlayers, byte maxPlayers)

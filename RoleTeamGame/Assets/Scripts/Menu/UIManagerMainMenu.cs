@@ -6,9 +6,23 @@ using UnityEngine.UI;
 
 public class UIManagerMainMenu : MonoBehaviour
 {
-    //public RectTransform bkgr, buttonMultiplayer, buttonTutorial, buttonInstruction, buttonCredit;
-    public GUIAnimFREE bkgr,buttonCreateGame,buttonJoinGame,buttonAudio,buttonCredits;
-    // Start is called before the first frame update
+    public GUIAnimFREE topPanel,loginPanel;
+
+
+    //public GUIAnimFREE buttonCreateRoom, buttonJoinRandom, buttonRoomList;
+
+
+    public Canvas canvas;
+
+
+    private void Awake()
+    {
+        if (enabled)
+        {
+            // Set GUIAnimSystemFREE.Instance.m_AutoAnimation to false in Awake() will let you control all GUI Animator elements in the scene via scripts.
+            GUIAnimSystemFREE.Instance.m_AutoAnimation = false;
+        }
+    }
 
     void Start()
     {
@@ -17,19 +31,55 @@ public class UIManagerMainMenu : MonoBehaviour
         //buttonTutorial.DOAnchorPosX(150, 0.8f);
         //buttonInstruction.DOAnchorPosX(150, 0.8f);
         //buttonCredit.DOAnchorPosY(-290, 0.8f);
-        bkgr.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonCreateGame.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonJoinGame.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonAudio.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonCredits.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        StartCoroutine(MoveInTopPanel());
+
+        // Disable all scene switch buttons
+        GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, false);
     }
 
-    public void clickAnim(){
-        bkgr.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonCreateGame.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonJoinGame.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonAudio.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonCredits.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+    IEnumerator MoveInTopPanel()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        topPanel.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+
+        StartCoroutine(MoveInLoginPanel());
     }
+
+    IEnumerator MoveInLoginPanel()
+    {
+        yield return new WaitForSeconds(.8f);
+
+        loginPanel.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+
+        // Enable all scene switch buttons
+        StartCoroutine(EnableAllDemoButtons());
+
+    }
+
+    // Enable/Disable all scene switch Coroutine
+    IEnumerator EnableAllDemoButtons()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        // Enable all scene switch buttons
+        GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, true);
+    }
+
+    /*
+    public void AnimButtonRoomList()
+    {
+        buttonRoomList.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+        buttonRoomList.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+        //StartCoroutine(ResetScaleButton());
+    }
+
+    IEnumerator ResetScaleButton()
+    {
+        yield return new WaitForSeconds(1.0f);
+        
+
+    }*/
+
 
 }

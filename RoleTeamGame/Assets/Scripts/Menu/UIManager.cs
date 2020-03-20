@@ -6,23 +6,80 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    //public RectTransform botonStart;
-   // public RectTransform title;
 
-    public GUIAnimFREE botonStart,title,bckgr;
+    public Canvas canvas;
+    public GUIAnimFREE buttonStart,title,textStart;
 
+    private void Awake()
+    {
+        if (enabled)
+        {
+            // Set GUIAnimSystemFREE.Instance.m_AutoAnimation to false in Awake() will let you control all GUI Animator elements in the scene via scripts.
+            GUIAnimSystemFREE.Instance.m_AutoAnimation = false;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        //title.DOAnchorPosY(160f , 0.5f);
-        //botonStart.DOAnchorPosX(0, 0.5f);
-        botonStart.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        title.PlayInAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-    }
-    public void clickAnims(){
-        botonStart.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        title.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        bckgr.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
+        // MoveIn title
+        StartCoroutine(MoveInTitleGameObjects());
+
+        // Disable all scene switch buttons
+        GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, false);
     }
 
+
+    IEnumerator MoveInTitleGameObjects()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        // MoveIn title
+        title.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);        
+
+        // MoveIn all primary buttons
+        StartCoroutine(MoveInButton());
+    }
+
+
+    // MoveIn all primary buttons
+    IEnumerator MoveInButton()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        // MoveIn all primary buttons
+        buttonStart.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+        textStart.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+
+        // Enable all scene switch buttons
+        StartCoroutine(EnableAllDemoButtons());
+    }
+
+    // Enable/Disable all scene switch Coroutine
+    IEnumerator EnableAllDemoButtons()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        // Enable all scene switch buttons
+        GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, true);
+    }
+
+
+    // MoveOut all primary buttons
+    public void HideAllGUIs()
+    {
+        buttonStart.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+        textStart.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+
+        // MoveOut title
+        StartCoroutine(HideTitleText());
+    }
+
+    // MoveOut title
+    IEnumerator HideTitleText()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        // MoveOut title
+        title.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+    }
 }
