@@ -3948,13 +3948,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< HEAD
-    - target: {fileID: 2921507324956932102, guid: b84ef0ec08dde594ab461c60b69a1a16,
-        type: 3}
-      propertyPath: m_MoveIn.Time
-      value: 1
-      objectReference: {fileID: 0}
-=======
     - target: {fileID: 2678515840243867452, guid: b84ef0ec08dde594ab461c60b69a1a16,
         type: 3}
       propertyPath: m_IsActive
@@ -4020,7 +4013,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
->>>>>>> lobby
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b84ef0ec08dde594ab461c60b69a1a16, type: 3}
 --- !u!224 &1133112036 stripped

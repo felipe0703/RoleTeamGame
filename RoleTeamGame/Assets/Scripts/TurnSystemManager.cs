@@ -135,8 +135,6 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
-<<<<<<< HEAD
-        #region Turn
 
 
         //Use este metodo para los mensajes de turno, llama a la corutina para activar las animaciones
@@ -145,9 +143,6 @@ namespace Com.BrumaGames.Llamaradas
         //en cuanto a lo del viento, tengo una sugerencia para que se note hacia a donde va,preguntando, me dijieron 
         //que se podria agregar una segunda camara que se activa para que muestre en el centro de la pantalla la brujula
         //con zoom para que se note
-
-=======
->>>>>>> lobby
         private void SetTurnText(int turn)
         {
             UIManagerGame.sharedInstance.textTurn.text = "Turno Jugador: " + turn;
