@@ -45,7 +45,11 @@ namespace Com.BrumaGames.Llamaradas
         private Dictionary<string, GameObject> roomListEntries;
         private Dictionary<int, GameObject> playerListEntries;
 
-        private string region;
+        public string region;
+
+
+        [Header("buttons Selection Panel")]
+        public GameObject buttonRoomList;
         #endregion
 
         #region UNITY
@@ -58,7 +62,7 @@ namespace Com.BrumaGames.Llamaradas
             roomListEntries = new Dictionary<string, GameObject>();
 
             PlayerNameInput.text = "Jugador " + Random.Range(1000, 10000);
-            region = "";
+            //region = "";
         }
 
         private void Start()
@@ -70,7 +74,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (PhotonNetwork.LevelLoadingProgress > 0 && PhotonNetwork.LevelLoadingProgress < 1)
             {
-                Debug.Log(PhotonNetwork.LevelLoadingProgress);
+                //Debug.Log(PhotonNetwork.LevelLoadingProgress);
             }
         }
         #endregion
@@ -152,7 +156,7 @@ namespace Com.BrumaGames.Llamaradas
         }
 
         public override void OnLeftRoom()
-        {//hsfdh
+        {//todo
             SetActivePanel(SelectionPanel.name);
 
             foreach (GameObject entry in playerListEntries.Values)
@@ -217,6 +221,12 @@ namespace Com.BrumaGames.Llamaradas
 
         public void OnBackButtonClicked()
         {
+            StartCoroutine(OnBack());
+        }
+
+        IEnumerator OnBack()
+        {
+            yield return new WaitForSeconds(.7f);
             if (PhotonNetwork.InLobby)
             {
                 PhotonNetwork.LeaveLobby();
@@ -227,6 +237,14 @@ namespace Com.BrumaGames.Llamaradas
 
         public void OnCreateRoomButtonClicked()
         {
+            StartCoroutine(OnCreateRoom());
+        }
+
+
+        IEnumerator OnCreateRoom()
+        {
+            yield return new WaitForSeconds(.7f);
+
             string roomName = RoomNameInputField.text;
             roomName = (roomName.Equals(string.Empty)) ? "Sala " + Random.Range(1000, 10000) : roomName;
 
@@ -241,6 +259,12 @@ namespace Com.BrumaGames.Llamaradas
 
         public void OnJoinRandomRoomButtonClicked()
         {
+            StartCoroutine(OnJoinRandomRoom());
+        }
+
+        IEnumerator OnJoinRandomRoom()
+        {
+            yield return new WaitForSeconds(.7f);
             SetActivePanel(JoinRandomRoomPanel.name);
 
             PhotonNetwork.JoinRandomRoom();
@@ -248,6 +272,12 @@ namespace Com.BrumaGames.Llamaradas
 
         public void OnLeaveGameButtonClicked()
         {
+            StartCoroutine(OnLeaveGame());
+        }
+
+        IEnumerator OnLeaveGame()
+        {
+            yield return new WaitForSeconds(.7f);
             PhotonNetwork.LeaveRoom();
         }
 
@@ -264,12 +294,10 @@ namespace Com.BrumaGames.Llamaradas
 
                 if (region == "")
                 {
-                    Debug.Log("mejor server");
                     OnLoginConnect();
                 }
                 else
                 {
-                    Debug.Log("server custom");
                     OnLoginConnectToRegion(region);
                 }
             }
@@ -284,6 +312,7 @@ namespace Com.BrumaGames.Llamaradas
             PhotonNetwork.ConnectUsingSettings();
         }
 
+        //sin usar
         public void SetRegionFromDropDown(int index)
         {
             if (index == 0)
@@ -305,7 +334,7 @@ namespace Com.BrumaGames.Llamaradas
         public void OnLoginConnectToRegion(string region)
         {
             PhotonNetwork.NetworkingClient.AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
-            Debug.Log(region);
+            Debug.Log("Region: " + region);
             PhotonNetwork.ConnectToRegion(region);
         }
 
@@ -313,16 +342,27 @@ namespace Com.BrumaGames.Llamaradas
 
         public void OnRoomListButtonClicked()
         {
+            StartCoroutine(OnRoomList());            
+        }
+
+        IEnumerator OnRoomList()
+        {
+            yield return new WaitForSeconds(.7f);
             if (!PhotonNetwork.InLobby)
             {
                 PhotonNetwork.JoinLobby();
             }
-
             SetActivePanel(RoomListPanel.name);
         }
 
         public void OnStartGameButtonClicked()
         {
+            StartCoroutine(OnStartGame());
+        }
+
+        IEnumerator OnStartGame()
+        {
+            yield return new WaitForSeconds(.7f);
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
@@ -364,12 +404,25 @@ namespace Com.BrumaGames.Llamaradas
         
         public void SetActivePanel(string activePanel)
         {
-            LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-            SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-            CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
+            if(activePanel == "CreateRoomPanel")
+                StartCoroutine(SetActivePanelCreateRoom());
+            else
+            {
+                SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
+                CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
+            }
+            LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));            
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
             RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
             InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+        }
+
+        IEnumerator SetActivePanelCreateRoom()
+        {
+            yield return new WaitForSeconds(.7f);
+            string activePanel = "CreateRoomPanel";
+            SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
+            CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
         }
 
         private void ClearRoomListView()

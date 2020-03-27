@@ -173,7 +173,7 @@ namespace Com.BrumaGames.Llamaradas
 
                             positionPlayer = LlamaradaGame.GetPosition(PhotonNetwork.LocalPlayer.GetPlayerNumber());
 
-                            PhotonNetwork.Instantiate(this.playerPrefab.name, positionPlayer, Quaternion.identity, 0);
+                            GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, positionPlayer, Quaternion.identity, 0);
                         }
                     }
                     else

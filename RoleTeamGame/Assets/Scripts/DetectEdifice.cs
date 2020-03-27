@@ -248,6 +248,7 @@ namespace Com.BrumaGames.Llamaradas
         // detecta si tenemos algun edificio a los lados y activa el boton del edificio
         public void DetectEdificeToInspect()
         {
+            Debug.Log("detect edifice to inspect");
             GameObject edifice;
             bool detected = false;
 
@@ -289,6 +290,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public void DetectEdificeTakeOutHabitant()
         {
+            Debug.Log("detect edifice take out habitant");
             GameObject edifice;
             bool detected = false;
             //ver en las 4 direcciones
@@ -301,20 +303,27 @@ namespace Com.BrumaGames.Llamaradas
                     if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
                     {
                         //ScriptEfectos.DetectEdifice(edifice);
+                        //si no hay mascota en el edificio activo las imagnes
+                       
                         for (int j = 0; j < 3; j++)
                         {
                             if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
                             {
-                                edifice.GetComponent<Edifice>().habitants[j].interactable = true;
-                                edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                                detected = true;
+                                if (!edifice.GetComponent<Edifice>().thereIsAPet)
+                                {
+                                    edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                                }
+                                    detected = true;
                             }
                         }
+                        
                         edifice.GetComponent<Edifice>().idPositionEdifice = i;
                     }
                 }
             }
 
+            //activa panel de notificacion
             if (!detected)
             {
                 UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");

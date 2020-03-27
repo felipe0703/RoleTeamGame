@@ -47,10 +47,21 @@ public class LoadingScene : MonoBehaviour
             yield return null;
         }
     }
-    /*public void clickAnims(){
-        panel.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        titlePartida.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        inputTxt.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-        buttonOk.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.SelfAndChildren);
-    }*/
+
+
+    public void CambiarEscena(string escena)
+    {
+       // audioSource.PlayOneShot(next);
+
+        //SceneManager.LoadScene(escena);
+
+        // Disable all buttons
+        GUIAnimSystemFREE.Instance.EnableAllButtons(false);
+
+        // Waits 1.5 secs for Moving Out animation then load next level
+        GUIAnimSystemFREE.Instance.LoadLevel(escena, 1.5f);
+
+        GameObject.Find("UIManager").gameObject.SendMessage("HideAllGUIs");
+    }
+
 }

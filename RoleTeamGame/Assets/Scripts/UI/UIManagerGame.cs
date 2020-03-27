@@ -29,6 +29,12 @@ namespace Com.BrumaGames.Llamaradas
         public GameObject panelActions;
         public GameObject panelMinimap;
         public GameObject panelNotification;
+        public GUIAnimFREE panelChangeTurnClient;
+        public GUIAnimFREE panelChangeTurnMaster;
+        public GUIAnimFREE panelAdvanceFireClient;
+        public GUIAnimFREE panelAdvanceFireMaster;
+        public GUIAnimFREE panelChangeWindClient;
+        public GUIAnimFREE panelChangeWindMaster;
         public TextMeshProUGUI textNotification;
         public GameObject vCam1;
         public GameObject vCam2;
@@ -37,7 +43,8 @@ namespace Com.BrumaGames.Llamaradas
         public GameObject vCamHabitant;
         
         public CinemachineVirtualCamera cine;
-        public GameObject arrow;
+        public GameObject arrowClient;
+        public GameObject arrowMaster;
 
         [Space(10)]
         public TextMeshProUGUI textTurn;
@@ -83,7 +90,12 @@ namespace Com.BrumaGames.Llamaradas
 
         public GameObject canvasMaster;
         public GameObject canvasClient;
+        public Canvas canvas;
+        bool firtTurn;
         Camera camera;
+
+        Player[] players;
+        bool setNamePlayer = false;
         #endregion
 
         // ########################################
@@ -110,8 +122,9 @@ namespace Com.BrumaGames.Llamaradas
         {
             pvUI = GetComponent<PhotonView>();
             camera = Camera.main;
+            firtTurn = true;
 
-            Player[] players = PhotonNetwork.PlayerList;
+            players = PhotonNetwork.PlayerList;
 
             if (players.Length > 1)
             {
@@ -119,11 +132,13 @@ namespace Com.BrumaGames.Llamaradas
                 {
                     canvasMaster.SetActive(true);
                     canvasClient.SetActive(false);
+                    canvas = canvasMaster.transform.GetChild(0).gameObject.GetComponent<Canvas>();
                 }
                 else
                 {
                     canvasMaster.SetActive(false);
                     canvasClient.SetActive(true);
+                    canvas = canvasClient.transform.GetChild(1).gameObject.GetComponent<Canvas>();
                 }
                 //CallDesactivatePanelLevel();
             }
@@ -131,9 +146,10 @@ namespace Com.BrumaGames.Llamaradas
             {
                 canvasMaster.SetActive(false);
                 canvasClient.SetActive(true);
+                canvas = canvasClient.transform.GetChild(1).gameObject.GetComponent<Canvas>();
             }
 
-
+            
             ActiveActions();
         }
 
@@ -147,7 +163,10 @@ namespace Com.BrumaGames.Llamaradas
             SetArrowWind();
 
             energies.text = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN].ToString();
-            
+
+            if (!setNamePlayer)
+                CallSetNamePlayerUI();
+               
         }
         #endregion
 
@@ -168,7 +187,7 @@ namespace Com.BrumaGames.Llamaradas
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             ActiveActions();
-            Debug.Log("se actualizo una propiedad personalizada");
+            //Debug.Log("se actualizo una propiedad personalizada");
         }
 
         
@@ -203,6 +222,35 @@ namespace Com.BrumaGames.Llamaradas
 
             return true;
         }
+
+        void CallSetNamePlayerUI()
+        {
+            Debug.Log("lo llame");
+            PhotonView pv = GetComponent<PhotonView>();
+            pv.RPC("SetNamePlayerUI", RpcTarget.AllBufferedViaServer);
+        }
+
+        [PunRPC]
+        void SetNamePlayerUI()
+        {
+            GameObject[] playersGO = GameObject.FindGameObjectsWithTag("Player");
+            Debug.Log("cuanto jugadores hay" + playersGO.Length);
+
+            for (int i = 0; i < playersGO.Length; i++)
+            {
+                for (int j = 0; j < players.Length; j++)
+                {
+                    if (playersGO[i].GetComponent<PhotonView>().OwnerActorNr == players[j].ActorNumber)
+                    {
+                        Debug.Log("playersGO: " + playersGO[i].GetComponent<PhotonView>().OwnerActorNr + " players: " + players[j].ActorNumber + " name: " + players[j].NickName);
+                        playersGO[i].GetComponent<PlayerController>().Initialize(players[j].NickName);
+                    }
+                }                
+            }
+
+            if (playersGO.Length > 0)
+                setNamePlayer = true;
+        }
         #endregion
         
         #region Directionwind
@@ -228,8 +276,26 @@ namespace Com.BrumaGames.Llamaradas
                     break;
             }
 
-            RectTransform transform = arrow.GetComponent<RectTransform>();
-            transform.localRotation =  Quaternion.Euler(0,0,grade);
+            RectTransform transform;
+
+            if (players.Length > 1)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    transform = arrowMaster.GetComponent<RectTransform>();
+                    transform.localRotation = Quaternion.Euler(0, 0, grade);
+                }
+                else
+                {
+                    transform = arrowClient.GetComponent<RectTransform>();
+                    transform.localRotation = Quaternion.Euler(0, 0, grade);
+                }
+            }
+            else
+            {
+                transform = arrowClient.GetComponent<RectTransform>();
+                transform.localRotation = Quaternion.Euler(0, 0, grade);
+            }
         }
         #endregion
 
@@ -369,8 +435,137 @@ namespace Com.BrumaGames.Llamaradas
                 showingPanel = !showingPanel;
             }
         }
+
+        // ANIMACION CAMBIO DE TURNO
+        #region AnimacionCambioTurno
+        public void AnimationChangeTurn()
+        {
+            if (!firtTurn)
+            {
+                Debug.Log("cambio de turno");
+                if (players.Length > 1)
+                {
+                    if (PhotonNetwork.IsMasterClient)
+                        StartCoroutine(MoveInPanelChangeTurn(panelChangeTurnMaster));
+                    else
+                        StartCoroutine(MoveInPanelChangeTurn(panelChangeTurnClient));
+                }
+                else
+                    StartCoroutine(MoveInPanelChangeTurn(panelChangeTurnClient));
+
+                // Disable all scene switch buttons
+                GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, false);                
+            }else
+                firtTurn = false;
+
+        }
+
+        IEnumerator MoveInPanelChangeTurn(GUIAnimFREE panelChangeTurn)
+        {
+            yield return new WaitForSeconds(.2f);
+            panelChangeTurn.gameObject.SetActive(true);
+            panelChangeTurn.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            StartCoroutine(MoveOutPanelChangeTurn(panelChangeTurn));
+        }
+
+        IEnumerator MoveOutPanelChangeTurn(GUIAnimFREE panelChangeTurn)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            panelChangeTurn.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            panelChangeTurn.gameObject.SetActive(false);
+            // Enable all scene switch buttons
+            StartCoroutine(EnableAllDemoButtons());
+        }
         #endregion
-                     
+        
+        //ANIMACION AVANCE DEL FUEGO
+        #region AnimacionAdvanceFire
+        public void AnimationAdvanceOfFire()
+        {
+            if (players.Length > 1)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    StartCoroutine(MoveInPanelAdvanceOfFire(panelAdvanceFireMaster));
+                else
+                    StartCoroutine(MoveInPanelAdvanceOfFire(panelAdvanceFireClient));
+            }
+            else
+                StartCoroutine(MoveInPanelAdvanceOfFire(panelAdvanceFireClient));
+
+            // Disable all scene switch buttons
+            GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, false);
+        }
+
+        IEnumerator MoveInPanelAdvanceOfFire(GUIAnimFREE panelAdvanceOfFire)
+        {
+            yield return new WaitForSeconds(1.8f);
+            panelAdvanceOfFire.gameObject.SetActive(true);
+            panelAdvanceOfFire.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            StartCoroutine(MoveOutPanelAdvanceOfFire(panelAdvanceOfFire));
+        }
+
+        IEnumerator MoveOutPanelAdvanceOfFire(GUIAnimFREE panelAdvanceOfFire)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            panelAdvanceOfFire.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            panelAdvanceOfFire.gameObject.SetActive(false);
+            // Enable all scene switch buttons
+            //StartCoroutine(EnableAllDemoButtons());
+            AnimationChangeWind();
+        }
+        #endregion
+
+        //ANIMACION AVANCE DEL FUEGO
+        #region AnimacionChangeWind
+        public void AnimationChangeWind()
+        {
+            if (players.Length > 1)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    StartCoroutine(MoveInPanelChangeWind(panelChangeWindMaster));
+                else
+                    StartCoroutine(MoveInPanelChangeWind(panelChangeWindClient));
+            }
+            else
+                StartCoroutine(MoveInPanelChangeWind(panelChangeWindClient));
+
+            // Disable all scene switch buttons
+            //GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, false);
+        }
+
+        IEnumerator MoveInPanelChangeWind(GUIAnimFREE panelChangeWind)
+        {
+            yield return new WaitForSeconds(.3f);
+            panelChangeWind.gameObject.SetActive(true);
+            panelChangeWind.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            StartCoroutine(MoveOutPanelChangeWind(panelChangeWind));
+        }
+
+        IEnumerator MoveOutPanelChangeWind(GUIAnimFREE panelChangeWind)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            panelChangeWind.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            panelChangeWind.gameObject.SetActive(false);
+            // Enable all scene switch buttons
+            StartCoroutine(EnableAllDemoButtons());
+        }
+        #endregion
+
+        // Enable/Disable all scene switch Coroutine
+        IEnumerator EnableAllDemoButtons()
+        {
+            yield return new WaitForSeconds(.5f);
+            // Enable all scene switch buttons
+            GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, true);
+        }
+
+
+
+        #endregion
+
         #region Show/Hide Panel-Buttons
 
         public void HideAllButtonsMove()
