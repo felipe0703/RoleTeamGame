@@ -691,6 +691,7 @@ MonoBehaviour:
   maxFire: 4
   contFire: 0
   isInspected: 0
+  thereIsAPet: 0
   idPositionEdifice: -1
   clips:
   - {fileID: 8300000, guid: 070dc1abee0156444ba6e3dbdc538592, type: 3}
@@ -1332,6 +1333,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1686158747882177076, guid: 544cdfdbb8f46cf48b40b1b1d289d4af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686158747882177076, guid: 544cdfdbb8f46cf48b40b1b1d289d4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6075111979985556708, guid: 544cdfdbb8f46cf48b40b1b1d289d4af,
         type: 3}
       propertyPath: m_Layer
@@ -1373,16 +1384,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8545742708993609648, guid: 544cdfdbb8f46cf48b40b1b1d289d4af,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686158747882177076, guid: 544cdfdbb8f46cf48b40b1b1d289d4af,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686158747882177076, guid: 544cdfdbb8f46cf48b40b1b1d289d4af,
         type: 3}
       propertyPath: m_Layer
       value: 9

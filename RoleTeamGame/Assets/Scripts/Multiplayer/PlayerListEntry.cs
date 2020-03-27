@@ -84,13 +84,19 @@ namespace Com.BrumaGames.Llamaradas
         //entrega id del player y nombre
         public void Initialize(int playerId, string playerName)
         {
+            string coach = "";
+
+            if (playerId == 1)
+                coach = " Coach";
+
             ownerId = playerId;
-            PlayerNameText.text = playerName;
+            PlayerNameText.text = playerName + coach;
         }
 
         // Color al player
         private void OnPlayerNumberingChanged()
         {
+           
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 if (p.ActorNumber == ownerId)

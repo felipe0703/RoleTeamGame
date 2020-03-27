@@ -51,7 +51,6 @@ public class LoadingScene : MonoBehaviour
 
     public void CambiarEscena(string escena)
     {
-        Debug.Log("probando script");
        // audioSource.PlayOneShot(next);
 
         //SceneManager.LoadScene(escena);

@@ -64,6 +64,7 @@ namespace Com.BrumaGames.Llamaradas
 
 
         public bool isInspected = false;
+        public bool thereIsAPet;
         public int idPositionEdifice = -1;
 
         //AUDIO
@@ -137,27 +138,27 @@ namespace Com.BrumaGames.Llamaradas
 
         public void IsSelected()
         {
+            Debug.Log("is selected");
+            isInspected = true;
             FillHabitant();
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
             controller.UpdateActions();
             
             //controller.HideAllButtonsInspect();
             controller.GetComponent<DetectEdifice>().HideAllButtonsInspect();
-            isInspected = true;
         }
 
         //TODO: EVALUAR SI ES CONVENIENTE TENER ESTA FUNCIONALIDAD EN ESTE SCRIPT O EN EL GAMECONTROLLER
         public void IsSelectedTakeOut(int id)
         {
+            Debug.Log("is selected take ou");
             if (!BurnedEdifice) //si el edificio no esta quemado
             {
                 PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
                 GameObject habitant = null;
                 int scoreHabitant = 0;
 
-                Debug.Log("presione un habitante");
-
+                //Debug.Log("presione un habitante posicion: " + id + " , de identificador: " + habitants[id].GetComponent<ButtonHabitant>().idHabitant);
                 // detecto que tipo de habitante seleccione
                 if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
                 {
@@ -171,6 +172,7 @@ namespace Com.BrumaGames.Llamaradas
                 }
                 else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
                 {
+                    Debug.Log("detecte un perro");
                     habitant = GameController.sharedInstance.pet;
                     scoreHabitant = 1;
                 }
@@ -206,6 +208,7 @@ namespace Com.BrumaGames.Llamaradas
                             controller.UpdateActions();
                             return;
                         }
+
 
                         if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
                         {
@@ -250,6 +253,7 @@ namespace Com.BrumaGames.Llamaradas
             }
             habitants[id].image.enabled = false;
             habitants[id].gameObject.SetActive(false);
+            thereIsAPet = false;
 
         }
 
@@ -262,6 +266,7 @@ namespace Com.BrumaGames.Llamaradas
         // rellena los sprite de los habitantes en el edificio
         void FillHabitant()
         {
+            Debug.Log("fill habitant");
             int disabledPerson = 0;
             int person = 0;
             int pet = 0;
@@ -281,8 +286,6 @@ namespace Com.BrumaGames.Llamaradas
                 pet = GameController.sharedInstance.populationInEdificesClient[id, 2];
             }
            
-
-            //Debug.Log("disabled: " + disabledPerson + " person: " + person + " pet: " + pet);
             for (int i = 0; i < 3; i++)
             {
                 if (disabledPerson > 0)
@@ -305,6 +308,14 @@ namespace Com.BrumaGames.Llamaradas
                     habitants[i].image.sprite = imageHabitants[2];
                     habitants[i].GetComponent<ButtonHabitant>().idHabitant = 2;
                     pet--;
+                    habitants[i].interactable = true;
+                    thereIsAPet = true;
+                    //buscar calle disponible
+                    PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                    controller.GetComponent<DetectEdifice>().DetectEdificeTakeOutHabitant();
+                    //saco al perro
+                    IsSelectedTakeOut(i);
+                    Debug.Log("hay un perro, posicion: " + i);
                 }
 
                 // habitants[i].preserveAspect = true;

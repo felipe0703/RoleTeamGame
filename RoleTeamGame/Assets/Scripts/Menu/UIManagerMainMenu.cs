@@ -6,12 +6,7 @@ using UnityEngine.UI;
 
 public class UIManagerMainMenu : MonoBehaviour
 {
-    public GUIAnimFREE topPanel,loginPanel;
-
-
-    //public GUIAnimFREE buttonCreateRoom, buttonJoinRandom, buttonRoomList;
-
-
+    public GUIAnimFREE topPanel,loginPanel;       
     public Canvas canvas;
 
 
@@ -26,11 +21,6 @@ public class UIManagerMainMenu : MonoBehaviour
 
     void Start()
     {
-        //bkgr.DOAnchorPosY(0, 0.2f);
-        //buttonMultiplayer.DOAnchorPosX(-150 , 0.8f);
-        //buttonTutorial.DOAnchorPosX(150, 0.8f);
-        //buttonInstruction.DOAnchorPosX(150, 0.8f);
-        //buttonCredit.DOAnchorPosY(-290, 0.8f);
         StartCoroutine(MoveInTopPanel());
 
         // Disable all scene switch buttons
@@ -39,7 +29,7 @@ public class UIManagerMainMenu : MonoBehaviour
 
     IEnumerator MoveInTopPanel()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(.2f);
 
         topPanel.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
 

@@ -81,9 +81,12 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Player[] players = PhotonNetwork.PlayerList;
 
+                //notificacion cambio de turno
+                UIManagerGame.sharedInstance.AnimationChangeTurn();
+
                 if (targetPlayer.ActorNumber == players.Length  && !(bool)targetPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
                 {
-                    Debug.Log("se modifico el turno: " + targetPlayer.ActorNumber);
+                    //Debug.Log("se modifico el turno: " + targetPlayer.ActorNumber);
 
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -91,6 +94,7 @@ namespace Com.BrumaGames.Llamaradas
                         BoardManager.sharedInstance.CallEdificeNeighborWithFire();
                         BoardManager.sharedInstance.CallWindGeneration();
                     }
+                    UIManagerGame.sharedInstance.AnimationAdvanceOfFire();
                 }
                 return;
             }            

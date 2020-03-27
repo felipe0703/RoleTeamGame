@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 #endregion // Namespaces
@@ -101,6 +102,7 @@ namespace Com.BrumaGames.Llamaradas
 
 
         public bool isMyTurn = false;
+        public TextMeshProUGUI namePlayer;
 
         
 
@@ -135,8 +137,9 @@ namespace Com.BrumaGames.Llamaradas
             myTurn = false;
             finishTurn = false;
 
+            //namePlayer.text = PhotonNetwork.LocalPlayer.NickName;
             if (pv.IsMine)
-            {
+            {                
                 int actor = PhotonNetwork.LocalPlayer.ActorNumber;
                 UIManagerGame.sharedInstance.textPlayer.text = "Soy Jugador: " + actor;
             }
@@ -247,6 +250,7 @@ namespace Com.BrumaGames.Llamaradas
                     {
                         finishTurn = false;
                         //pv.RPC("SetTurn", RpcTarget.AllViaServer);
+                      
                         GetNext();
                         gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
                     }
@@ -306,243 +310,7 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
-       /* public void HideAllButtonsInspect()
-        {
-            GameObject edifice;
 
-            for (int i = 0; i < adjacentDirections.Length; i++)
-            {
-                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
-                {
-                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-                    edifice.GetComponent<Edifice>().btn.SetActive(false);
-                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                }
-            }
-        }*/
-
-        /*
-        public void DetectEdificeToMove()
-        {
-            //  EDIFICIOS A LA DERECHA E IZQUIERDA
-            if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
-            {
-
-                // HAY BORDE ARRIBA
-                if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isBorder)
-                {
-                    UIManagerGame.sharedInstance.down.SetActive(true);
-                }// HAY BORDE ABAJO
-                else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isBorder)
-                {
-                    UIManagerGame.sharedInstance.up.SetActive(true);
-                }
-                else
-                {
-                    UIManagerGame.sharedInstance.up.SetActive(true);
-                    UIManagerGame.sharedInstance.down.SetActive(true);
-                }
-                UIManagerGame.sharedInstance.upRight.SetActive(true);
-                UIManagerGame.sharedInstance.upLeft.SetActive(true);
-                UIManagerGame.sharedInstance.downRight.SetActive(true);
-                UIManagerGame.sharedInstance.downLeft.SetActive(true);
-            }
-
-            // EDIFICIOS ARRIBA Y ABAJO
-            if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice" && GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice")
-            {
-                // HAY BORDE DERECHA
-                if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isBorder)
-                {
-                    UIManagerGame.sharedInstance.left.SetActive(true);
-                }// HAY BORDE IZQUIERDA
-                else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isBorder)
-                {
-                    UIManagerGame.sharedInstance.right.SetActive(true);
-                }
-                else
-                {
-                    UIManagerGame.sharedInstance.right.SetActive(true);
-                    UIManagerGame.sharedInstance.left.SetActive(true);
-                }
-                UIManagerGame.sharedInstance.rightUp.SetActive(true);
-                UIManagerGame.sharedInstance.rightDown.SetActive(true);
-                UIManagerGame.sharedInstance.leftUp.SetActive(true);
-                UIManagerGame.sharedInstance.leftDown.SetActive(true);
-            }
-
-
-            //EDIFICIO A LA DERECHA
-            if (GetNeighbor(adjacentDirections[1], "Edifice").tag == "Edifice")
-            {
-                // BOSQUE A LA IZQUIERDA
-                if (GetNeighbor(adjacentDirections[3], "Streets").tag == "Border")
-                {
-                    // si tengo una esquina arriba
-                    if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.down.SetActive(true);
-                    }// si tengo una esquina abajo
-                    else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.up.SetActive(true);
-                    }
-                    else
-                    {
-                        UIManagerGame.sharedInstance.up.SetActive(true);
-                        UIManagerGame.sharedInstance.down.SetActive(true);
-                    }
-
-                    UIManagerGame.sharedInstance.downRight.SetActive(true);
-                    UIManagerGame.sharedInstance.upRight.SetActive(true);
-                }
-            }
-
-            //EDIFICIO A LA IZQUIEDA
-            if (GetNeighbor(adjacentDirections[3], "Edifice").tag == "Edifice")
-            {
-                // AGUA A LA DERECHA
-                if (GetNeighbor(adjacentDirections[1], "Water").tag == "River")
-                {
-                    // si tengo una esquina arriba
-                    if (GetNeighbor(adjacentDirections[0], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.down.SetActive(true);
-                    }// si tengo una esquina abajo
-                    else if (GetNeighbor(adjacentDirections[2], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.up.SetActive(true);
-                    }
-                    else
-                    {
-                        UIManagerGame.sharedInstance.up.SetActive(true);
-                        UIManagerGame.sharedInstance.down.SetActive(true);
-                    }
-
-                    UIManagerGame.sharedInstance.downLeft.SetActive(true);
-                    UIManagerGame.sharedInstance.upLeft.SetActive(true);
-                }
-            }
-
-            //EDIFICIO ABAJO
-            if (GetNeighbor(adjacentDirections[2], "Edifice").tag == "Edifice")
-            {
-                // BORDE ARRIBA
-                if (GetNeighbor(adjacentDirections[0], "Streets").tag == "Border")
-                {
-                    // si tengo una esquina derecha
-                    if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.left.SetActive(true);
-                    }// si tengo una esquina izquierda
-                    else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.right.SetActive(true);
-                    }
-                    else
-                    {
-                        UIManagerGame.sharedInstance.right.SetActive(true);
-                        UIManagerGame.sharedInstance.left.SetActive(true);
-                    }
-
-                    UIManagerGame.sharedInstance.rightDown.SetActive(true);
-                    UIManagerGame.sharedInstance.leftDown.SetActive(true);
-                }
-            }
-
-            //EDIFICIO ARRIBA
-            if (GetNeighbor(adjacentDirections[0], "Edifice").tag == "Edifice")
-            {
-                // BORDE ABAJO
-                if (GetNeighbor(adjacentDirections[2], "Streets").tag == "Border")
-                {
-                    // si tengo una esquina derecha
-                    if (GetNeighbor(adjacentDirections[1], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.left.SetActive(true);
-                    }// si tengo una esquina izquierda
-                    else if (GetNeighbor(adjacentDirections[3], "Streets").GetComponent<Street>().isCorner)
-                    {
-                        UIManagerGame.sharedInstance.right.SetActive(true);
-                    }
-                    else
-                    {
-                        UIManagerGame.sharedInstance.right.SetActive(true);
-                        UIManagerGame.sharedInstance.left.SetActive(true);
-                    }
-                    UIManagerGame.sharedInstance.rightUp.SetActive(true);
-                    UIManagerGame.sharedInstance.leftUp.SetActive(true);
-                }
-            }
-        }
-        */
-
-
-        // detecta si tenemos algun edificio a los lados y activa el boton del edificio
-        /*
-        public void DetectEdificeToInspect()
-        {
-            GameObject edifice;
-            bool detected = false;
-
-            for (int i = 0; i < adjacentDirections.Length; i++)
-            {
-                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
-                {
-                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-                
-                    if (!edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice)
-                    {
-                        edifice.GetComponent<Edifice>().btn.SetActive(true);
-                        edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                        detected = true;
-                    }
-                }
-            }
-
-            if (!detected)
-            {
-                UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
-            }
-        }*/
-
-        
-
-        // detecta si tenemos algun edificio a los lados y activa el boton del edificio
-        /*public void DetectEdificeTakeOutHabitant()
-        {
-            GameObject edifice;
-            bool detected = false;
-            //ver en las 4 direcciones
-            for (int i = 0; i < adjacentDirections.Length; i++)
-            {
-                if (GetNeighbor(adjacentDirections[i], "Edifice").tag == "Edifice")
-                {
-                    edifice = GetNeighbor(adjacentDirections[i], "Edifice");
-
-                    if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
-                    {
-                        //ScriptEfectos.DetectEdifice(edifice);
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
-                            {
-                                edifice.GetComponent<Edifice>().habitants[j].interactable = true;
-                                edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                                detected = true;
-                            }
-                        }
-                        edifice.GetComponent<Edifice>().idPositionEdifice = i;
-                    }
-                }
-            }
-
-            if (!detected)
-            {
-                UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
-            }
-        }
-        */
 
         #endregion //DetectEdifices
 
@@ -1015,5 +783,10 @@ namespace Com.BrumaGames.Llamaradas
 
         #endregion //Private Methods
 
+        //entrega id del player y nombre
+        public void Initialize(string playerName)
+        {
+            namePlayer.text = playerName;
+        }
     }
 }
