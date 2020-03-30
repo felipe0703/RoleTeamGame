@@ -33,6 +33,7 @@ namespace Com.BrumaGames.Llamaradas
         public int id;
         public int idTypeOfEdifice;
         [SerializeField] Sprite spriteBurnedEdifice;
+        [SerializeField] Sprite spriteTurnedEdifice;
 
         PhotonView pv;
 
@@ -139,6 +140,7 @@ namespace Com.BrumaGames.Llamaradas
         public void IsSelected()
         {
             Debug.Log("is selected");
+            ChangeSpriteTurned();
             isInspected = true;
             FillHabitant();
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -597,6 +599,12 @@ namespace Com.BrumaGames.Llamaradas
             {
                 habitants[i].gameObject.SetActive(false);
             }
+        }
+
+        void ChangeSpriteTurned()
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = spriteTurnedEdifice;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
         }
 
         int TotalScoreDeadHabitant()

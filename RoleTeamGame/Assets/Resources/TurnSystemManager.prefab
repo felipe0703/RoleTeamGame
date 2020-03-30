@@ -50,6 +50,7 @@ MonoBehaviour:
   controllers: []
   turnBoolsPlayer: 0000000000000000
   avisos: []
+  turno: {fileID: 0}
 --- !u!114 &2924688502458047375
 MonoBehaviour:
   m_ObjectHideFlags: 0
