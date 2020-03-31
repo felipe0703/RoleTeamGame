@@ -89,6 +89,9 @@ namespace Com.BrumaGames.Llamaradas
         public bool buttonAddFire = false;
         public bool buttonSubtractFire = false;
 
+        public string scoreSaved;
+        public string scoreDead;
+
 
         #endregion // Variables
 
@@ -375,12 +378,17 @@ namespace Com.BrumaGames.Llamaradas
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
+            Debug.Log("LEAVE ROOM!!!");
+
+            GameOver();
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
             Debug.Log("se desconecto un jugador");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+            //UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverWindow");
         }
 
         public override void OnLeftRoom()
@@ -439,16 +447,21 @@ namespace Com.BrumaGames.Llamaradas
 
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); // busco jugador
             Debug.Log("Tu puntaje es: " + controller.PostScoreText().ToString());
-           /* 
-            controller.CallPostScorePlayer();//envio los puntajes
 
-            Debug.Log("tamaño de la lista: " + listScorePlayers.Count);
-            //imprimir puntajes
-            for (int i = 0; i < listScorePlayers.Count; i++)
-            {
-                //Debug.Log("tamaño de la lista: " + scorePlayers.Count);
-                Debug.Log("puntaje jugador: " + listScorePlayers[i]);
-            }*/
+            scoreSaved = controller.PostScoreText().ToString();
+            scoreDead = controller.PostDeadText().ToString();
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverWindow");
+            /* 
+             controller.CallPostScorePlayer();//envio los puntajes
+
+             Debug.Log("tamaño de la lista: " + listScorePlayers.Count);
+             //imprimir puntajes
+             for (int i = 0; i < listScorePlayers.Count; i++)
+             {
+                 //Debug.Log("tamaño de la lista: " + scorePlayers.Count);
+                 Debug.Log("puntaje jugador: " + listScorePlayers[i]);
+             }*/
         }
 
 

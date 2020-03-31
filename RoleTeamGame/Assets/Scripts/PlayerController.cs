@@ -757,6 +757,11 @@ namespace Com.BrumaGames.Llamaradas
         {
             return savedHabitants;
         }
+
+        public int PostDeadText()
+        {
+            return deadHabitants;
+        }
         #endregion // Public Methods
 
         #region Private Methods

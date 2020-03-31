@@ -114,6 +114,15 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.game);
     }
 
+    public void CloseGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
     private void SetGameState(GameState newGameState)
     {
         if (newGameState == GameState.welcome)
