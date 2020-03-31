@@ -837,7 +837,7 @@ MonoBehaviour:
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_ScaleOut:
-    Enable: 1
+    Enable: 0
     Began: 0
     Animating: 0
     Done: 0
@@ -851,7 +851,7 @@ MonoBehaviour:
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_FadeOut:
-    Enable: 1
+    Enable: 0
     Began: 0
     Animating: 0
     Done: 0
@@ -931,7 +931,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 247892087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c91cbfd6843b847b08187d7baa403810, type: 3}
+  m_Script: {fileID: 11500000, guid: 22e7cd1e98f80fc468579b1fa4f363db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 30334352}
@@ -2070,6 +2070,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3302059196082601140, guid: 26a4427eb9263bc45903194fc57e406d,
+        type: 3}
+      propertyPath: maxNumbersActions
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3302059196082601141, guid: 26a4427eb9263bc45903194fc57e406d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2124,11 +2129,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3302059196082601140, guid: 26a4427eb9263bc45903194fc57e406d,
-        type: 3}
-      propertyPath: maxNumbersActions
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a4427eb9263bc45903194fc57e406d, type: 3}
