@@ -25,6 +25,9 @@ namespace Com.BrumaGames.Llamaradas
 
         public TMP_InputField RoomNameInputField;
         public TMP_InputField MaxPlayersInputField;
+        public TMP_Dropdown GameTimeInputField;
+        public TMP_Dropdown RoundTimeInputField;
+
 
         [Header("Join Random Room Panel")]
         public GameObject JoinRandomRoomPanel;
@@ -253,6 +256,10 @@ namespace Com.BrumaGames.Llamaradas
             maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 8);
 
             RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers };
+            Hashtable customRoomProperties = new Hashtable();
+            customRoomProperties.Add("TIMER", GameTimeInputField.value);
+            customRoomProperties.Add("R_TIME", RoundTimeInputField.value);
+            options.CustomRoomProperties = customRoomProperties;
 
             PhotonNetwork.CreateRoom(roomName, options, null);
         }

@@ -58,6 +58,7 @@ namespace Com.BrumaGames.Llamaradas
 
         //  COMPONENTES
         public TextMeshProUGUI textTimer;
+        public TextMeshProUGUI textTimerMaster;
         public GameObject buttonShowActions;
         public Canvas canvasActions;
 
@@ -520,8 +521,19 @@ namespace Com.BrumaGames.Llamaradas
                 textoDelReloj = segundos.ToString("00");
             }
 
+            if(tiempoEnSegundos == 0)
+            {
+                textTimer.enabled = false;
+                textTimerMaster.enabled = false;
+            } else
+            {
+                textTimer.enabled = true;
+                textTimerMaster.enabled = true;
+            }
+
             //  Actualizar el elemento de text de UI con la cadena de caracteres
             textTimer.text = textoDelReloj;
+            textTimerMaster.text = textoDelReloj;
         }
 
         public void Pausar()
