@@ -93,6 +93,10 @@ namespace Com.BrumaGames.Llamaradas
         public string scoreSaved;
         public string scoreDead;
 
+        private int optionTime;
+        private int optionR_Time;
+
+
 
         #endregion // Variables
 
@@ -130,6 +134,24 @@ namespace Com.BrumaGames.Llamaradas
             };
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            optionTime = (int)PhotonNetwork.CurrentRoom.CustomProperties["TIMER"];
+            optionR_Time = (int)PhotonNetwork.CurrentRoom.CustomProperties["R_TIME"];
+
+            if (optionTime == 0)
+            {
+                textTimer.enabled = false;
+                textTimerMaster.enabled = false;
+            }
+            else if (optionTime == 1)
+            {
+                textTimer.enabled = false;
+            }
+
+            if (optionR_Time > 0)
+            {
+                //TODO Limitar tiempo de ronda
+            }
 
             //INSTANCIAR BOARMANAGER
             if (boarManagerPrefab == null)
@@ -449,8 +471,10 @@ namespace Com.BrumaGames.Llamaradas
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); // busco jugador
             Debug.Log("Tu puntaje es: " + controller.PostScoreText().ToString());
 
-            scoreSaved = controller.PostScoreText().ToString();
-            scoreDead = controller.PostDeadText().ToString();
+            LocalScore.saved = controller.PostScoreText();
+            LocalScore.dead = controller.PostDeadText();
+
+
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverWindow");
             /* 
@@ -519,16 +543,6 @@ namespace Com.BrumaGames.Llamaradas
             else
             {
                 textoDelReloj = segundos.ToString("00");
-            }
-
-            if(tiempoEnSegundos == 0)
-            {
-                textTimer.enabled = false;
-                textTimerMaster.enabled = false;
-            } else
-            {
-                textTimer.enabled = true;
-                textTimerMaster.enabled = true;
             }
 
             //  Actualizar el elemento de text de UI con la cadena de caracteres

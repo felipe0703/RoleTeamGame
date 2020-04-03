@@ -32,11 +32,11 @@ public class UIManagerGameOver : MonoBehaviour
         // Disable all scene switch buttons
         GUIAnimSystemFREE.Instance.SetGraphicRaycasterEnable(canvas, false);
 
-        if(GameController.sharedInstance != null)
-        {
-            textScoreSaved.text = GameController.sharedInstance.scoreSaved;
-            textScoreDead.text = GameController.sharedInstance.scoreDead;
-        }
+        //if(GameController.sharedInstance != null)
+        //{
+        textScoreSaved.text = LocalScore.saved + "";
+        textScoreDead.text = LocalScore.dead + "";
+        //}
     }
 
 

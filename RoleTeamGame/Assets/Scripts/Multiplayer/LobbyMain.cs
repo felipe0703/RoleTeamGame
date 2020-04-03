@@ -50,6 +50,9 @@ namespace Com.BrumaGames.Llamaradas
 
         public string region;
 
+        private int optionTime;
+        private int optionR_Time;
+
 
         [Header("buttons Selection Panel")]
         public GameObject buttonRoomList;
@@ -64,7 +67,7 @@ namespace Com.BrumaGames.Llamaradas
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
 
-            PlayerNameInput.text = "Jugador " + Random.Range(1000, 10000);
+            //PlayerNameInput.text = "Jugador " + Random.Range(1000, 10000);
             //region = "";
         }
 
@@ -131,6 +134,7 @@ namespace Com.BrumaGames.Llamaradas
             {
                 playerListEntries = new Dictionary<int, GameObject>();
             }
+
 
             foreach (Player p in PhotonNetwork.PlayerList)
             {
