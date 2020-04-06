@@ -215,10 +215,10 @@ namespace Com.BrumaGames.Llamaradas
             }
 
 
-            //  TIMER
-            escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
+            //  TIMER - Cambiado a CronometerTimer.cs
+            /*escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
             tiempoAMostrarEnSegundos = GameManager.sharedInstance.timeTurn;         //  Inicializamos la variables que acumular
-            ActualizarReloj(tiempoInicial);
+            ActualizarReloj(tiempoInicial);*/
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -250,7 +250,7 @@ namespace Com.BrumaGames.Llamaradas
             }
 
 
-            if (!estaPausado)
+            /*if (!estaPausado)
             {
                 //  La siguiente variable representa el tiempo de cada frame considerando la escala de tiempo
                 tiempoDelFrameConTimeScale = Time.deltaTime * escalaDeTiempo;
@@ -258,7 +258,7 @@ namespace Com.BrumaGames.Llamaradas
                 //  La siguiente variable va acumulando el tiempo transcurrido para luego mostrarlo en el reloj
                 tiempoAMostrarEnSegundos += tiempoDelFrameConTimeScale;
                 ActualizarReloj(tiempoAMostrarEnSegundos);
-            }
+            }*/
         }
         #endregion // MonoBehaviour        
 
@@ -514,6 +514,7 @@ namespace Com.BrumaGames.Llamaradas
         //  TIMER
         public void ActualizarReloj(float tiempoEnSegundos)
         {
+            return;
             int minutos = 0;
             int segundos = 0;
             string textoDelReloj;
@@ -587,6 +588,14 @@ namespace Com.BrumaGames.Llamaradas
             TurnSystemManager.sharedInstance.SetTurnInit();
 
             //sistema de turno iniciar
+
+
+            //Comienzo del cronometro
+            Hashtable props = new Hashtable
+                {
+                    {CronometerTimer.CronometerStartTime, (float) PhotonNetwork.Time}
+                };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         }
 
         private bool CheckAllPlayerLoadedLevel()
