@@ -102,6 +102,16 @@ namespace Com.BrumaGames.Llamaradas
                     }
                     UIManagerGame.sharedInstance.AnimationAdvanceOfFire();
                 }
+
+                if (GameController.sharedInstance.optionR_Time > 0)
+                {
+                    Debug.Log("-----> REINICIAR TIMER");
+                    Hashtable props2 = new Hashtable
+                    {
+                        {RoundCountdownTimer.CountdownStartTime, (float) PhotonNetwork.Time}
+                    };
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(props2);
+                }
                 return;
             }            
         }

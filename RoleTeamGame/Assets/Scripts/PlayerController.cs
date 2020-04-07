@@ -160,6 +160,8 @@ namespace Com.BrumaGames.Llamaradas
             UpdateScoreSaved(savedHabitants);
             UpdateScoreDead(0);
             //BoardManager.sharedInstance.SetIdEdifice();
+
+            RoundCountdownTimer.OnCountdownTimerHasExpired += OnRoundCountdownTimerIsExpired;
         }
 
         private void Update()
@@ -259,10 +261,16 @@ namespace Com.BrumaGames.Llamaradas
             #endregion
         }
 
-        public void FinishTurno()
+        private void OnRoundCountdownTimerIsExpired()
         {
-            GetNext();
-            gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
+            Debug.Log("-----> TIEMPO!");
+            if ((bool)PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
+            {
+                Debug.Log("-----> MI TURNO");
+                myTurn = false;
+                GetNext();
+                gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
+            }
         }
 
         //IMPLEMENTAR LUEGO

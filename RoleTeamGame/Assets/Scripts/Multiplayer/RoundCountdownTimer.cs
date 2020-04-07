@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using TMPro;
+using System.Collections;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Com.BrumaGames.Llamaradas
 {
@@ -20,9 +22,15 @@ namespace Com.BrumaGames.Llamaradas
      * CountdownTimer.OnCountdownTimerHasExpired - = OnCountdownTimerIsExpired; 
      * Puede hacerlo desde la función OnDisable de Unity, por ejemplo. 
     */
-    public class CronometerTimer : MonoBehaviourPunCallbacks
+    public class RoundCountdownTimer : MonoBehaviourPunCallbacks
     {
-        public const string CronometerStartTime = "GameTime";
+        public const string CountdownStartTime = "RoundTime";
+
+        // OnCountdownTimerHasExpired delegate.
+        public delegate void CountdownTimerHasExpired();
+
+        // Called when the timer has expired.
+        public static event CountdownTimerHasExpired OnCountdownTimerHasExpired;
 
         private bool isTimerRunning;
 
@@ -31,6 +39,8 @@ namespace Com.BrumaGames.Llamaradas
         [Header("Reference to a Text component for visualizing the countdown")]
         public TextMeshProUGUI TextClient;
         public TextMeshProUGUI TextMaster;
+
+        private float Countdown;
 
         public void Start()
         {
@@ -66,7 +76,6 @@ namespace Com.BrumaGames.Llamaradas
 
         public void Update()
         {
-
             //Debug.Log("isrunning " + isTimerRunning);
             if (!isTimerRunning)
             {
@@ -74,62 +83,72 @@ namespace Com.BrumaGames.Llamaradas
             }
 
             float timer = (float)PhotonNetwork.Time - startTime;
-            //float countdown = Countdown - timer;
+            float countdown = Countdown - timer;
 
-            int minutos = 0;
-            int segundos = 0;
-            string textoDelReloj;
-
-            //  Calcular minutos y segundos
-            minutos = (int)timer / 60;
-            segundos = (int)timer % 60;
-
-
-            // Formato con el que se ve el tiempo
-            //  Crear la cadena de caracteres con 2 dígitos para los minutos y segundos, separados por  ":"
-            if (minutos >= 10)
-            {
-                textoDelReloj = minutos.ToString("00") + ":" + segundos.ToString("00");
-            }
-            else if (minutos >= 1)
-            {
-                textoDelReloj = minutos.ToString("0") + ":" + segundos.ToString("00");
-            }
-            else if (segundos < 10)
-            {
-                textoDelReloj = segundos.ToString("0");
-            }
-            else
-            {
-                textoDelReloj = segundos.ToString("00");
-            }
 
             if (PhotonNetwork.PlayerList.Length > 1)
             {
                 if (PhotonNetwork.IsMasterClient)
-                    TextMaster.text = textoDelReloj;
+                    TextMaster.text = string.Format(countdown.ToString("n2"));
                 else
-                    TextClient.text = textoDelReloj;
-            }
-            else
+                    TextClient.text = string.Format(countdown.ToString("n2"));
+            }else
+                TextClient.text = string.Format(countdown.ToString("n2"));
+
+
+
+
+            if (countdown > 0.0f)
             {
-                TextClient.text = textoDelReloj;
+                return;
             }
-                
+
+            isTimerRunning = false;
+
+            if(PhotonNetwork.PlayerList.Length > 1)
+            {
+                if(PhotonNetwork.IsMasterClient)
+                    TextMaster.text = string.Empty;
+                else
+                    TextClient.text = string.Empty;
+
+            }else
+                TextClient.text = string.Empty;
 
 
 
+            if (OnCountdownTimerHasExpired != null)
+            {
+                OnCountdownTimerHasExpired();
+            }
         }
 
         public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
             object startTimeFromProps;
 
-            if (propertiesThatChanged.TryGetValue(CronometerStartTime, out startTimeFromProps))
+            if (propertiesThatChanged.TryGetValue(CountdownStartTime, out startTimeFromProps))
             {
-                isTimerRunning = true;
+                Countdown = GameController.sharedInstance.optionR_TimeNum;
+                isTimerRunning = false;
                 startTime = (float)startTimeFromProps;
-            }
+                StartCoroutine(waiting());
+                if (PhotonNetwork.PlayerList.Length > 1)
+                {
+                    if (PhotonNetwork.IsMasterClient)
+                        TextMaster.text = string.Format(Countdown.ToString("n2"));
+                    else
+                        TextClient.text = string.Format(Countdown.ToString("n2"));
+                }
+                else
+                    TextClient.text = string.Format(Countdown.ToString("n2"));
+                IEnumerator waiting()
+                {
+                    yield return new WaitForSeconds(3);
+                    startTime = (float)PhotonNetwork.Time;
+                    isTimerRunning = true;
+                }
+        }
         }
     }
 }

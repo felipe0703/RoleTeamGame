@@ -94,7 +94,8 @@ namespace Com.BrumaGames.Llamaradas
         public string scoreDead;
 
         private int optionTime;
-        private int optionR_Time;
+        public int optionR_Time;
+        public int optionR_TimeNum;
 
 
 
@@ -150,7 +151,9 @@ namespace Com.BrumaGames.Llamaradas
 
             if (optionR_Time > 0)
             {
-                //TODO Limitar tiempo de ronda
+                if (optionR_Time == 1) optionR_TimeNum = 30;
+                else if (optionR_Time == 2) optionR_TimeNum = 45;
+                else if (optionR_Time == 3) optionR_TimeNum = 60;
             }
 
             //INSTANCIAR BOARMANAGER
@@ -579,7 +582,7 @@ namespace Com.BrumaGames.Llamaradas
         }
 
 
-       
+
         #endregion //TIMER
 
 
@@ -596,6 +599,15 @@ namespace Com.BrumaGames.Llamaradas
                     {CronometerTimer.CronometerStartTime, (float) PhotonNetwork.Time}
                 };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            if (optionR_Time > 0)
+            { 
+                //Comienzo del tiempo por ronda
+                Hashtable props2 = new Hashtable
+                    {
+                        {RoundCountdownTimer.CountdownStartTime, (float) PhotonNetwork.Time}
+                    };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(props2);
+            }
         }
 
         private bool CheckAllPlayerLoadedLevel()
