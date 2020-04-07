@@ -88,6 +88,7 @@ namespace Com.BrumaGames.Llamaradas
 
                 //notificacion cambio de turno
                 UIManagerGame.sharedInstance.AnimationChangeTurn();
+                SetTurnText(targetPlayer.NickName);
 
                 if (targetPlayer.ActorNumber == players.Length  && !(bool)targetPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
                 {
@@ -118,6 +119,7 @@ namespace Com.BrumaGames.Llamaradas
             {
                 if (players.Length > 1)
                 {
+                    SetTurnText(players[1].NickName);
                     players[1].SetCustomProperties(
                             new Hashtable{
                             { LlamaradaGame.PLAYER_TURN, true }
@@ -126,6 +128,7 @@ namespace Com.BrumaGames.Llamaradas
                 }
                 else
                 {
+                    SetTurnText(PhotonNetwork.LocalPlayer.NickName);
                     PhotonNetwork.LocalPlayer.SetCustomProperties(
                             new Hashtable{
                             { LlamaradaGame.PLAYER_TURN, true }
@@ -143,9 +146,21 @@ namespace Com.BrumaGames.Llamaradas
         //en cuanto a lo del viento, tengo una sugerencia para que se note hacia a donde va,preguntando, me dijieron 
         //que se podria agregar una segunda camara que se activa para que muestre en el centro de la pantalla la brujula
         //con zoom para que se note
-        private void SetTurnText(int turn)
+        private void SetTurnText(string turn)
         {
-            UIManagerGame.sharedInstance.textTurn.text = "Turno Jugador: " + turn;
+            //UIManagerGame.sharedInstance.textTurn.text = "Turno Jugador: " + turn;
+            UIManagerGame.sharedInstance.textTurnStatic.enabled = true;
+            UIManagerGame.sharedInstance.textTurnStaticMaster.enabled = true;
+            if (PhotonNetwork.PlayerList.Length > 1)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    UIManagerGame.sharedInstance.textTurnStaticMaster.text = "Turno: " + turn;
+                else
+                    UIManagerGame.sharedInstance.textTurnStatic.text = "Turno: " + turn;
+            }
+            else
+                UIManagerGame.sharedInstance.textTurnStatic.text = "Turno: " + turn;
+
             StartCoroutine(AnimacionTurnos());
         }
 

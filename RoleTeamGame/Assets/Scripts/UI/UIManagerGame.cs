@@ -48,6 +48,8 @@ namespace Com.BrumaGames.Llamaradas
 
         [Space(10)]
         public TextMeshProUGUI textTurn;
+        public TextMeshProUGUI textTurnStatic;
+        public TextMeshProUGUI textTurnStaticMaster;
         public TextMeshProUGUI textPlayer;
         public TextMeshProUGUI textSetTurn;
 

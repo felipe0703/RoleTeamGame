@@ -259,6 +259,12 @@ namespace Com.BrumaGames.Llamaradas
             #endregion
         }
 
+        public void FinishTurno()
+        {
+            GetNext();
+            gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
+        }
+
         //IMPLEMENTAR LUEGO
         private void LateUpdate()
         {
@@ -579,6 +585,7 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         public void ItsMyTurn()
         {
+            Debug.Log("ITS MY TURN");
             Player player = PhotonNetwork.LocalPlayer.GetNext();       
 
             if (pv.IsMine)
