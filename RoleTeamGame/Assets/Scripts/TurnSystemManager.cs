@@ -88,7 +88,19 @@ namespace Com.BrumaGames.Llamaradas
 
                 //notificacion cambio de turno
                 UIManagerGame.sharedInstance.AnimationChangeTurn();
-                SetTurnText(targetPlayer.NickName);
+                foreach (Player p in players)
+                {
+                    object turn;
+
+                    if (p.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_TURN, out turn))
+                    {
+                        if ((bool)turn == true)
+                        {
+                            SetTurnText(p.NickName);
+                            break;
+                        }
+                    }
+                }
 
                 if (targetPlayer.ActorNumber == players.Length  && !(bool)targetPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
                 {
