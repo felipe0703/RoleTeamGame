@@ -3132,11 +3132,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1773832640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b804f7fcff0e64b3eb90b028c43974a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 2274aca8ff8604736a7aae11471e96b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LangInputField: {fileID: 1608912709}
-  pressStart: {fileID: 0}
+  pressStart: {fileID: 2140881813}
   idioma: {fileID: 2140881813}
 --- !u!4 &1773832642
 Transform:
