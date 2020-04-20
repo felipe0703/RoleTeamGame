@@ -58,6 +58,7 @@ namespace Com.BrumaGames.Llamaradas
 
         //  COMPONENTES
         public TextMeshProUGUI textTimer;
+        public TextMeshProUGUI textTimerMaster;
         public GameObject buttonShowActions;
         public Canvas canvasActions;
 
@@ -91,6 +92,11 @@ namespace Com.BrumaGames.Llamaradas
 
         public string scoreSaved;
         public string scoreDead;
+
+        private int optionTime;
+        public int optionR_Time;
+        public int optionR_TimeNum;
+
 
 
         #endregion // Variables
@@ -129,6 +135,26 @@ namespace Com.BrumaGames.Llamaradas
             };
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            optionTime = (int)PhotonNetwork.CurrentRoom.CustomProperties["TIMER"];
+            optionR_Time = (int)PhotonNetwork.CurrentRoom.CustomProperties["R_TIME"];
+
+            if (optionTime == 0)
+            {
+                textTimer.enabled = false;
+                textTimerMaster.enabled = false;
+            }
+            else if (optionTime == 1)
+            {
+                textTimer.enabled = false;
+            }
+
+            if (optionR_Time > 0)
+            {
+                if (optionR_Time == 1) optionR_TimeNum = 30;
+                else if (optionR_Time == 2) optionR_TimeNum = 45;
+                else if (optionR_Time == 3) optionR_TimeNum = 60;
+            }
 
             //INSTANCIAR BOARMANAGER
             if (boarManagerPrefab == null)
@@ -192,10 +218,10 @@ namespace Com.BrumaGames.Llamaradas
             }
 
 
-            //  TIMER
-            escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
+            //  TIMER - Cambiado a CronometerTimer.cs
+            /*escalaDeTiempoInicial = escalaDeTiempo;                                 //  Establecer la escala de tiempo original    
             tiempoAMostrarEnSegundos = GameManager.sharedInstance.timeTurn;         //  Inicializamos la variables que acumular
-            ActualizarReloj(tiempoInicial);
+            ActualizarReloj(tiempoInicial);*/
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -227,7 +253,7 @@ namespace Com.BrumaGames.Llamaradas
             }
 
 
-            if (!estaPausado)
+            /*if (!estaPausado)
             {
                 //  La siguiente variable representa el tiempo de cada frame considerando la escala de tiempo
                 tiempoDelFrameConTimeScale = Time.deltaTime * escalaDeTiempo;
@@ -235,7 +261,7 @@ namespace Com.BrumaGames.Llamaradas
                 //  La siguiente variable va acumulando el tiempo transcurrido para luego mostrarlo en el reloj
                 tiempoAMostrarEnSegundos += tiempoDelFrameConTimeScale;
                 ActualizarReloj(tiempoAMostrarEnSegundos);
-            }
+            }*/
         }
         #endregion // MonoBehaviour        
 
@@ -448,8 +474,10 @@ namespace Com.BrumaGames.Llamaradas
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); // busco jugador
             Debug.Log("Tu puntaje es: " + controller.PostScoreText().ToString());
 
-            scoreSaved = controller.PostScoreText().ToString();
-            scoreDead = controller.PostDeadText().ToString();
+            LocalScore.saved = controller.PostScoreText();
+            LocalScore.dead = controller.PostDeadText();
+
+
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverWindow");
             /* 
@@ -489,6 +517,7 @@ namespace Com.BrumaGames.Llamaradas
         //  TIMER
         public void ActualizarReloj(float tiempoEnSegundos)
         {
+            return;
             int minutos = 0;
             int segundos = 0;
             string textoDelReloj;
@@ -522,6 +551,7 @@ namespace Com.BrumaGames.Llamaradas
 
             //  Actualizar el elemento de text de UI con la cadena de caracteres
             textTimer.text = textoDelReloj;
+            textTimerMaster.text = textoDelReloj;
         }
 
         public void Pausar()
@@ -552,7 +582,7 @@ namespace Com.BrumaGames.Llamaradas
         }
 
 
-       
+
         #endregion //TIMER
 
 
@@ -561,6 +591,23 @@ namespace Com.BrumaGames.Llamaradas
             TurnSystemManager.sharedInstance.SetTurnInit();
 
             //sistema de turno iniciar
+
+
+            //Comienzo del cronometro
+            Hashtable props = new Hashtable
+                {
+                    {CronometerTimer.CronometerStartTime, (float) PhotonNetwork.Time}
+                };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            if (optionR_Time > 0)
+            { 
+                //Comienzo del tiempo por ronda
+                Hashtable props2 = new Hashtable
+                    {
+                        {RoundCountdownTimer.CountdownStartTime, (float) PhotonNetwork.Time}
+                    };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(props2);
+            }
         }
 
         private bool CheckAllPlayerLoadedLevel()
