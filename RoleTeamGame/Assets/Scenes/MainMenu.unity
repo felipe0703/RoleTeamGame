@@ -1247,7 +1247,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: volver
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -2598,7 +2598,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Create Room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -2677,7 +2677,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -3212,7 +3212,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Crear Sala
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -3291,7 +3291,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -3893,7 +3893,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Audio
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -3972,7 +3972,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -4125,7 +4125,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -4204,7 +4204,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -4333,7 +4333,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Tiempo por ronda:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -4412,7 +4412,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -4566,9 +4566,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "Estado de conexi\xF3n: "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
-  m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4641,7 +4640,7 @@ MonoBehaviour:
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -4724,7 +4723,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Iniciar juego
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -4803,7 +4802,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5164,9 +5163,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Nombre Jugador
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
-  m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5385,7 +5383,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Creditos
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -5464,7 +5462,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5543,7 +5541,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Max Jugadores:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -5622,7 +5620,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5702,7 +5700,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Sin Tiempo
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -5781,7 +5779,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 1531278637}
@@ -6244,7 +6242,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -6323,7 +6321,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -6843,7 +6841,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Nombre de Sala:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -6922,7 +6920,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -7075,9 +7073,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Login
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
-  m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7497,7 +7494,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Cancelar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -7576,7 +7573,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -7804,7 +7801,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Servidor:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -7883,7 +7880,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 1508842136}
@@ -8500,7 +8497,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: intentando unirse a una sala aleatoria...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -8579,7 +8576,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -10654,7 +10651,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'TIEMPO PARTIDA:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -10733,7 +10730,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -10812,7 +10809,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Salir
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -10891,7 +10888,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -10970,7 +10967,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Join Random Room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -11049,7 +11046,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -11836,7 +11833,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Crear una partida
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -11915,7 +11912,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -11994,7 +11991,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Default
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -12073,7 +12070,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -12753,7 +12750,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -12832,7 +12829,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -12947,7 +12944,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: unirse a partida
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -13026,7 +13023,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -13451,7 +13448,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -13555,7 +13552,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: NO MOSTRAR
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 494ff11f3ae7ab543b5d3d7c210df9af, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21403030962801726, guid: 494ff11f3ae7ab543b5d3d7c210df9af,
     type: 2}
   m_fontSharedMaterials: []
@@ -13634,7 +13631,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 1900810619}
@@ -13802,9 +13799,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
-  m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14104,7 +14100,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Show Room List
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
     type: 2}
   m_fontSharedMaterials: []
@@ -14183,7 +14179,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
