@@ -98,6 +98,7 @@ namespace Com.BrumaGames.Llamaradas
 
         Player[] players;
         bool setNamePlayer = false;
+        int contSetName = 0;
         #endregion
 
         // ########################################
@@ -166,9 +167,9 @@ namespace Com.BrumaGames.Llamaradas
 
             energies.text = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN].ToString();
 
-            if (!setNamePlayer)
-                CallSetNamePlayerUI();
-               
+            if (contSetName < 100)
+                SetNamePlayerUI();
+
         }
         #endregion
 
@@ -225,36 +226,22 @@ namespace Com.BrumaGames.Llamaradas
             return true;
         }
 
-        void CallSetNamePlayerUI()
-        {
-            Debug.Log("lo llame");
-            PhotonView pv = GetComponent<PhotonView>();
-            pv.RPC("SetNamePlayerUI", RpcTarget.AllBufferedViaServer);
-        }
-
-        [PunRPC]
         void SetNamePlayerUI()
         {
             GameObject[] playersGO = GameObject.FindGameObjectsWithTag("Player");
-            Debug.Log("cuanto jugadores hay" + playersGO.Length);
 
-            for (int i = 0; i < playersGO.Length; i++)
+            foreach (GameObject player in playersGO)
             {
-                for (int j = 0; j < players.Length; j++)
-                {
-                    if (playersGO[i].GetComponent<PhotonView>().OwnerActorNr == players[j].ActorNumber)
-                    {
-                        Debug.Log("playersGO: " + playersGO[i].GetComponent<PhotonView>().OwnerActorNr + " players: " + players[j].ActorNumber + " name: " + players[j].NickName);
-                        playersGO[i].GetComponent<PlayerController>().Initialize(players[j].NickName);
-                    }
-                }                
-            }
+                Debug.Log("Nombre del jugador: " + player.GetComponent<PhotonView>().Owner.NickName);
+                player.GetComponent<PlayerController>().Initialize(player.GetComponent<PhotonView>().Owner.NickName);
 
-            if (playersGO.Length > 0)
-                setNamePlayer = true;
+                if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length > 1)
+                    player.GetComponent<PlayerController>().namePlayer.fontSize = 2f;
+            }
+            contSetName++;
         }
         #endregion
-        
+
         #region Directionwind
         public void SetArrowWind()
         {
