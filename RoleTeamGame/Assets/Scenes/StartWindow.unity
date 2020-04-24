@@ -2152,6 +2152,7 @@ MonoBehaviour:
   buttonStart: {fileID: 171095728}
   title: {fileID: 1753335335}
   textStart: {fileID: 1653596331}
+  pressStartText: {fileID: 1629665037}
   textLang: {fileID: 2140881815}
   langDropdown: {fileID: 1608912712}
 --- !u!4 &1405483499
@@ -2611,7 +2612,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -94}
+  m_AnchoredPosition: {x: 26, y: -94}
   m_SizeDelta: {x: 278.6, y: 89.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1629665037
@@ -2707,7 +2708,7 @@ MonoBehaviour:
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_ScaleLoop:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     IsOverriding: 0
@@ -2715,7 +2716,7 @@ MonoBehaviour:
     Done: 0
     m_ScaleLast: {x: 0, y: 0, z: 0}
     Min: {x: 1, y: 1, z: 1}
-    Max: {x: 1.05, y: 1.05, z: 1.05}
+    Max: {x: 1.2, y: 1.2, z: 1.2}
     EaseType: 21
     Time: 1
     Delay: 0
@@ -2742,11 +2743,11 @@ MonoBehaviour:
       m_Loop: 0
       m_AudioSource: {fileID: 0}
   m_MoveOut:
-    Enable: 0
+    Enable: 1
     Began: 0
     Animating: 0
     Done: 0
-    MoveTo: 2
+    MoveTo: 5
     BeginPos: {x: 0, y: 0, z: 0}
     EndPos: {x: 0, y: 0, z: 0}
     Position: {x: 0, y: 0, z: 0}
@@ -2942,7 +2943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1653596328
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2959,7 +2960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000022888, y: -92}
+  m_AnchoredPosition: {x: 0, y: -92}
   m_SizeDelta: {x: 324.8, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653596329
