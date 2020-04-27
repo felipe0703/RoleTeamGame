@@ -3485,7 +3485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LangInputField: {fileID: 1608912709}
-  pressStart: {fileID: 2140881813}
+  pressStart: {fileID: 1629665038}
   idioma: {fileID: 2140881813}
 --- !u!4 &1773832642
 Transform:
