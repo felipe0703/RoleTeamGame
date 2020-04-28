@@ -19,17 +19,37 @@ namespace Com.BrumaGames.Llamaradas
 
         private void OnEnable()
         {
-            GameObject target = GetBorder(adjacentDirections[3], mask);
+            GameObject target = GetBorder(mask);
             this.gameObject.GetComponent<MovementIA>().SetTargetWhereToMove(target);
         }
 
-        private GameObject GetBorder(Vector2 direction, LayerMask mask)
+        private GameObject GetBorder(LayerMask mask)
         {
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1000f, mask);
-            if (hit.collider != null)
+
+            float distance = 1000f;
+            Vector2 direction = Vector2.zero;
+
+            //distancia mas corta al borde
+            for (int i = 0; i < adjacentDirections.Length; i++)
             {
-                Debug.Log(hit.collider.name);
-                return hit.collider.gameObject;
+                RaycastHit2D hit = Physics2D.Raycast(this.transform.position, adjacentDirections[i], 1000f, mask);
+
+                if (hit.collider != null)
+                {
+                    if (hit.distance < distance)
+                    {
+                        distance = hit.distance;
+                        direction = adjacentDirections[i];
+                    }
+                }
+            }
+
+            RaycastHit2D hit2 = Physics2D.Raycast(this.transform.position, direction, 1000f, mask);
+
+            if (hit2.collider != null)
+            {
+                //Debug.Log(hit.collider.name);
+                return hit2.collider.gameObject;
             }
             else
             {

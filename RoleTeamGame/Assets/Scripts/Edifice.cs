@@ -141,6 +141,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             Debug.Log("is selected");
             ChangeSpriteTurned();
+
             isInspected = true;
             FillHabitant();
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -311,8 +312,10 @@ namespace Com.BrumaGames.Llamaradas
                     habitants[i].GetComponent<ButtonHabitant>().idHabitant = 2;
                     pet--;
                     habitants[i].interactable = true;
+
                     thereIsAPet = true;
-                    //buscar calle disponible
+
+                    //buscar calle disponible, identifica en que dirección está el edificio
                     PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
                     controller.GetComponent<DetectEdifice>().DetectEdificeTakeOutHabitant();
                     //saco al perro
