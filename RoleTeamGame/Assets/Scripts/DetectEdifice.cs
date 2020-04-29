@@ -309,12 +309,9 @@ namespace Com.BrumaGames.Llamaradas
                         {
                             if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
                             {
-                                if (!edifice.GetComponent<Edifice>().thereIsAPet)
-                                {
-                                    edifice.GetComponent<Edifice>().habitants[j].interactable = true;
-                                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                                }
-                                    detected = true;
+                                edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                                edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                                detected = true;
                             }
                         }
                         

@@ -550,7 +550,7 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         public void UpdateActions()
         {
-
+            Debug.Log("actualice energia");
             if (pv.IsMine)
             {
                 object energies;
@@ -569,6 +569,7 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         public void RestartActions()
         {
+            Debug.Log("reinicie energias");
             if (pv.IsMine)
             {
                 PhotonNetwork.LocalPlayer.SetCustomProperties(
