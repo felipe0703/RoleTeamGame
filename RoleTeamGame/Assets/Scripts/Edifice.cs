@@ -208,7 +208,8 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
-                            controller.UpdateActions();
+                            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2)
+                                controller.UpdateActions();
                             return;
                         }
 
@@ -219,7 +220,8 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
-                            controller.UpdateActions();
+                            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2)
+                                controller.UpdateActions();
                             return;
                         }
 
@@ -317,7 +319,7 @@ namespace Com.BrumaGames.Llamaradas
 
                     //buscar calle disponible, identifica en que dirección está el edificio
                     PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-                    controller.GetComponent<DetectEdifice>().DetectEdificeTakeOutHabitant();
+                    controller.GetComponent<DetectEdifice>().DetectPetInEdifice();
                     //saco al perro
                     IsSelectedTakeOut(i);
                     Debug.Log("hay un perro, posicion: " + i);

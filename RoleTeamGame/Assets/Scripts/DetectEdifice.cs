@@ -330,6 +330,27 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
+        public void DetectPetInEdifice()
+        {
+            GameObject edifice;
+
+            //ver en las 4 direcciones
+            for (int i = 0; i < adjacentDirections.Length; i++)
+            {
+                if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], mask);
+
+                    if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
+                    {
+                        //ScriptEfectos.DetectEdifice(edifice);
+                        //si no hay mascota en el edificio activo las imagnes
+                        edifice.GetComponent<Edifice>().idPositionEdifice = i;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         public void DeactivateButtons()
