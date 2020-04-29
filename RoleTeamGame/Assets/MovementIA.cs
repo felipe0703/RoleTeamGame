@@ -112,9 +112,6 @@ namespace Com.BrumaGames.Llamaradas
         public void SetTargetWhereToMove(GameObject target)
         {
             this.target = target.transform;
-            PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            //controller.UpdateNumberOfActions();
-            controller.UpdateActions();
             UpdatePath();
         }
         private void StopAnim()

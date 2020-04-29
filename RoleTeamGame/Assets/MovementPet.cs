@@ -53,7 +53,7 @@ namespace Com.BrumaGames.Llamaradas
             }
             else
             {
-                Debug.Log("no encontre nada");
+                //Debug.Log("no encontre nada");
                 return null;
             }
         }

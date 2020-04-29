@@ -140,7 +140,7 @@ namespace Com.BrumaGames.Llamaradas
         public void IsSelected()
         {
             pv = GetComponent<PhotonView>();
-            pv.RPC("SyncUpSprite", RpcTarget.AllBufferedViaServer );
+            pv.RPC("SyncUpSpriteAndHabitant", RpcTarget.AllBufferedViaServer );
             
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             controller.UpdateActions();
@@ -150,9 +150,8 @@ namespace Com.BrumaGames.Llamaradas
         }
 
         [PunRPC]
-        void SyncUpSprite()
+        void SyncUpSpriteAndHabitant()
         {
-            Debug.Log("is selected");
             ChangeSpriteTurned();
             isInspected = true;
             FillHabitant();
@@ -161,7 +160,7 @@ namespace Com.BrumaGames.Llamaradas
         //TODO: EVALUAR SI ES CONVENIENTE TENER ESTA FUNCIONALIDAD EN ESTE SCRIPT O EN EL GAMECONTROLLER
         public void IsSelectedTakeOut(int id)
         {
-            Debug.Log("is selected take ou");
+            //Debug.Log("is selected take ou");
             if (!BurnedEdifice) //si el edificio no esta quemado
             {
                 PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -211,17 +210,12 @@ namespace Com.BrumaGames.Llamaradas
                     {
                         if ((idPositionEdifice == 0 || idPositionEdifice == 3) && i < 3)
                         {
-                            Debug.Log("holaaaaaaaaaaa");
                             //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
                             if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2)
-                            {
-                                Debug.Log("hola");
                                 controller.UpdateActions();
-                            }
-                                
                             return;
                         }
 
@@ -229,15 +223,11 @@ namespace Com.BrumaGames.Llamaradas
                         if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
                         {
                             //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
-                            Debug.Log("chaoooooooo");
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
                             if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2)
-                            {
-                                Debug.Log("chaoo");
                                 controller.UpdateActions();
-                            }
                             return;
                         }
 
@@ -286,7 +276,7 @@ namespace Com.BrumaGames.Llamaradas
         // rellena los sprite de los habitantes en el edificio
         void FillHabitant()
         {
-            Debug.Log("fill habitant");
+            //Debug.Log("fill habitant");
             int disabledPerson = 0;
             int person = 0;
             int pet = 0;
@@ -336,7 +326,7 @@ namespace Com.BrumaGames.Llamaradas
                     controller.GetComponent<DetectEdifice>().DetectPetInEdifice();
                     //saco al perro
                     IsSelectedTakeOut(i);
-                    Debug.Log("hay un perro, posicion: " + i);
+                   // Debug.Log("hay un perro, posicion: " + i);
                 }
 
                 // habitants[i].preserveAspect = true;
