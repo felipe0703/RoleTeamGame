@@ -103,8 +103,9 @@ namespace Com.BrumaGames.Llamaradas
 
         public bool isMyTurn = false;
         public TextMeshProUGUI namePlayer;
+        public bool disabledPersonArrivedAtDestination = false;
 
-        
+
 
         #endregion
 
@@ -136,6 +137,7 @@ namespace Com.BrumaGames.Llamaradas
             animator = GetComponent<Animator>();
             myTurn = false;
             finishTurn = false;
+            moveTarget2 = false;
 
             //namePlayer.text = PhotonNetwork.LocalPlayer.NickName;
             if (pv.IsMine)
@@ -225,17 +227,18 @@ namespace Com.BrumaGames.Llamaradas
                 moveTarget1 = false;
                 moveTarget2 = true;
             }
+
             if (transform.position != target.position)
             {
                 moving = true;
             }
 
-            if (transform.position == target2.position)
+            if (transform.position == target2.position && moveTarget2)
             {
                 moveTarget2 = false;
                 StopAnim();
                 target.position = transform.position;
-
+                
                 // si llegue al destino y no tengo mas acciones finaliza mi turno
                 if (pv.IsMine)
                 {
@@ -258,6 +261,8 @@ namespace Com.BrumaGames.Llamaradas
                     }
                 }
             }
+
+            
             #endregion
         }
 
@@ -348,6 +353,7 @@ namespace Com.BrumaGames.Llamaradas
             UpdateActions();
             UIManagerGame.sharedInstance.HidePanelMove();
             UIManagerGame.sharedInstance.HideButtonsActions();
+            disabledPersonArrivedAtDestination = true;
         }
 
         // LEFT

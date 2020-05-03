@@ -6,17 +6,22 @@ namespace Com.BrumaGames.Llamaradas
 {
     public class ActivatingDectectionZone : MonoBehaviour
     {
-        public GameObject detectionZone;
+        public GameObject detectionZonePerson;
+        public GameObject detectionZoneDisabledPerson;
         
         public void ActivateZone()
         {
             Debug.Log("activando detector");
-            detectionZone.SetActive(true);
+            detectionZonePerson.SetActive(true);
+            detectionZoneDisabledPerson.SetActive(true);
         }
         public void DeactivateZone()
         {
-            detectionZone.GetComponent<DetectionZone>().detetedHabitants = false;
-            detectionZone.SetActive(false);
+            //detectionZonePerson.GetComponent<DetectionZone>().detetedHabitants = false;
+            detectionZonePerson.SetActive(false);
+
+            //detectionZoneDisabledPerson.GetComponent<DetectionZone>().detetedHabitants = false;
+            detectionZoneDisabledPerson.SetActive(false);
         }
     }
 }

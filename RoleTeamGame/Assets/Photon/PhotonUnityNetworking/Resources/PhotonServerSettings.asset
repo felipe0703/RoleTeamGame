@@ -66,5 +66,6 @@ MonoBehaviour:
   - CallFireLevelAll
   - SetNamePlayerUI
   - SyncUpSprite
+  - SyncUpSpriteAndHabitant
   DisableAutoOpenWizard: 1
   ShowSettings: 0

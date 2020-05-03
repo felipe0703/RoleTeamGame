@@ -367,6 +367,7 @@ namespace Com.BrumaGames.Llamaradas
                 }
                 else
                 {
+
                     ActivateDeactivateCams(true, false, false, false);
                     cine.m_Lens.OrthographicSize = 15f;
                     camera.GetComponent<Camera>().orthographic = true;
@@ -382,11 +383,13 @@ namespace Com.BrumaGames.Llamaradas
             // Asigno al player como objetivo para que la camara lo siga
             CinemachineVirtualCamera vCam = vCamMinimap.GetComponent<CinemachineVirtualCamera>();
             vCam.m_Lens.OrthographicSize = 30f;
+
             if (vCam.Follow == null)
                 vCam.Follow = GameObject.FindGameObjectWithTag(target).transform;
             GameObject player = GameObject.FindGameObjectWithTag(target);
             player.GetComponent<ActivatingDectectionZone>().ActivateZone();
         }
+
         public void ChangeCamMinimapTransform(Transform position)
         {
             ActivateDeactivateCams(false, false, false, true);

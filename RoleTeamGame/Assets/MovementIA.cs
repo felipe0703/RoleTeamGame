@@ -16,7 +16,7 @@ namespace Com.BrumaGames.Llamaradas
 
         Path path;// ruta actual
         int currentWaypoint = 0;
-       // bool reachedEndPath = false;
+        public bool reachedEndPath = false;
 
         //animacion
         private Animator animator;
@@ -52,12 +52,15 @@ namespace Com.BrumaGames.Llamaradas
             //si los puntos necesarios para llegar son mayor a los que faltan, es porque llegué
             if (currentWaypoint >= path.vectorPath.Count)
             {
-                //reachedEndPath = true;
+                //Debug.Log("lleuge");
+               // Debug.Log("distancia: " + currentWaypoint + "pathcoun: " + path.vectorPath.Count);
+                reachedEndPath = true;
                 StopAnim();
                 return;
             }
             else
             {
+                //Debug.Log("no lleuge distancia: " + currentWaypoint + "pathcoun: " + path.vectorPath.Count);
                 //Debug.Log("No he Llegado");
                 //reachedEndPath = false;
             }
@@ -82,10 +85,10 @@ namespace Com.BrumaGames.Llamaradas
         // se llama cuando se completa la ruta
         void OnPathComplete(Path p)
         {
-            //Debug.Log("complete la ruta");
+           // Debug.Log("complete la ruta");
             if (!p.error)
             {
-                //Debug.Log("dentro del if");
+               // Debug.Log("dentro del if");
                 path = p;
                 currentWaypoint = 0;
             }
@@ -112,6 +115,8 @@ namespace Com.BrumaGames.Llamaradas
         public void SetTargetWhereToMove(GameObject target)
         {
             this.target = target.transform;
+
+            reachedEndPath = false;
             UpdatePath();
         }
         private void StopAnim()

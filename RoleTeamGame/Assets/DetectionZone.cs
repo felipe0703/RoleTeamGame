@@ -7,7 +7,7 @@ namespace Com.BrumaGames.Llamaradas
     public class DetectionZone : MonoBehaviour
     {
         public List<GameObject> habitansDetected = new List<GameObject>();
-        public bool detetedHabitants = false;
+        public bool isPerson = false;
 
         private void OnEnable()
         {
@@ -28,11 +28,16 @@ namespace Com.BrumaGames.Llamaradas
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("DisabledPerson") || collision.CompareTag("Person"))
+            if (collision.CompareTag("DisabledPerson") && !isPerson)
             {
                 habitansDetected.Add(collision.gameObject);
                 collision.gameObject.GetComponent<HabitantController>().ActivateHabitantButtont();
-                detetedHabitants = true;
+            }
+
+            if (collision.CompareTag("Person") && isPerson)
+            {
+                habitansDetected.Add(collision.gameObject);
+                collision.gameObject.GetComponent<HabitantController>().ActivateHabitantButtont();
             }
         }
 

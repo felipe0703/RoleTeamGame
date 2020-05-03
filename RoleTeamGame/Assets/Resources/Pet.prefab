@@ -245,6 +245,7 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 600
   nextWaypointDistance: 1
+  reachedEndPath: 0
   seeker: {fileID: 0}
   rb: {fileID: 0}
 --- !u!50 &8497335695770798960
