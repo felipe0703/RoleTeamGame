@@ -5,7 +5,7 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class i18nManagerSetGame : I18nManager
+    public class I18nManagerSetGame : I18nManager
     {
         [SerializeField] private TextMeshProUGUI connectionStatus;
         [SerializeField] private TextMeshProUGUI playerName;
@@ -25,9 +25,7 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField] private TextMeshProUGUI backButton;
         [SerializeField] private TextMeshProUGUI leaveGameButton;
         [SerializeField] private TextMeshProUGUI startGameButton;
-
-
-
+  
 
         protected override void DoTranslations()
         {
@@ -50,7 +48,8 @@ namespace Com.BrumaGames.Llamaradas
             if (leaveGameButton != null) leaveGameButton.text = i18n.__("leaveGameButton");
             if (startGameButton != null) startGameButton.text = i18n.__("startGameButton");
 
-                                                       
+
         }
+
     }
 }
