@@ -7,6 +7,8 @@ namespace Com.BrumaGames.Llamaradas
 {
     public class I18nManagerSetGame : I18nManager
     {
+
+
         [SerializeField] private TextMeshProUGUI connectionStatus;
         [SerializeField] private TextMeshProUGUI playerName;
         [SerializeField] private TextMeshProUGUI loginButton;
@@ -25,8 +27,8 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField] private TextMeshProUGUI backButton;
         [SerializeField] private TextMeshProUGUI leaveGameButton;
         [SerializeField] private TextMeshProUGUI startGameButton;
-  
 
+       
         protected override void DoTranslations()
         {
             if (connectionStatus != null) connectionStatus.text = i18n.__("connectionStatus");

@@ -9,7 +9,7 @@ namespace Com.BrumaGames.Llamaradas
     {
 
         protected I18n i18n = I18n.Instance;
-        public static I18nManager sharedInstancei18n;
+        public static I18nManager sharedInstance;
 
 
         [SerializeField] private TMP_Dropdown LangInputField;
@@ -17,15 +17,21 @@ namespace Com.BrumaGames.Llamaradas
         private void Awake()
         {
             //      SINGLETON
-            if (sharedInstancei18n == null)
+            if (sharedInstance == null)
             {
-                sharedInstancei18n = this;
+                sharedInstance = this;
             }
             else
             {
                 Destroy(gameObject);
             }
         }
+
+        public string GetText(string text)
+        {
+            return i18n.__(text);
+        }
+
 
         private void Start()
         {
@@ -84,11 +90,8 @@ namespace Com.BrumaGames.Llamaradas
             }
 
         }
+
     }
 
- /*  public string SetText(string text)
-      {
-            return i18n.__("text");
-      }
-*/
+
 }

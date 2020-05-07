@@ -9,13 +9,17 @@ namespace Com.BrumaGames.Llamaradas{
 
     public class LobbyPanel : MonoBehaviour
     {
-        private readonly string connectionStatusMessage = "Estado conexión: ";
+        //private readonly string connectionStatusMessage = "Estado conexión: ";
+        private string connectionStatusMessage;
 
         [Header("UI References")]
         public TextMeshProUGUI ConnectionStatusText;
 
         #region UNITY
-
+        public void Awake()
+        {
+            connectionStatusMessage = I18nManager.sharedInstance.GetText("connectionStatus");
+        }
         public void Update()
         {
             ConnectionStatusText.text = connectionStatusMessage + PhotonNetwork.NetworkClientState;
