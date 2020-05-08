@@ -274,7 +274,7 @@ namespace Com.BrumaGames.Llamaradas
             yield return new WaitForSeconds(.7f);
 
             string roomName = RoomNameInputField.text;
-            roomName = (roomName.Equals(string.Empty)) ? "Sala " + Random.Range(1000, 10000) : roomName;
+            roomName = (roomName.Equals(string.Empty)) ? I18nManager.sharedInstance.GetText("room") + " " + Random.Range(1000, 10000) : roomName;
 
             byte maxPlayers;
             byte.TryParse(MaxPlayersInputField.text, out maxPlayers);

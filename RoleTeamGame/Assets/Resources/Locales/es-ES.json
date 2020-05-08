@@ -42,6 +42,9 @@
     "ready?": "¿Listo?",
     "ready!": "¡Listo!",
     "startText" : "Comienza en {0} segundos",
+    "noEdificesToShow" : "No hay edificios que ver",
+    "noInhabitantsToShow":"No hay habitantes visualizados",
+    "turn":"Turno: ",
     "Hello {0}, how are you today?": "Hello {0}, how are you today?",
     "Combo: {0}x": "Combo {0}x",
     "You have one cat": {
