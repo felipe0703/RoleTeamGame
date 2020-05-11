@@ -5,11 +5,11 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public abstract class I18nManager : MonoBehaviour
+    public abstract class I18nManager_ : MonoBehaviour
     {
 
         protected I18n i18n = I18n.Instance;
-        public static I18nManager sharedInstance;
+        public static I18nManager_ sharedInstance;
 
 
         [SerializeField] private TMP_Dropdown LangInputField;
@@ -20,6 +20,7 @@ namespace Com.BrumaGames.Llamaradas
             if (sharedInstance == null)
             {
                 sharedInstance = this;
+                DontDestroyOnLoad(sharedInstance);
             }
             else
             {

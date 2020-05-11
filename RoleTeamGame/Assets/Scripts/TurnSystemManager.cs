@@ -176,12 +176,12 @@ namespace Com.BrumaGames.Llamaradas
             if (PhotonNetwork.PlayerList.Length > 1)
             {
                 if (PhotonNetwork.IsMasterClient)
-                    UIManagerGame.sharedInstance.textTurnStaticMaster.text = I18nManager.sharedInstance.GetText("turn") + turn;
+                    UIManagerGame.sharedInstance.textTurnStaticMaster.text = I18nManager_.sharedInstance.GetText("turn") + turn;
                 else
-                    UIManagerGame.sharedInstance.textTurnStatic.text = I18nManager.sharedInstance.GetText("turn") + turn;
+                    UIManagerGame.sharedInstance.textTurnStatic.text = I18nManager_.sharedInstance.GetText("turn") + turn;
             }
             else
-                UIManagerGame.sharedInstance.textTurnStatic.text = I18nManager.sharedInstance.GetText("turn") + turn;
+                UIManagerGame.sharedInstance.textTurnStatic.text = I18nManager_.sharedInstance.GetText("turn") + turn;
 
             StartCoroutine(AnimacionTurnos());
         }

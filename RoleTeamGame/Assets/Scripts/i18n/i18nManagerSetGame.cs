@@ -5,7 +5,7 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class I18nManagerSetGame : I18nManager
+    public class I18nManagerSetGame : I18nManager_
     {
 
 

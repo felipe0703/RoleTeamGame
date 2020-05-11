@@ -5,7 +5,7 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class I18ManagerGame : I18nManager
+    public class I18ManagerGame : I18nManager_
     {
         [SerializeField] private TextMeshProUGUI buttonWind_M;
         [SerializeField] private TextMeshProUGUI countdownTimerText_M;

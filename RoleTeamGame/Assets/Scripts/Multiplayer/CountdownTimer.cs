@@ -75,7 +75,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public void Update()
         {
-            string startText = I18nManager.sharedInstance.GetText("startText");
+            string startText = I18nManager_.sharedInstance.GetText("startText");
 
             //Debug.Log("isrunning " + isTimerRunning);
             if (!isTimerRunning)

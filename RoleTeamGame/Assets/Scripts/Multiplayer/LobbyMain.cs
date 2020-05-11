@@ -77,16 +77,16 @@ namespace Com.BrumaGames.Llamaradas
             //inicializar el dropdown con opciones y traducción getText i18n
 
             
-            string o_game1 = I18nManager.sharedInstance.GetText("gameTime1");
-            string o_game2 = I18nManager.sharedInstance.GetText("gameTime2");
-            string o_game3 = I18nManager.sharedInstance.GetText("gameTime3");
+            string o_game1 = I18nManager_.sharedInstance.GetText("gameTime1");
+            string o_game2 = I18nManager_.sharedInstance.GetText("gameTime2");
+            string o_game3 = I18nManager_.sharedInstance.GetText("gameTime3");
             List<string> m_GameTimeDropOptions = new List<string> { o_game1, o_game2 , o_game3 };
             GameTimeInputField.AddOptions(m_GameTimeDropOptions);
 
-            string o_round1 = I18nManager.sharedInstance.GetText("roundTime1");
-            string o_round2 = I18nManager.sharedInstance.GetText("roundTime2");
-            string o_round3 = I18nManager.sharedInstance.GetText("roundTime3");
-            string o_round4 = I18nManager.sharedInstance.GetText("roundTime4");
+            string o_round1 = I18nManager_.sharedInstance.GetText("roundTime1");
+            string o_round2 = I18nManager_.sharedInstance.GetText("roundTime2");
+            string o_round3 = I18nManager_.sharedInstance.GetText("roundTime3");
+            string o_round4 = I18nManager_.sharedInstance.GetText("roundTime4");
             List<string> m_RoundTimeDropOptions = new List<string> { o_round1, o_round2, o_round3, o_round4 };
             RoundTimeInputField.AddOptions(m_RoundTimeDropOptions);
 
@@ -140,7 +140,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            room = I18nManager.sharedInstance.GetText("room");
+            room = I18nManager_.sharedInstance.GetText("room");
             string roomName = room + " " + Random.Range(1000, 10000);
 
             RoomOptions options = new RoomOptions { MaxPlayers = 8 };
@@ -292,13 +292,13 @@ namespace Com.BrumaGames.Llamaradas
             yield return new WaitForSeconds(.7f);
 
             string roomName = RoomNameInputField.text;
-            roomName = (roomName.Equals(string.Empty)) ? I18nManager.sharedInstance.GetText("room") + " " + Random.Range(1000, 10000) : roomName;
+            roomName = (roomName.Equals(string.Empty)) ? I18nManager_.sharedInstance.GetText("room") + " " + Random.Range(1000, 10000) : roomName;
 
-            int maxPlayers = GetMaxPlayers(MaxPlayers_InputField.value);
-            Debug.Log(maxPlayers);
-            //byte maxPlayers;
-            //byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-            //maxPlayers = (byte)Mathf.Clamp(maxPlayers, 4, 9);
+            //int maxPlayers = GetMaxPlayers(MaxPlayers_InputField.value);
+            //Debug.Log(maxPlayers);
+            byte maxPlayers;
+            byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
+            maxPlayers = (byte)Mathf.Clamp(maxPlayers, 4, 9);
 
             RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayers };
             Hashtable customRoomProperties = new Hashtable();
