@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -21,6 +23,11 @@ namespace Com.BrumaGames.Llamaradas
             {
                 return instance;
             }
+        }
+
+        internal List<TMP_Dropdown.OptionData> __()
+        {
+            throw new NotImplementedException();
         }
     }
 }

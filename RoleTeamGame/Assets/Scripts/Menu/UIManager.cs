@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
 
     public Canvas canvas;
-    public GUIAnimFREE buttonStart,title,textStart,textLang,langDropdown;
+    public GUIAnimFREE buttonStart,title,textStart, pressStartText, textLang, langDropdown;
 
     private void Awake()
     {
@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
         // MoveIn all primary buttons
         buttonStart.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
         textStart.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+        pressStartText.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
 
         yield return new WaitForSeconds(1.0f);
 

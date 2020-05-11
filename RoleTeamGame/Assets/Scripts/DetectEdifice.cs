@@ -269,7 +269,7 @@ namespace Com.BrumaGames.Llamaradas
 
             if (!detected)
             {
-                UIManagerGame.sharedInstance.ShowPanelNotification("No hay edificios que ver");
+                UIManagerGame.sharedInstance.ShowPanelNotification(I18nManager.sharedInstance.GetText("noEdificesToShow"));
             }
         }
 
@@ -323,7 +323,7 @@ namespace Com.BrumaGames.Llamaradas
             //activa panel de notificacion
             if (!detected)
             {
-                UIManagerGame.sharedInstance.ShowPanelNotification("No hay habitantes visualizados");
+                UIManagerGame.sharedInstance.ShowPanelNotification(I18nManager.sharedInstance.GetText("noInhabitantsToShow"));
             }
         }
 

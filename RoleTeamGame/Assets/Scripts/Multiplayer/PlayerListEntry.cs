@@ -87,7 +87,7 @@ namespace Com.BrumaGames.Llamaradas
             string coach = "";
 
             if (playerId == 1)
-                coach = " Coach";
+                coach = " Master";
 
             ownerId = playerId;
             PlayerNameText.text = playerName + coach;
@@ -110,7 +110,10 @@ namespace Com.BrumaGames.Llamaradas
         //activa la imagen 
         public void SetPlayerReady(bool playerReady)
         {
-            PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? "Listo!" : "Listo?";
+            string ready1 = I18nManager.sharedInstance.GetText("ready!");
+            string ready2 = I18nManager.sharedInstance.GetText("ready?");
+            //PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? "Listo!" : "Listo?";
+            PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? ready1 : ready2;
             PlayerReadyImage.enabled = playerReady;
         }
     }

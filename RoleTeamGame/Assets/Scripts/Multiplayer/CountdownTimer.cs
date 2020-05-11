@@ -75,6 +75,8 @@ namespace Com.BrumaGames.Llamaradas
 
         public void Update()
         {
+            string startText = I18nManager.sharedInstance.GetText("startText");
+
             //Debug.Log("isrunning " + isTimerRunning);
             if (!isTimerRunning)
             {
@@ -84,15 +86,15 @@ namespace Com.BrumaGames.Llamaradas
             float timer = (float)PhotonNetwork.Time - startTime;
             float countdown = Countdown - timer;
 
-
             if (PhotonNetwork.PlayerList.Length > 1)
             {
                 if (PhotonNetwork.IsMasterClient)
-                    TextMaster.text = string.Format("Comienza en {0} segundos", countdown.ToString("n2"));
+                    //TextMaster.text = string.Format("Comienza en {0} segundos", countdown.ToString("n2"));
+                    TextMaster.text = string.Format(startText, countdown.ToString("n2"));
                 else
-                    TextClient.text = string.Format("Comienza en {0} segundos", countdown.ToString("n2"));
+                    TextClient.text = string.Format(startText, countdown.ToString("n2"));
             }else
-                TextClient.text = string.Format("Comienza en {0} segundos", countdown.ToString("n2"));
+                TextClient.text = string.Format(startText, countdown.ToString("n2"));
 
 
 
