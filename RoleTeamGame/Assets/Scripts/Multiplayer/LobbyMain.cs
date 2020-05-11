@@ -25,6 +25,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public TMP_InputField RoomNameInputField;
         public TMP_InputField MaxPlayersInputField;
+        public TMP_Dropdown MaxPlayers_InputField;
         public TMP_Dropdown GameTimeInputField;
         public TMP_Dropdown RoundTimeInputField;
 
@@ -247,6 +248,23 @@ namespace Com.BrumaGames.Llamaradas
             StartCoroutine(OnCreateRoom());
         }
 
+        public int GetMaxPlayers(int index)
+        {
+            int maxPlayers = 9 ;
+
+            switch (index)
+            {
+                case 0: return maxPlayers = 4;
+                case 1: return maxPlayers = 5;
+                case 2: return maxPlayers = 6;
+                case 3: return maxPlayers = 7;
+                case 4: return maxPlayers = 8;
+                case 5: return maxPlayers = 9;
+            }
+
+            return maxPlayers;
+        }
+
 
         IEnumerator OnCreateRoom()
         {
@@ -255,16 +273,18 @@ namespace Com.BrumaGames.Llamaradas
             string roomName = RoomNameInputField.text;
             roomName = (roomName.Equals(string.Empty)) ? "Sala " + Random.Range(1000, 10000) : roomName;
 
-            byte maxPlayers;
-            byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-            maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 8);
+            int maxPlayers = GetMaxPlayers(MaxPlayers_InputField.value);
+            Debug.Log(maxPlayers);
+            //byte maxPlayers;
+            //byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
+            //maxPlayers = (byte)Mathf.Clamp(maxPlayers, 4, 9);
 
-            RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers };
+            RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayers };
             Hashtable customRoomProperties = new Hashtable();
             customRoomProperties.Add("TIMER", GameTimeInputField.value);
             customRoomProperties.Add("R_TIME", RoundTimeInputField.value);
             options.CustomRoomProperties = customRoomProperties;
-
+            
             PhotonNetwork.CreateRoom(roomName, options, null);
         }
 
@@ -341,7 +361,7 @@ namespace Com.BrumaGames.Llamaradas
                 region = "sa";
             }
         }
-
+        
         public void OnLoginConnectToRegion(string region)
         {
             PhotonNetwork.NetworkingClient.AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;

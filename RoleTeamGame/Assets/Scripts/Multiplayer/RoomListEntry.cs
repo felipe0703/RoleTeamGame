@@ -39,7 +39,7 @@ namespace Com.BrumaGames.Llamaradas
             roomName = name;
 
             RoomNameText.text = name;
-            RoomPlayersText.text = currentPlayers + " / " + maxPlayers;
+            RoomPlayersText.text = (currentPlayers - 1)  + " / " + (maxPlayers-1);
         }
     }
 }
