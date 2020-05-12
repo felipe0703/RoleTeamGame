@@ -18,7 +18,7 @@ namespace Com.BrumaGames.Llamaradas{
         #region UNITY
         public void Awake()
         {
-            connectionStatusMessage = I18nManager_.sharedInstance.GetText("connectionStatus");
+            connectionStatusMessage = I18nMng.GetText("connectionStatus");
         }
         public void Update()
         {

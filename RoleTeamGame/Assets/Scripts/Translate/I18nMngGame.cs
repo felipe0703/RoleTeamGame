@@ -5,7 +5,7 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class I18ManagerGame : I18nManager_1
+    public class I18nMngGame : I18nMng
     {
         [SerializeField] private TextMeshProUGUI buttonWind_M;
         [SerializeField] private TextMeshProUGUI countdownTimerText_M;
@@ -18,8 +18,6 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField] private TextMeshProUGUI changeWind_C;
         [SerializeField] private TextMeshProUGUI countEnergiesText_M;
         [SerializeField] private TextMeshProUGUI countEnergiesText_C;
-
-
 
         protected override void DoTranslations()
         {
@@ -36,11 +34,6 @@ namespace Com.BrumaGames.Llamaradas
             if (advanceFire_C != null) advanceFire_C.text = i18n.__("advanceFire_C");
             if (changeWind_C != null) changeWind_C.text = i18n.__("changeWind_C");
             if (countEnergiesText_C != null) countEnergiesText_C.text = i18n.__("countEnergiesText_C");
-
-
         }
-
-
     }
 }
-

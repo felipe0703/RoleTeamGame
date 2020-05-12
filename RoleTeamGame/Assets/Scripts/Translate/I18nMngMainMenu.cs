@@ -5,7 +5,7 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class I18nManagerSetGame : I18nManager_1
+    public class I18nMngMainMenu : I18nMng
     {
 
 
@@ -28,7 +28,7 @@ namespace Com.BrumaGames.Llamaradas
         [SerializeField] private TextMeshProUGUI leaveGameButton;
         [SerializeField] private TextMeshProUGUI startGameButton;
 
-       
+
         protected override void DoTranslations()
         {
             if (connectionStatus != null) connectionStatus.text = i18n.__("connectionStatus");

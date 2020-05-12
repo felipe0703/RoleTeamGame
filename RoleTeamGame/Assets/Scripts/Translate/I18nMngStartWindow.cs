@@ -5,10 +5,17 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public class I18nManagerMainMenu : I18nManager_1
+    public class I18nMngStartWindow : I18nMng
     {
+
         [SerializeField] private TextMeshProUGUI pressStart;
         [SerializeField] private TextMeshProUGUI idioma;
+
+
+        public void hacerAlgo()
+        {
+
+        }
 
         protected override void DoTranslations()
         {

@@ -110,8 +110,8 @@ namespace Com.BrumaGames.Llamaradas
         //activa la imagen 
         public void SetPlayerReady(bool playerReady)
         {
-            string ready1 = I18nManager_.sharedInstance.GetText("ready!");
-            string ready2 = I18nManager_.sharedInstance.GetText("ready?");
+            string ready1 = I18nMng.GetText("ready!");
+            string ready2 = I18nMng.GetText("ready?");
             //PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? "Listo!" : "Listo?";
             PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? ready1 : ready2;
             PlayerReadyImage.enabled = playerReady;

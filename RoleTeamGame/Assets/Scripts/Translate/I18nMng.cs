@@ -5,16 +5,16 @@ using Mgl;
 
 namespace Com.BrumaGames.Llamaradas
 {
-    public abstract class I18nManager_1 : MonoBehaviour
+    public abstract class I18nMng : MonoBehaviour
     {
 
-        protected I18n i18n = I18n.Instance;
-        public static I18nManager_1 sharedInstance;
+        protected static I18n i18n = I18n.Instance;
+        //public static I18nMng sharedInstance;
 
 
         [SerializeField] private TMP_Dropdown LangInputField;
 
-        private void Awake()
+        /*private void Awake()
         {
             //      SINGLETON
             if (sharedInstance == null)
@@ -26,9 +26,9 @@ namespace Com.BrumaGames.Llamaradas
             {
                 Destroy(gameObject);
             }
-        }
+        }*/
 
-        public string GetText(string text)
+        public static string GetText(string text)
         {
             return i18n.__(text);
         }
@@ -38,6 +38,12 @@ namespace Com.BrumaGames.Llamaradas
         {
             //Messenger.AddListener<string>("Language:Change", SetLanguage); // event when langauge change
             InitLanguage();
+            if(LangInputField != null)
+            {
+                LangInputField.onValueChanged.AddListener(delegate {
+                    ChangeLanguage();
+                });
+            }
         }
 
         public void ChangeLanguage()
@@ -72,13 +78,16 @@ namespace Com.BrumaGames.Llamaradas
             {
                 SetLanguage(PlayerPrefs.GetString("Language"));
 
-                if (PlayerPrefs.GetString("Language") == "en-US")
+                if (LangInputField != null)
                 {
-                    LangInputField.value = 0;
-                }
-                else if (PlayerPrefs.GetString("Language") == "es-ES")
-                {
-                    LangInputField.value = 1;
+                    if (PlayerPrefs.GetString("Language") == "en-US")
+                    {
+                        LangInputField.value = 0;
+                    }
+                    else if (PlayerPrefs.GetString("Language") == "es-ES")
+                    {
+                        LangInputField.value = 1;
+                    }
                 }
 
                 return;

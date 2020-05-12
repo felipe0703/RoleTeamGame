@@ -11396,6 +11396,7 @@ MonoBehaviour:
   CreateRoomPanel: {fileID: 1765797927}
   RoomNameInputField: {fileID: 1842238512}
   MaxPlayersInputField: {fileID: 57815243}
+  MaxPlayers_InputField: {fileID: 0}
   GameTimeInputField: {fileID: 131638061}
   RoundTimeInputField: {fileID: 1804172195}
   JoinRandomRoomPanel: {fileID: 1575041317}
@@ -13902,28 +13903,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2044944056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df99fa1025ba0ee408788b794cc14a77, type: 3}
+  m_Script: {fileID: 11500000, guid: d5a0acb158d984d52ad3ebd1cf177b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LangInputField: {fileID: 0}
-  connectionStatus: {fileID: 582569124}
-  playerName: {fileID: 667167250}
-  loginButton: {fileID: 1008050228}
-  createRoomButton: {fileID: 263834510}
-  joinRandomRoomButton: {fileID: 1562400431}
-  roomListButton: {fileID: 2115543174}
-  roomNameText: {fileID: 939396822}
-  roomNameInput: {fileID: 1569878480}
-  maxPlayersText: {fileID: 712930257}
-  maxPlayersInput: {fileID: 58331300}
-  showTimeText: {fileID: 1545743814}
-  roundTimeText: {fileID: 533098197}
-  cancelButton: {fileID: 1091898033}
-  createRoomButton1: {fileID: 379472862}
-  joinRandomRoomText: {fileID: 1244711002}
-  backButton: {fileID: 99834207}
-  leaveGameButton: {fileID: 1558226194}
-  startGameButton: {fileID: 588739301}
+  connectionStatus: {fileID: 0}
+  playerName: {fileID: 0}
+  loginButton: {fileID: 0}
+  createRoomButton: {fileID: 0}
+  joinRandomRoomButton: {fileID: 0}
+  roomListButton: {fileID: 0}
+  roomNameText: {fileID: 0}
+  roomNameInput: {fileID: 0}
+  maxPlayersText: {fileID: 0}
+  maxPlayersInput: {fileID: 0}
+  showTimeText: {fileID: 0}
+  roundTimeText: {fileID: 0}
+  cancelButton: {fileID: 0}
+  createRoomButton1: {fileID: 0}
+  joinRandomRoomText: {fileID: 0}
+  backButton: {fileID: 0}
+  leaveGameButton: {fileID: 0}
+  startGameButton: {fileID: 0}
 --- !u!4 &2044944058
 Transform:
   m_ObjectHideFlags: 0

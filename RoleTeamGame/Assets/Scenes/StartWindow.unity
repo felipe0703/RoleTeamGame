@@ -2337,17 +2337,17 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1773832641}
-        m_MethodName: ChangeLanguage
+      - m_Target: {fileID: 11500000, guid: c1b182b13f149438f84805122b3263f6, type: 3}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
     m_TypeName: TMPro.TMP_Dropdown+DropdownEvent, Unity.TextMeshPro, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1608912710
@@ -3464,7 +3464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1773832642}
-  - component: {fileID: 1773832641}
+  - component: {fileID: 1773832643}
   m_Layer: 0
   m_Name: I18nManager
   m_TagString: Untagged
@@ -3472,21 +3472,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1773832641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773832640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2274aca8ff8604736a7aae11471e96b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LangInputField: {fileID: 1608912709}
-  pressStart: {fileID: 1629665038}
-  idioma: {fileID: 2140881813}
 --- !u!4 &1773832642
 Transform:
   m_ObjectHideFlags: 0
@@ -3501,6 +3486,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1773832643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773832640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b182b13f149438f84805122b3263f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LangInputField: {fileID: 1608912709}
+  pressStart: {fileID: 1629665038}
+  idioma: {fileID: 2140881813}
 --- !u!1 &2140881811
 GameObject:
   m_ObjectHideFlags: 0
