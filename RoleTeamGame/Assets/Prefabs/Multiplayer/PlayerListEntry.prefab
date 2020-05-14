@@ -67,9 +67,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: listo?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
-  m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -321,9 +320,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Nombre Jugador
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70ffae49466a28a4186fa8ee8f8d2199, type: 2}
-  m_sharedMaterial: {fileID: 21979173531872492, guid: 70ffae49466a28a4186fa8ee8f8d2199,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

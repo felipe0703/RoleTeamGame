@@ -44,7 +44,8 @@
     "startText" : "Starts in {0} seconds",
     "noEdificesToShow" : "There are no buildings to see",
     "noInhabitantsToShow":"No inhabitants displayed",
-     "turn":"Turn: ",
+    "turn":"Turn: ",
+    "joinRandomButton":"Unirse",
     "Hello {0}, how are you today?": "Hello {0}, how are you today?",
     "Combo: {0}x": "Combo {0}x",
     "You have one cat": {
