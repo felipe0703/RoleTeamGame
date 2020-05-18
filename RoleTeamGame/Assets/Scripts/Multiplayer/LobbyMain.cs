@@ -40,6 +40,7 @@ namespace Com.BrumaGames.Llamaradas
         public GameObject RoomListEntryPrefab;
 
         [Header("Inside Room Panel")]
+        public GameObject ShowNumberOfPlayers; 
         public GameObject InsideRoomPanel;
 
         public Button StartGameButton;
@@ -53,6 +54,8 @@ namespace Com.BrumaGames.Llamaradas
 
         private int optionTime;
         private int optionR_Time;
+
+        private int numberOfPlayers;
 
 
         [Header("buttons Selection Panel")]
@@ -99,6 +102,11 @@ namespace Com.BrumaGames.Llamaradas
 
         private void Update()
         {
+            if (ShowNumberOfPlayers.activeSelf)
+            {
+                ShowNumberOfPlayers.GetComponent<TextMeshProUGUI>().text = (PhotonNetwork.PlayerList.Length - 1) + " / " + (PhotonNetwork.CurrentRoom.MaxPlayers - 1);
+            }
+
             if (PhotonNetwork.LevelLoadingProgress > 0 && PhotonNetwork.LevelLoadingProgress < 1)
             {
                 //Debug.Log(PhotonNetwork.LevelLoadingProgress);
@@ -115,7 +123,9 @@ namespace Com.BrumaGames.Llamaradas
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
+            numberOfPlayers = roomList[0].MaxPlayers;
             ClearRoomListView();
+            Debug.Log(numberOfPlayers);
 
             UpdateCachedRoomList(roomList);
             UpdateRoomListView();
@@ -157,7 +167,6 @@ namespace Com.BrumaGames.Llamaradas
                 playerListEntries = new Dictionary<int, GameObject>();
             }
 
-
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 GameObject entry = Instantiate(PlayerListEntryPrefab);
@@ -174,7 +183,6 @@ namespace Com.BrumaGames.Llamaradas
 
                 playerListEntries.Add(p.ActorNumber, entry);
             }
-
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
 
             Hashtable props = new Hashtable
@@ -241,7 +249,6 @@ namespace Com.BrumaGames.Llamaradas
                     entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool)isPlayerReady);
                 }
             }
-
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
         #endregion
@@ -294,10 +301,10 @@ namespace Com.BrumaGames.Llamaradas
             string roomName = RoomNameInputField.text;
             roomName = (roomName.Equals(string.Empty)) ? I18nMng.GetText("room") + " " + Random.Range(1000, 10000) : roomName;
 
-            //int maxPlayers = GetMaxPlayers(MaxPlayers_InputField.value);
+            int maxPlayers = GetMaxPlayers(MaxPlayers_InputField.value);
             //Debug.Log(maxPlayers);
-            byte maxPlayers;
-            byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
+            //byte maxPlayers;
+            //byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
             maxPlayers = (byte)Mathf.Clamp(maxPlayers, 4, 9);
 
             RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayers };
@@ -307,6 +314,7 @@ namespace Com.BrumaGames.Llamaradas
             options.CustomRoomProperties = customRoomProperties;
             
             PhotonNetwork.CreateRoom(roomName, options, null);
+            
         }
 
         public void OnJoinRandomRoomButtonClicked()
@@ -467,6 +475,7 @@ namespace Com.BrumaGames.Llamaradas
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
             RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
             InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+            ShowNumberOfPlayers.SetActive(activePanel.Equals(InsideRoomPanel.name));
         }
 
         IEnumerator SetActivePanelCreateRoom()
@@ -498,7 +507,6 @@ namespace Com.BrumaGames.Llamaradas
                     {
                         cachedRoomList.Remove(info.Name);
                     }
-
                     continue;
                 }
 
@@ -523,7 +531,6 @@ namespace Com.BrumaGames.Llamaradas
                 entry.transform.SetParent(RoomListContent.transform);
                 entry.transform.localScale = Vector3.one;
                 entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
-
                 roomListEntries.Add(info.Name, entry);
             }
         }
