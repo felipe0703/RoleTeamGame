@@ -1,8 +1,8 @@
 {
-    "pressStart": "PULSA START",
+    "pressStart": "COMENZAR",
     "idioma": "IDIOMA",
     "connectionStatus": "Estado conexión: ",
-    "playerName": "Nombre jugador",
+    "playerName": "Nombre",
     "loginButton" : "Entrar",
     "createRoomButton" : "Crear sala",
     "joinRandomRoomButton" : "Unirse a sala aleatoria",
