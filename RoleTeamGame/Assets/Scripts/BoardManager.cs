@@ -575,6 +575,9 @@ namespace Com.BrumaGames.Llamaradas
                 if (contFire > 0)
                 {
                     neighborEdifice = edifice.GetComponent<Edifice>().GetNeighborEdifice(adjacentDirections[directionWind]);
+                    //edifice.GetComponent<Edifice>().ActivateDetectBurnedPlayer(directionWind);
+                    edifice.GetComponent<Edifice>().ActivateDetectBurnedPlayer(adjacentDirections[directionWind]);
+
 
                     if (neighborEdifice != null && neighborEdifice.GetComponent<Edifice>().contFire == 0)
                     {

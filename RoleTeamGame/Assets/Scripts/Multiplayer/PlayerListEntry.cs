@@ -24,7 +24,6 @@ namespace Com.BrumaGames.Llamaradas
         public TextMeshProUGUI PlayerNameText;
 
         public Image PlayerColorImage;
-        public Button PlayerReadyButton;
         public Image PlayerReadyImage;
 
         private int ownerId;
@@ -40,11 +39,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public void Start()
         {
-            if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
-            {
-                PlayerReadyButton.gameObject.SetActive(false);
-            }
-            else
+            if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
             {
                 Hashtable initialProps = new Hashtable() {
                     { LlamaradaGame.PLAYER_READY, isPlayerReady },
@@ -55,22 +50,20 @@ namespace Com.BrumaGames.Llamaradas
                 PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
                 PhotonNetwork.LocalPlayer.SetScore(0);
 
-                PlayerReadyButton.onClick.AddListener(() =>
-                {
-                    isPlayerReady = !isPlayerReady;
-                    SetPlayerReady(isPlayerReady);
 
-                    Hashtable props = new Hashtable() {
+                isPlayerReady = !isPlayerReady;
+                SetPlayerReady(isPlayerReady);
+
+                Hashtable props = new Hashtable() {
                         { LlamaradaGame.PLAYER_READY, isPlayerReady }
                     };
 
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        FindObjectOfType<LobbyMain>().LocalPlayerPropertiesUpdated();
-                    }
-                });
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    FindObjectOfType<LobbyMain>().LocalPlayerPropertiesUpdated();
+                }
             }
         }
 
@@ -110,10 +103,6 @@ namespace Com.BrumaGames.Llamaradas
         //activa la imagen 
         public void SetPlayerReady(bool playerReady)
         {
-            string ready1 = I18nMng.GetText("ready!");
-            string ready2 = I18nMng.GetText("ready?");
-            //PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? "Listo!" : "Listo?";
-            PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? ready1 : ready2;
             PlayerReadyImage.enabled = playerReady;
         }
     }

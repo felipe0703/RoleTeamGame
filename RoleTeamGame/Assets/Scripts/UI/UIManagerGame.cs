@@ -581,7 +581,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             buttons.SetActive(true);
             //HidePanelUI();
-            HidePanelActions();
+            //HidePanelActions();
             HideButtonsActions();
         }
 
@@ -589,7 +589,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             buttons.SetActive(false);
             //ShowPanelUI();
-            ShowPanelActions();
+            //ShowPanelActions();
             ShowButtonsActions();
             HideAllButtonsMove();
         }

@@ -516,42 +516,6 @@ namespace Com.BrumaGames.Llamaradas
             }            
         }
 
-       
-        //   AGREGAR ACCION USADA
-        /*public void AddActions()
-        {
-            if (numbersActions >= GameManager.sharedInstance.maxNumbersActions)
-            {
-                numbersActions = GameManager.sharedInstance.maxNumbersActions;
-            }
-            else
-            {
-                numbersActions++;
-            }
-        }*/
-
-        //  RESTAR ACCION
-        /*public void SubtractActions()
-        {
-            if (numbersActions <= 0)
-            {
-                numbersActions = 0;
-            }
-            else
-            {
-                numbersActions--;
-            }
-        }*/
-
-        /* public void UpdateNumberOfActions()
-         {
-             //GameController.sharedInstance.SubtractActions();
-             //SubtractActions();
-             //animacion de restar acción
-             // int i = GameController.sharedInstance.numbersActions;
-             //int i = numbersActions;
-             //actions[i].SetActive(false);
-         }*/
 
         [PunRPC]
         public void UpdateActions()

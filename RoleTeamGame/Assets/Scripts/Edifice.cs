@@ -424,7 +424,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public GameObject GetNeighborEdifice(Vector2 direction)
         {
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 30f, LayerMask.GetMask("Edifice"));
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 20f, LayerMask.GetMask("Edifice"));
             if (hit.collider != null)
             {
                 return hit.collider.gameObject;
@@ -599,6 +599,21 @@ namespace Com.BrumaGames.Llamaradas
 
         #endregion
 
+        public void ActivateDetectBurnedPlayer(Vector2 direction)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 13f, LayerMask.GetMask("Player"));
+            if (hit.collider != null)
+            {
+                //return hit.collider.gameObject;
+                Debug.Log("detecte un jugador " + this.gameObject.name);
+            }
+            else
+            {
+                Debug.Log("no hay jugador " + this.gameObject.name);
+                //return null;
+            }
+        }
+           
         void ChangeSprite()
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = spriteBurnedEdifice;
