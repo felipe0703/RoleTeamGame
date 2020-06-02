@@ -50,6 +50,7 @@ namespace Com.BrumaGames.Llamaradas
         [Space(10)]
         public GameObject currentStreet;
         public List<GameObject> streetList = new List<GameObject>();
+        public List<GameObject> allStreets = new List<GameObject>();
         private GameObject[,] streets;
 
         [Space(10)]
@@ -118,6 +119,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (setCont && !PhotonNetwork.IsMasterClient)
             {
+                SetBorderAndCornerStreet();
                 SetIdEdifice();
                 GameController.sharedInstance.FillPopulationList(GameController.sharedInstance.listPopulationInEdifice);
                 setCont = false;
@@ -201,7 +203,6 @@ namespace Com.BrumaGames.Llamaradas
                             Vector3 edificePosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
 
                             //GameObject newEdifice = Instantiate(currenteEdifice,positionEdifice, currenteEdifice.transform.rotation);
-
                             GameObject newEdifice = PhotonNetwork.Instantiate("Edifices/" + currenteEdifice.name, edificePosition, Quaternion.identity);
 
                             newEdifice.GetComponent<Edifice>().id = cont;
@@ -217,7 +218,6 @@ namespace Com.BrumaGames.Llamaradas
                         else
                         {
                             //  GENERACIÓN CALLES
-
                             if (x % 2 != 0 && y % 2 == 0)           //  HORIZONTALES
                             {
                                 currentStreet = streetList[Random.Range(0, 1)];
@@ -227,50 +227,21 @@ namespace Com.BrumaGames.Llamaradas
                             {
                                 currentStreet = streetList[Random.Range(1, 3)];
                                 // newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
-
-
                             }
                             else if (x % 2 == 0 && y % 2 == 0)      //  INTERCEPCIÓN CALLES CALLES 
                             {
                                 currentStreet = streetList[Random.Range(3, 4)];
                                 // newStreet.GetComponent<SpriteRenderer>().sprite = sprite;
-
                             }
 
-                            Vector3 streetPosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);
-
-                           // GameObject newStreet = Instantiate(currentStreet, streetPosition,currentStreet.transform.rotation);
-
+                            Vector3 streetPosition = new Vector3(startX + (offset.x * x), startY + (offset.y * y), 0);                            
                             GameObject newStreet = PhotonNetwork.Instantiate("Streets/" + currentStreet.name, streetPosition, Quaternion.identity);
 
                             // Formato al nombre de los objetos
                             newStreet.name = string.Format("Street[{0}][{1}]", x, y);
-
                             newStreet.transform.SetParent( GameObject.Find("Streets").transform, false);
-                            //streets[x, y] = newStreet;
-
-                            currentStreet.GetComponent<Street>().isBorder = false;
-                            currentStreet.GetComponent<Street>().isCorner = false;
-
-                            // la calle esta en los borde
-                            if (x == 2 || y == 2 || x == xSizeBoard - 3 || y == ySizeBoard - 3)
-                            {
-                                newStreet.GetComponent<Street>().isBorder = true;
-                            }
-
-                            // la calle es una esquina
-                            if ((x == 2 && y == 2) ||
-                                (x == xSizeBoard - 3 && y == ySizeBoard - 3) ||
-                                (x == 2 && y == ySizeBoard - 3) ||
-                                (x == xSizeBoard - 3 && y == 2))
-                            {
-                                newStreet.GetComponent<Street>().isCorner = true;
-                            }
                         }
                     }
-
-
-
                     else if (x >= xSizeBoard - 2)
                     {
                         //  GENERACIÓN RIO
@@ -294,8 +265,6 @@ namespace Com.BrumaGames.Llamaradas
                         newRiver.transform.parent = GameObject.Find("Rivers").transform;
                         //rivers[x, y] = newRiver;
                     }
-
-
                     else if (x <= 1 || y <= 1 || y >= ySizeBoard - 2)
                     {
                         //  GENERACIÓN BORDER
@@ -317,8 +286,7 @@ namespace Com.BrumaGames.Llamaradas
                 }                
             }
             SaveEdificesInMatrix();
-            FireStart();
-            
+            FireStart();            
         }
         #endregion
 
@@ -424,8 +392,7 @@ namespace Com.BrumaGames.Llamaradas
         [PunRPC]
         void WindGeneration(int direction)
         {
-            directionWind = direction;       
-
+            directionWind = direction;
             if (directionWind == 0)
             {
                 WindNorth();
@@ -443,7 +410,6 @@ namespace Com.BrumaGames.Llamaradas
                 WindWest();
             }
         }
-
 
         public void WindNorth()
         {
@@ -692,6 +658,54 @@ namespace Com.BrumaGames.Llamaradas
         }
 
         #endregion // FunctionFire
-    }
 
+
+        // ####################################################
+        // FUNCIONES CALLE ES ESQUINA O BORDE
+        // ####################################################
+
+        public void SetBorderAndCornerStreet()
+        {
+            if (!PhotonNetwork.IsMasterClient && allStreets.Count == 0)
+            {
+                GameObject[] streets = GameObject.FindGameObjectsWithTag("Street");
+                int a = 13, c = 13;
+                int b = 7, d = 7;
+                for (int i = 0; i < streets.Length; i++)
+                {
+                    streets[i].GetComponent<Street>().isCorner = false;
+                    streets[i].GetComponent<Street>().isBorder = false;              
+                }
+                for (int i = 0; i < streets.Length; i++)
+                {
+                    allStreets.Add(streets[i]);
+                    // la calle esta en los corner
+                    if (i == 0 || i == 12 || i == 120 || i == 132)
+                        allStreets[i].GetComponent<Street>().isCorner = true;
+                    if( i < 13 || i > 119)
+                        allStreets[i].GetComponent<Street>().isBorder = true; 
+                    if(a == i)
+                    {
+                        a += 20;
+                        allStreets[i].GetComponent<Street>().isBorder = true;
+                    }
+                    if(i == 13 + b)
+                    {
+                        b += 20;
+                        allStreets[i].GetComponent<Street>().isBorder = true;
+                    }
+                    if (i == 19 + c)
+                    {
+                        c += 20;
+                        allStreets[i].GetComponent<Street>().isBorder = true;
+                    }
+                    if (i == 12 + d)
+                    {
+                        d += 20;
+                        allStreets[i].GetComponent<Street>().isBorder = true;
+                    }
+                }
+            }
+        }
+    }
 }

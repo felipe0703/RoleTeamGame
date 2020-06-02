@@ -188,10 +188,11 @@ MonoBehaviour:
   currentStreet: {fileID: 2970909160875802345, guid: a7c2f1981e65ee54a8e6a544c6145251,
     type: 3}
   streetList:
-  - {fileID: 2970909160875802345, guid: a7c2f1981e65ee54a8e6a544c6145251, type: 3}
-  - {fileID: 2970909160875802345, guid: 229ee778a9d1d814ebd0e5c660e36ded, type: 3}
-  - {fileID: 2970909160875802345, guid: 229ee778a9d1d814ebd0e5c660e36ded, type: 3}
   - {fileID: 2970909160875802345, guid: 36100e259f3a472468cf4e944c110935, type: 3}
+  - {fileID: 2970909160875802345, guid: 36100e259f3a472468cf4e944c110935, type: 3}
+  - {fileID: 2970909160875802345, guid: 36100e259f3a472468cf4e944c110935, type: 3}
+  - {fileID: 2970909160875802345, guid: 36100e259f3a472468cf4e944c110935, type: 3}
+  allStreets: []
   currentRiver: {fileID: 8363111426474032847, guid: d577e435d25bda844830bde8d63b6a3b,
     type: 3}
   riverList:

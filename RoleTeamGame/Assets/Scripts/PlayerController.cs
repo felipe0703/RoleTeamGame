@@ -138,14 +138,12 @@ namespace Com.BrumaGames.Llamaradas
             myTurn = false;
             finishTurn = false;
             moveTarget2 = false;
-
             //namePlayer.text = PhotonNetwork.LocalPlayer.NickName;
             if (pv.IsMine)
             {                
                 int actor = PhotonNetwork.LocalPlayer.ActorNumber;
                 UIManagerGame.sharedInstance.textPlayer.text = "Soy Jugador: " + actor;
-            }
-            
+            }          
 
             if (target != null && target2 != null)
             {
@@ -165,34 +163,7 @@ namespace Com.BrumaGames.Llamaradas
 
             RoundCountdownTimer.OnCountdownTimerHasExpired += OnRoundCountdownTimerIsExpired;
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                if (photonView.IsMine)
-                {
-                    gameObject.GetComponent<PhotonView>().RPC("UpdateActions", RpcTarget.All);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                if (photonView.IsMine)
-                {
-                    gameObject.GetComponent<PhotonView>().RPC("RestartActions", RpcTarget.All);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                if (photonView.IsMine)
-                {
-                    GetNext();
-                }
-            }
-        }
-
+        
         // Update is called once per frame
         void FixedUpdate()
         {
@@ -278,7 +249,6 @@ namespace Com.BrumaGames.Llamaradas
             }
         }
 
-        //IMPLEMENTAR LUEGO
         private void LateUpdate()
         {
             if((bool)PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
@@ -335,8 +305,6 @@ namespace Com.BrumaGames.Llamaradas
                 return null;
             }
         }
-
-
 
         #endregion //DetectEdifices
 
@@ -497,15 +465,12 @@ namespace Com.BrumaGames.Llamaradas
         }
         #endregion // Animación
 
-        
-
         // ########################################
         // Funciones de Contador Acciones
         // ########################################
 
         #region Acciones
-        
-        
+             
         //Activa UI Actions(Energias), recargo mis acciones y activo mi turno        
         public void ActiveActions()
         {
@@ -522,7 +487,6 @@ namespace Com.BrumaGames.Llamaradas
                 }*/
             }            
         }
-
 
         [PunRPC]
         public void UpdateActions()
@@ -818,7 +782,6 @@ namespace Com.BrumaGames.Llamaradas
                 }
             }
         }
-
 
         public void RestorePlayerTurn()
         {

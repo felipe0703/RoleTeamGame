@@ -506,7 +506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3478612927d8c114ba6b4a4ca43b4c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBorder: 0
+  test: {fileID: 0}
+  isBorder: 1
   isCorner: 0
 --- !u!114 &4014963318693677728
 MonoBehaviour:

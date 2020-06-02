@@ -38,7 +38,7 @@ namespace Com.BrumaGames.Llamaradas
         // obtengo el vecino
         private GameObject GetNeighbor(Vector2 direction, LayerMask mask)
         {
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 400f, mask);
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 40f, mask);
             if (hit.collider != null)
             {
                 return hit.collider.gameObject;
@@ -107,7 +107,7 @@ namespace Com.BrumaGames.Llamaradas
             // si tengo una esquina arriba
             if (DetectionAddress("up").GetComponent<Street>().isCorner)
             {
-                GetButton("up").SetActive(true);
+                GetButton("down").SetActive(true);
             }// si tengo una esquina abajo
             else if (DetectionAddress("down").GetComponent<Street>().isCorner)
             {
