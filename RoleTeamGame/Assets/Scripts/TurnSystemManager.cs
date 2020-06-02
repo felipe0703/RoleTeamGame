@@ -41,17 +41,6 @@ namespace Com.BrumaGames.Llamaradas
         public bool[] turnBoolsPlayer = new bool[8];
         PhotonView pv;
 
-        /*public GameObject avisoFuego;
-        public GameObject avisoP1;
-        public GameObject avisoP2;
-        public GameObject avisoP3;
-        public GameObject avisoP4;
-
-        public GUIAnimFREE fuego;
-        public GUIAnimFREE p1;
-        public GUIAnimFREE p2;
-        public GUIAnimFREE p3;
-        public GUIAnimFREE p4;*/
 
         //Marco: esto es para guardar el componente del objeto Text_turn que esta en el uimanager
         private GUIAnimFREE textoTurno;
@@ -129,8 +118,6 @@ namespace Com.BrumaGames.Llamaradas
         }
 
         #endregion
-
-
 
         #region Turn
 

@@ -250,7 +250,7 @@ namespace Com.BrumaGames.Llamaradas
                         finishTurn = true;
                         myTurn = false;
                     }
-
+                    // Termina mi turno
                     if (finishTurn)
                     {
                         finishTurn = false;
@@ -283,12 +283,19 @@ namespace Com.BrumaGames.Llamaradas
         {
             if((bool)PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN])
             {
-                buttonShowActions.SetActive(true);
+                if (pv.IsMine)
+                {
+                    object lose;
+                    if(PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_LOSE_TURN, out lose))
+                    {
+                        if ((bool)lose) GetNext();
+                        else buttonShowActions.SetActive(true);                    
+                    }
+                    else buttonShowActions.SetActive(true);
+                }
             }
-            else
-            {
-                buttonShowActions.SetActive(false);
-            }    
+            else buttonShowActions.SetActive(false);
+
         }
         #endregion // MonoBehaviour
 
@@ -565,12 +572,17 @@ namespace Com.BrumaGames.Llamaradas
         public void ItsMyTurn()
         {
             Debug.Log("ITS MY TURN");
-            Player player = PhotonNetwork.LocalPlayer.GetNext();       
-
+            Player player = PhotonNetwork.LocalPlayer.GetNext();  
             if (pv.IsMine)
             {
-
                 object turn;
+                object lose;
+                if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_LOSE_TURN,out lose))
+                {
+                    if ((bool)lose) RestorePlayerTurn();
+                    else Debug.Log("its my turn no perdi turno");
+                }
+
                 // si el siguiente jugador es el master paso al cliente 2
                 if (player.ActorNumber == 1)
                 {
@@ -778,6 +790,46 @@ namespace Com.BrumaGames.Llamaradas
         public void Initialize(string playerName)
         {
             namePlayer.text = playerName;
+        }
+
+        public void PlayerLosesTurn()
+        {
+            object turn;
+            if (pv.IsMine)
+            {
+                if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(LlamaradaGame.PLAYER_LOSE_TURN, out turn))
+                {
+                    if (!(bool)turn)
+                    {
+                        PhotonNetwork.LocalPlayer.SetCustomProperties(
+                                               new Hashtable{
+                                                    { LlamaradaGame.PLAYER_LOSE_TURN, ( (bool)true)}
+                                               }
+                                           );
+                    }
+                }
+                else
+                {
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(
+                                              new Hashtable{
+                                                    { LlamaradaGame.PLAYER_LOSE_TURN, ( (bool)true)}
+                                              }
+                                          );
+                }
+            }
+        }
+
+
+        public void RestorePlayerTurn()
+        {
+            if (pv.IsMine)
+            {
+                PhotonNetwork.LocalPlayer.SetCustomProperties(
+                        new Hashtable{
+                                { LlamaradaGame.PLAYER_LOSE_TURN, ( (bool)false)}
+                        }
+                    );
+            }
         }
     }
 }

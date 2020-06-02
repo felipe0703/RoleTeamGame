@@ -606,6 +606,7 @@ namespace Com.BrumaGames.Llamaradas
             {
                 //return hit.collider.gameObject;
                 Debug.Log("detecte un jugador " + this.gameObject.name);
+                hit.collider.gameObject.GetComponent<PlayerController>().PlayerLosesTurn();
             }
             else
             {

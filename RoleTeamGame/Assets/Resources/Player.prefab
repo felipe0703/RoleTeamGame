@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 2109643827605859325}
   - component: {fileID: 574919123518358804}
   - component: {fileID: 3831447297842207872}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: DetectionZonePerson
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2109643827605859325
 Transform:
   m_ObjectHideFlags: 0
@@ -83,13 +83,13 @@ GameObject:
   - component: {fileID: 5568065394292165490}
   - component: {fileID: 7365729485180130384}
   - component: {fileID: 7170447098518681916}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: DetectionZoneDisabledPerson
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5568065394292165490
 Transform:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 8419924676878346471}
   - component: {fileID: 8419924676878346468}
   - component: {fileID: 8419924676878346469}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 8419924676986140600}
   - component: {fileID: 8419924676986140601}
   - component: {fileID: 8419924676986140606}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Down_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 8419924677029625185}
   - component: {fileID: 8419924677029625190}
   - component: {fileID: 8419924677029625191}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Right_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 8419924677029949312}
   - component: {fileID: 8419924677029949313}
   - component: {fileID: 8419924677029949318}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 8419924677055881819}
   - component: {fileID: 8419924677055881816}
   - component: {fileID: 8419924677055881817}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Left (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 8419924677153052194}
   - component: {fileID: 8419924677153052195}
   - component: {fileID: 8419924677153052192}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Up_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -965,7 +965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419924677239501711}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1012,7 +1012,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419924677250612187}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Target_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1045,7 +1045,7 @@ GameObject:
   - component: {fileID: 8419924677301094360}
   - component: {fileID: 8419924677301094361}
   - component: {fileID: 8419924677301094366}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1171,7 +1171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8419924677334624738}
   - component: {fileID: 8419924677334624749}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Targets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1220,7 +1220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8419924677338843213}
   - component: {fileID: 8419924677338843212}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 8419924677355107270}
   - component: {fileID: 8419924677355107271}
   - component: {fileID: 8419924677355107268}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Panel_Buttons_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1353,7 +1353,7 @@ GameObject:
   - component: {fileID: 8419924677420488361}
   - component: {fileID: 8419924677420488366}
   - component: {fileID: 8419924677420488367}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Left_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1491,7 +1491,7 @@ GameObject:
   - component: {fileID: 8419924677796292528}
   - component: {fileID: 8419924677796292529}
   - component: {fileID: 8419924677796292534}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Panel_Buttons_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1569,7 +1569,7 @@ GameObject:
   - component: {fileID: 8419924677806039353}
   - component: {fileID: 8419924677806039358}
   - component: {fileID: 8419924677806039359}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1696,7 +1696,7 @@ GameObject:
   - component: {fileID: 8419924677975081458}
   - component: {fileID: 8419924677975081459}
   - component: {fileID: 8419924677975081456}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Panel_Buttons_Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1775,7 +1775,7 @@ GameObject:
   - component: {fileID: 8419924678050376325}
   - component: {fileID: 8419924678050376346}
   - component: {fileID: 8419924678050376347}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Up_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1911,7 +1911,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419924678097214595}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Target2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1944,7 +1944,7 @@ GameObject:
   - component: {fileID: 8419924678156385871}
   - component: {fileID: 8419924678156385868}
   - component: {fileID: 8419924678156385869}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2330,7 +2330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419924678183737148}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Target_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2363,7 +2363,7 @@ GameObject:
   - component: {fileID: 8419924678199141717}
   - component: {fileID: 8419924678199141738}
   - component: {fileID: 8419924678199141739}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2502,7 +2502,7 @@ GameObject:
   - component: {fileID: 8419924678213082429}
   - component: {fileID: 8419924678213082418}
   - component: {fileID: 8419924678213082419}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2627,7 +2627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419924678213088135}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Target_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2660,7 +2660,7 @@ GameObject:
   - component: {fileID: 8419924678312566141}
   - component: {fileID: 8419924678312566130}
   - component: {fileID: 8419924678312566131}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Left (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2787,7 +2787,7 @@ GameObject:
   - component: {fileID: 8419924678326068192}
   - component: {fileID: 8419924678326068194}
   - component: {fileID: 8419924678326068195}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Panel_Buttons_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2864,7 +2864,7 @@ GameObject:
   - component: {fileID: 8419924678326460493}
   - component: {fileID: 8419924678326460495}
   - component: {fileID: 8419924678326460492}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Panel_Buttons_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2942,7 +2942,7 @@ GameObject:
   - component: {fileID: 8419924678383834220}
   - component: {fileID: 8419924678383834221}
   - component: {fileID: 8419924678383834210}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3070,7 +3070,7 @@ GameObject:
   - component: {fileID: 8419924678504250411}
   - component: {fileID: 8419924678504250408}
   - component: {fileID: 8419924678504250409}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Left_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3206,7 +3206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419924678532169999}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Target_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3239,7 +3239,7 @@ GameObject:
   - component: {fileID: 8419924678551688457}
   - component: {fileID: 8419924678551688462}
   - component: {fileID: 8419924678551688463}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3378,7 +3378,7 @@ GameObject:
   - component: {fileID: 8419924678590484799}
   - component: {fileID: 8419924678590484796}
   - component: {fileID: 8419924678590484797}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Down (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3506,7 +3506,7 @@ GameObject:
   - component: {fileID: 8419924678656014354}
   - component: {fileID: 8419924678656014355}
   - component: {fileID: 8419924678656014352}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3634,7 +3634,7 @@ GameObject:
   - component: {fileID: 8419924678660544590}
   - component: {fileID: 8419924678660544591}
   - component: {fileID: 8419924678660544588}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Right_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3773,7 +3773,7 @@ GameObject:
   - component: {fileID: 8419924678663553620}
   - component: {fileID: 8419924678663553621}
   - component: {fileID: 8419924678663553642}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Down (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3901,7 +3901,7 @@ GameObject:
   - component: {fileID: 8419924678673088730}
   - component: {fileID: 8419924678673088731}
   - component: {fileID: 8419924678673088728}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Down_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4040,7 +4040,7 @@ GameObject:
   - component: {fileID: 8419924678808953268}
   - component: {fileID: 8419924678808953269}
   - component: {fileID: 8419924678808953290}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4168,7 +4168,7 @@ GameObject:
   - component: {fileID: 8419924678826461311}
   - component: {fileID: 8419924678826461308}
   - component: {fileID: 8419924678826461309}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4307,7 +4307,7 @@ GameObject:
   - component: {fileID: 8419924678849035718}
   - component: {fileID: 8419924678849035719}
   - component: {fileID: 8419924678849035716}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Button_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4434,7 +4434,7 @@ GameObject:
   - component: {fileID: 7873689110219872038}
   - component: {fileID: 1928519181576428744}
   - component: {fileID: 1358373555614560663}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Text_NamePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

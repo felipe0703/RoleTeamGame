@@ -13,6 +13,7 @@ namespace Com.BrumaGames.Llamaradas
         public const string PLAYER_READY = "IsPlayerReady";
         public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
         public const string PLAYER_TURN = "PlayerTurn";
+        public const string PLAYER_LOSE_TURN = "PlayerLoseTurn";
 
         public static Color GetColor(int colorChoice)
         {
