@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 3939807515606607955}
   - component: {fileID: 7078886511707157492}
   - component: {fileID: 2472229161550462177}
+  - component: {fileID: 8803786184673319681}
   m_Layer: 8
   m_Name: Street
   m_TagString: Street
@@ -197,7 +198,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -249,6 +250,19 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8803786184673319681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970909160875802345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d907418a046f74997ddba201124692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positions: 000000000000
 --- !u!1 &7372100442625925085
 GameObject:
   m_ObjectHideFlags: 0
