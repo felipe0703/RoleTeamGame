@@ -163,11 +163,6 @@ namespace Com.BrumaGames.Llamaradas
 
             RoundCountdownTimer.OnCountdownTimerHasExpired += OnRoundCountdownTimerIsExpired;
         }
-
-        private void Update()
-        {
-            //OntriggerEnterStreet();
-        }
         void FixedUpdate()
         {
             #region Move
@@ -742,12 +737,6 @@ namespace Com.BrumaGames.Llamaradas
         #endregion // Turn
 
         #region CollisionStreet
-
-        private void OntriggerEnterStreet()
-        {
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.up, 3f, LayerMask.GetMask("Streets"));
-            if (hit.collider != null) street = hit.collider.gameObject.gameObject;
-        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

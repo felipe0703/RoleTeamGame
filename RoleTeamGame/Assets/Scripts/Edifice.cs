@@ -165,32 +165,28 @@ namespace Com.BrumaGames.Llamaradas
             {
                 PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
                 GameObject habitant = null;
-                int scoreHabitant = 0;
 
                 //Debug.Log("presione un habitante posicion: " + id + " , de identificador: " + habitants[id].GetComponent<ButtonHabitant>().idHabitant);
                 // detecto que tipo de habitante seleccione
                 if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
                 {
                     habitant = GameController.sharedInstance.disabledPerson;
-                    scoreHabitant = 3;
                 }
                 else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 1)
                 {
                     habitant = GameController.sharedInstance.person;
-                    scoreHabitant = 2;
                 }
                 else if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 2)
                 {
                     Debug.Log("detecte un perro");
                     habitant = GameController.sharedInstance.pet;
-                    scoreHabitant = 1;
+                    int scoreHabitant = 1;
+                    controller.UpdateScoreSaved(scoreHabitant);
                 }
 
                 pv = GetComponent<PhotonView>();
                 pv.RPC("UpdatePopulationInEdifice", RpcTarget.AllBuffered, this.id, habitants[id].GetComponent<ButtonHabitant>().idHabitant, id);
 
-                // PUNTUACIÓN
-                controller.UpdateScoreSaved(scoreHabitant);
 
 
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);//vuelve el edificio a su color original

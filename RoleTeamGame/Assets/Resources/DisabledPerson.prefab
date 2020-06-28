@@ -2477,6 +2477,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detected: 0
   btnSelect: {fileID: 4987610968504619601}
+  survivedEffect: {fileID: 7421701344717921446, guid: 89620e72432b1f2458ce4739a271e914,
+    type: 3}
+  survived: 0
+  idHabitant: 0
 --- !u!114 &3301444049195963218
 MonoBehaviour:
   m_ObjectHideFlags: 0
