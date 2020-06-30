@@ -59,7 +59,7 @@ namespace Com.BrumaGames.Llamaradas
         //  COMPONENTES
         public TextMeshProUGUI textTimer;
         public TextMeshProUGUI textTimerMaster;
-        public GameObject buttonShowActions;
+        //public GameObject buttonShowActions;
         public Canvas canvasActions;
 
         // HABITANTES DE EDIFICIOS    

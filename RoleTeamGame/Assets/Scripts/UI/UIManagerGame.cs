@@ -27,7 +27,6 @@ namespace Com.BrumaGames.Llamaradas
         public GameObject buttons;
         public GameObject panelUI;
         public GameObject panelActions;
-        public GameObject panelMinimap;
         public GameObject panelNotification;
         public GUIAnimFREE panelChangeTurnClient;
         public GUIAnimFREE panelChangeTurnMaster;
@@ -36,13 +35,13 @@ namespace Com.BrumaGames.Llamaradas
         public GUIAnimFREE panelChangeWindClient;
         public GUIAnimFREE panelChangeWindMaster;
         public TextMeshProUGUI textNotification;
+
         public GameObject vCam1;
         public GameObject vCam2;
-        public GameObject minimapCamera;
-        public GameObject vCamMinimap;
-        public GameObject vCamHabitant;
-        
+        public GameObject vCamMaster;       
         public CinemachineVirtualCamera cine;
+
+
         public GameObject arrowClient;
         public GameObject arrowMaster;
 
@@ -99,6 +98,7 @@ namespace Com.BrumaGames.Llamaradas
         Player[] players;
         bool setNamePlayer = false;
         int contSetName = 0;
+        public bool showMove = false;
         #endregion
 
         // ########################################
@@ -108,17 +108,9 @@ namespace Com.BrumaGames.Llamaradas
         #region MonoBehaviour
         private void Awake()
         {
-            if (sharedInstance == null)
-            {
-                sharedInstance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
+            if (sharedInstance == null) sharedInstance = this;
+            else Destroy(gameObject);
             playerListEntries = new Dictionary<int, GameObject>();
-
         }
 
         private void Start()
@@ -143,7 +135,6 @@ namespace Com.BrumaGames.Llamaradas
                     canvasClient.SetActive(true);
                     canvas = canvasClient.transform.GetChild(1).gameObject.GetComponent<Canvas>();
                 }
-                //CallDesactivatePanelLevel();
             }
             else
             {
@@ -158,18 +149,10 @@ namespace Com.BrumaGames.Llamaradas
 
         private void Update()
         {
-            if (!foundPlayer)
-            {
-               foundPlayer = FindPlayer();
-            }
-
+            if (!foundPlayer) foundPlayer = FindPlayer();
             SetArrowWind();
-
             energies.text = PhotonNetwork.LocalPlayer.CustomProperties[LlamaradaGame.PLAYER_TURN].ToString();
-
-            if (contSetName < 100)
-                SetNamePlayerUI();
-
+            if (contSetName < 100) SetNamePlayerUI();
         }
         #endregion
 
@@ -202,9 +185,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             player = GameObject.FindGameObjectWithTag("Player");
 
-            if (player == null)
-                return false;
-
+            if (player == null) return false;
             pv = player.GetComponent<PhotonView>();
 
             //activo botones 
@@ -229,14 +210,11 @@ namespace Com.BrumaGames.Llamaradas
         void SetNamePlayerUI()
         {
             GameObject[] playersGO = GameObject.FindGameObjectsWithTag("Player");
-
             foreach (GameObject player in playersGO)
             {
-                Debug.Log("Nombre del jugador: " + player.GetComponent<PhotonView>().Owner.NickName);
+                //Debug.Log("Nombre del jugador: " + player.GetComponent<PhotonView>().Owner.NickName);
                 player.GetComponent<PlayerController>().Initialize(player.GetComponent<PhotonView>().Owner.NickName);
-
-                if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length > 1)
-                    player.GetComponent<PlayerController>().namePlayer.fontSize = 2f;
+                if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length > 1) player.GetComponent<PlayerController>().namePlayer.fontSize = 2f;
             }
             contSetName++;
         }
@@ -292,18 +270,22 @@ namespace Com.BrumaGames.Llamaradas
         //TODO: BUSCAR EL PLAYERCONTROLLER PARA LLAMAR AL METODO DE DETECCION DE EDIFICIO
         public void CallDetectEdificeToMove()
         {
-            if (player != null && pv.IsMine)
-            {
-                //controller.DetectEdificeToMove();
-                controller.GetComponent<DetectEdifice>().DetectEdificeToMovePerson();
-            }
+            if (showMove && player != null && pv.IsMine) controller.GetComponent<DetectEdifice>().DetectEdificeToMovePerson();
         }
 
         public void CallDetectEdificeTakeOutHabitant()
         {
             if (player != null && pv.IsMine)
             {
+                if(!vCam1.activeSelf) ActivateDeactivateCams(true, false, false);
+                if (showMove)
+                {
+                    showMove = false;
+                    HidePanelMove();
+                }
+
                 controller.GetComponent<DetectEdifice>().DetectEdificeTakeOutHabitant();
+                controller.GetComponent<DetectEdifice>().HideInspect();
             }
         }
 
@@ -311,8 +293,14 @@ namespace Com.BrumaGames.Llamaradas
         {
             if (player != null && pv.IsMine)
             {
-                //controller.DetectEdificeToInspect();
+                if (!vCam1.activeSelf) ActivateDeactivateCams(true, false, false);
+                if (showMove)
+                {
+                    showMove = false;
+                    HidePanelMove();
+                } 
                 controller.GetComponent<DetectEdifice>().DetectEdificeToInspect();
+                controller.GetComponent<DetectEdifice>().HideTakeOutHabitant();
             }
         }
 
@@ -345,59 +333,73 @@ namespace Com.BrumaGames.Llamaradas
         #endregion
 
         #region ChangeCam
-        public void ActivateDeactivateCams(bool cam1, bool cam2, bool minimap, bool habitant)
-        {
+        public void ActivateDeactivateCams(bool cam1, bool cam2, bool master)
+        {            
+            if (vCam2.activeSelf)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                player.GetComponent<ActivatingDectectionZone>().DeactivateZone();
+            }
+            player.GetComponent<ActivatingDectectionZone>().DeactivateZone();
             vCam1.SetActive(cam1);
             vCam2.SetActive(cam2);
-            vCamMinimap.SetActive(minimap);
-            vCamHabitant.SetActive(habitant);
+            vCamMaster.SetActive(master);
+            if (cam1 || cam2) camera.GetComponent<Camera>().orthographic = true;            
+            if (master) camera.GetComponent<Camera>().orthographic = false;
         }
 
         public void ChangeCam()
         {
             if(PhotonNetwork.PlayerList.Length > 1)
             {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    ActivateDeactivateCams(true, false, false, false);
-                    cine.m_Lens.FieldOfView = 165f;
-                    cine.transform.localPosition = new Vector3(70f, 80, -10f);
-                    camera.GetComponent<Camera>().orthographic = false;
-
-                }
-                else
-                {
-
-                    ActivateDeactivateCams(true, false, false, false);
-                    cine.m_Lens.OrthographicSize = 15f;
-                    camera.GetComponent<Camera>().orthographic = true;
-                }
+                if (PhotonNetwork.IsMasterClient) ActivateDeactivateCams(false, false, true);
+                else ActivateDeactivateCams(true, false, false);
             }
             
         }
 
+        public void ZoomIn()
+        {
+            ActivateDeactivateCams(true, false, false);
+        }
+        public void ZoomOut()
+        {
+            ActivateDeactivateCams(false, false, true);            
+        }
 
         public void ChangeCamMinimap(string target)
         {
-            ActivateDeactivateCams(false, false, true, false);
-            // Asigno al player como objetivo para que la camara lo siga
-            CinemachineVirtualCamera vCam = vCamMinimap.GetComponent<CinemachineVirtualCamera>();
-            vCam.m_Lens.OrthographicSize = 30f;
+            
+            if (vCam2.activeSelf)
+            {
+                ActivateDeactivateCams(true, false, false);                
+            }
+            else if (vCam1.activeSelf)
+            {
+                ActivateDeactivateCams(false, true, false);
+                // Asigno al player como objetivo para que la camara lo siga
+                CinemachineVirtualCamera vCam = vCam2.GetComponent<CinemachineVirtualCamera>();
+                if (vCam.Follow == null) vCam.Follow = GameObject.FindGameObjectWithTag(target).transform;
+                GameObject player = GameObject.FindGameObjectWithTag(target);
+                player.GetComponent<ActivatingDectectionZone>().ActivateZone();
+            }
 
-            if (vCam.Follow == null)
-                vCam.Follow = GameObject.FindGameObjectWithTag(target).transform;
-            GameObject player = GameObject.FindGameObjectWithTag(target);
-            player.GetComponent<ActivatingDectectionZone>().ActivateZone();
+            if (showMove)
+            {
+                showMove = false;
+                HidePanelMove();
+            }
+            controller.GetComponent<DetectEdifice>().HideInspect();
+            controller.GetComponent<DetectEdifice>().HideTakeOutHabitant();
         }
 
         public void ChangeCamMinimapTransform(Transform position)
         {
-            ActivateDeactivateCams(false, false, false, true);
+            ActivateDeactivateCams(false, false, false);
             // Asigno al target como objetivo para que la camara lo siga
-            CinemachineVirtualCamera vCam = vCamHabitant.GetComponent<CinemachineVirtualCamera>();
-            vCam.m_Lens.OrthographicSize = 20f;
-            if (vCam.Follow == null)
-                vCam.Follow = position;
+            //CinemachineVirtualCamera vCam = vCam2.GetComponent<CinemachineVirtualCamera>();
+            //vCam.m_Lens.OrthographicSize = 20f;
+            //if (vCam.Follow == null) vCam.Follow = position;
         }
 
         #endregion
@@ -579,18 +581,27 @@ namespace Com.BrumaGames.Llamaradas
         // PANEL MOVE
         public void ShowPanelMove()
         {
-            buttons.SetActive(true);
-            //HidePanelUI();
-            //HidePanelActions();
-            HideButtonsActions();
+            if (!vCam1.activeSelf)
+            {
+                ActivateDeactivateCams(true, false, false);
+            }
+            if (!showMove)
+            {
+                buttons.SetActive(true);
+                showMove = true;
+            }
+            else
+            {
+                showMove = false;
+                HidePanelMove();
+            }
+            controller.GetComponent<DetectEdifice>().HideInspect();
+            controller.GetComponent<DetectEdifice>().HideTakeOutHabitant();
         }
 
         public void HidePanelMove()
         {
             buttons.SetActive(false);
-            //ShowPanelUI();
-            //ShowPanelActions();
-            ShowButtonsActions();
             HideAllButtonsMove();
         }
         
@@ -630,14 +641,12 @@ namespace Com.BrumaGames.Llamaradas
         //  PANEL MINIMAP
         public void ShowPanelMinimap()
         {
-            panelMinimap.SetActive(true);
-            minimapCamera.SetActive(true);
-            minimapCamera.GetComponent<Minimap>().FindPlayer();
+            //minimapCamera.SetActive(true);
+            //minimapCamera.GetComponent<Minimap>().FindPlayer();
         }
 
         public void HidePanelMinimap()
         {
-            panelMinimap.SetActive(false);
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.GetComponent<ActivatingDectectionZone>().DeactivateZone();
         }
@@ -647,6 +656,13 @@ namespace Com.BrumaGames.Llamaradas
         {
             panelNotification.SetActive(true);
             textNotification.text = notification;
+            StartCoroutine(HideNotification());
+        }
+
+        IEnumerator HideNotification()
+        {
+            yield return new WaitForSeconds(1f);
+            panelNotification.SetActive(false);
         }
 
         public void HidePanelNotification()

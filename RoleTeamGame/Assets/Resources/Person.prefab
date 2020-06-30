@@ -2446,6 +2446,7 @@ GameObject:
   - component: {fileID: 4199512677837215747}
   - component: {fileID: 700218907378848673}
   - component: {fileID: 2109309048420387451}
+  - component: {fileID: 4013381609027020869}
   m_Layer: 11
   m_Name: Person
   m_TagString: Person
@@ -2604,6 +2605,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 700218907378848673}
+  - {fileID: 4013381609027020869}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2705,3 +2707,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4013381609027020869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126926093658832263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: MoveX
+  - Type: 1
+    SynchronizeType: 2
+    Name: MoveY
+  - Type: 1
+    SynchronizeType: 2
+    Name: LastX
+  - Type: 1
+    SynchronizeType: 2
+    Name: LastY
+  - Type: 4
+    SynchronizeType: 2
+    Name: isMoving
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0

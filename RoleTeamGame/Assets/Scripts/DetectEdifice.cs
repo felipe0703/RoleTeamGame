@@ -250,26 +250,56 @@ namespace Com.BrumaGames.Llamaradas
         {
             Debug.Log("detect edifice to inspect");
             GameObject edifice;
-            bool detected = false;
+            bool isInspected = false;
+            bool isSelected = false;
 
             for (int i = 0; i < adjacentDirections.Length; i++)
             {
                 if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
                 {
                     edifice = GetNeighbor(adjacentDirections[i], mask);
-
+                    isSelected = edifice.GetComponent<Edifice>().isSelected;
                     if (!edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice)
                     {
-                        edifice.GetComponent<Edifice>().btn.SetActive(true);
-                        edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                        detected = true;
+                        if (isSelected)
+                        {
+                            edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                            edifice.GetComponent<Edifice>().isSelected = false;
+                            edifice.GetComponent<Edifice>().btn.SetActive(false);
+                        }
+                        else
+                        {
+                            edifice.GetComponent<Edifice>().btn.SetActive(true);
+                            edifice.GetComponent<Edifice>().isSelected = true;
+                            edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                            isInspected = true;
+                        }
                     }
                 }
             }
+            if (!isInspected && !isSelected) UIManagerGame.sharedInstance.ShowPanelNotification(I18nMng.GetText("noEdificesToShow"));
+        }
 
-            if (!detected)
+        public void HideInspect()
+        {
+            GameObject edifice;
+            bool isSelected = false;
+            for (int i = 0; i < adjacentDirections.Length; i++)
             {
-                UIManagerGame.sharedInstance.ShowPanelNotification(I18nMng.GetText("noEdificesToShow"));
+                if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], mask);
+                    isSelected = edifice.GetComponent<Edifice>().isSelected;
+                    if (!edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice)
+                    {
+                        if (isSelected)
+                        {
+                            edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                            edifice.GetComponent<Edifice>().isSelected = false;
+                            edifice.GetComponent<Edifice>().btn.SetActive(false);
+                        }
+                    }
+                }
             }
         }
 
@@ -290,42 +320,82 @@ namespace Com.BrumaGames.Llamaradas
 
         public void DetectEdificeTakeOutHabitant()
         {
-            Debug.Log("detect edifice take out habitant");
             GameObject edifice;
             bool detected = false;
+            bool isSelected = false;
             //ver en las 4 direcciones
             for (int i = 0; i < adjacentDirections.Length; i++)
             {
                 if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
                 {
                     edifice = GetNeighbor(adjacentDirections[i], mask);
-
+                    isSelected = edifice.GetComponent<Edifice>().isSelectedOutHabitant;
                     if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
                     {
-                        //ScriptEfectos.DetectEdifice(edifice);
-                        //si no hay mascota en el edificio activo las imagnes
-                       
+                        int cont = 0;
                         for (int j = 0; j < 3; j++)
                         {
                             if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
                             {
-                                edifice.GetComponent<Edifice>().habitants[j].interactable = true;
-                                edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
-                                detected = true;
+                                if (isSelected)
+                                {
+                                    edifice.GetComponent<Edifice>().habitants[j].interactable = false;
+                                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                                    edifice.GetComponent<Edifice>().isSelectedOutHabitant = false;
+                                }
+                                else
+                                {
+                                    edifice.GetComponent<Edifice>().isSelectedOutHabitant = true;
+                                    edifice.GetComponent<Edifice>().habitants[j].interactable = true;
+                                    edifice.GetComponent<SpriteRenderer>().color = new Color(.85f, .85f, .85f, 0.3f);
+                                    detected = true;
+                                }
                             }
+                            else cont++;
+                        }              
+                        if(cont == 3 && isSelected )
+                        {
+                            detected = false;
+                            isSelected = false;
                         }
-                        
                         edifice.GetComponent<Edifice>().idPositionEdifice = i;
                     }
                 }
             }
-
             //activa panel de notificacion
-            if (!detected)
+            if (!detected && !isSelected) UIManagerGame.sharedInstance.ShowPanelNotification(I18nMng.GetText("noInhabitantsToShow"));
+        }
+
+        public void HideTakeOutHabitant()
+        {
+            GameObject edifice;
+            bool isSelected = false;
+            for (int i = 0; i < adjacentDirections.Length; i++)
             {
-                UIManagerGame.sharedInstance.ShowPanelNotification(I18nMng.GetText("noInhabitantsToShow"));
+                if (GetNeighbor(adjacentDirections[i], mask).tag == "Edifice")
+                {
+                    edifice = GetNeighbor(adjacentDirections[i], mask);
+                    isSelected = edifice.GetComponent<Edifice>().isSelectedOutHabitant;
+                    if (edifice.GetComponent<Edifice>().isInspected && !edifice.GetComponent<Edifice>().BurnedEdifice) // el edificio fue inspeccionado 
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (edifice.GetComponent<Edifice>().habitants[j].image.enabled) // si hay habitantes
+                            {
+                                if (isSelected)
+                                {
+                                    edifice.GetComponent<Edifice>().habitants[j].interactable = false;
+                                    edifice.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                                    edifice.GetComponent<Edifice>().isSelectedOutHabitant = false;
+                                }
+                            }
+                        }
+                        //edifice.GetComponent<Edifice>().idPositionEdifice = i;
+                    }
+                }
             }
         }
+
 
         public void DetectPetInEdifice()
         {
@@ -359,7 +429,7 @@ namespace Com.BrumaGames.Llamaradas
 
             UIManagerGame.sharedInstance.ChangeCam();
             UIManagerGame.sharedInstance.HidePanelMinimap();
-            UIManagerGame.sharedInstance.ActivateDeactivateCams(false, false, true, false);
+            UIManagerGame.sharedInstance.ActivateDeactivateCams(false, false, false);
         }
 
     }

@@ -65,6 +65,8 @@ namespace Com.BrumaGames.Llamaradas
 
 
         public bool isInspected = false;
+        public bool isSelected = false;
+        public bool isSelectedOutHabitant = false;
         public int idPositionEdifice = -1;
 
         //AUDIO
@@ -141,6 +143,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             pv = GetComponent<PhotonView>();
             pv.RPC("SyncUpSpriteAndHabitant", RpcTarget.AllBufferedViaServer );
+            isSelected = false;
             
             PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             controller.UpdateActions();
@@ -160,13 +163,14 @@ namespace Com.BrumaGames.Llamaradas
         //TODO: EVALUAR SI ES CONVENIENTE TENER ESTA FUNCIONALIDAD EN ESTE SCRIPT O EN EL GAMECONTROLLER
         public void IsSelectedTakeOut(int id)
         {
-            //Debug.Log("is selected take ou");
             if (!BurnedEdifice) //si el edificio no esta quemado
             {
-                PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                PlayerController controller = player.GetComponent<PlayerController>();
                 GameObject habitant = null;
+                isSelectedOutHabitant = false;
+                player.GetComponent<DetectEdifice>().HideTakeOutHabitant();
 
-                //Debug.Log("presione un habitante posicion: " + id + " , de identificador: " + habitants[id].GetComponent<ButtonHabitant>().idHabitant);
                 // detecto que tipo de habitante seleccione
                 if (habitants[id].GetComponent<ButtonHabitant>().idHabitant == 0)
                 {
@@ -186,8 +190,6 @@ namespace Com.BrumaGames.Llamaradas
 
                 pv = GetComponent<PhotonView>();
                 pv.RPC("UpdatePopulationInEdifice", RpcTarget.AllBuffered, this.id, habitants[id].GetComponent<ButtonHabitant>().idHabitant, id);
-
-
 
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);//vuelve el edificio a su color original
                 HabitantsNotInteractable();
@@ -210,20 +212,16 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
-                            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2)
-                                controller.UpdateActions();
+                            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2) controller.UpdateActions();
                             return;
                         }
-
-
                         if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
                         {
                             //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
-                            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2)
-                                controller.UpdateActions();
+                            if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2) controller.UpdateActions();
                             return;
                         }
 

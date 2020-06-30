@@ -155,7 +155,7 @@ namespace Com.BrumaGames.Llamaradas
             //obtener el boton de acciones
             GameObject canvasClient = canvas.transform.GetChild(0).gameObject;
             GameObject canvasActions = canvasClient.transform.GetChild(1).gameObject;
-            buttonShowActions = canvasActions.transform.GetChild(2).gameObject;
+            buttonShowActions = canvasActions.transform.GetChild(0).gameObject; // #### MODIFICAR PARA MOSTRAR EL PANEL DE BOTONES
 
             UpdateScoreSaved(savedHabitants);
             UpdateScoreDead(0);
@@ -326,6 +326,7 @@ namespace Com.BrumaGames.Llamaradas
             UpdateActions();
             UIManagerGame.sharedInstance.HidePanelMove();
             UIManagerGame.sharedInstance.HideButtonsActions();
+            UIManagerGame.sharedInstance.showMove = false;
             disabledPersonArrivedAtDestination = true;
         }
 
