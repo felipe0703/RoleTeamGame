@@ -493,6 +493,13 @@ namespace Com.BrumaGames.Llamaradas
 
         IEnumerator MoveInPanelAdvanceOfFire(GUIAnimFREE panelAdvanceOfFire)
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    panelButtons.transform.GetChild(i).gameObject.SetActive(false);
+                }
+            }
             yield return new WaitForSeconds(1.8f);
             panelAdvanceOfFire.gameObject.SetActive(true);
             panelAdvanceOfFire.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
@@ -543,6 +550,15 @@ namespace Com.BrumaGames.Llamaradas
 
             panelChangeWind.PlayOutAnims(GUIAnimSystemFREE.eGUIMove.Self);
             panelChangeWind.gameObject.SetActive(false);
+
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    panelButtons.transform.GetChild(i).gameObject.SetActive(true);
+
+                }
+            }
             // Enable all scene switch buttons
             StartCoroutine(EnableAllDemoButtons());
         }
@@ -661,8 +677,17 @@ namespace Com.BrumaGames.Llamaradas
 
         IEnumerator HideNotification()
         {
+            for (int i = 0; i < 4; i++)
+            {
+                panelButtons.transform.GetChild(i).gameObject.SetActive(false);
+            }
+            
             yield return new WaitForSeconds(1f);
             panelNotification.SetActive(false);
+            for (int i = 0; i < 4; i++)
+            {
+                panelButtons.transform.GetChild(i).gameObject.SetActive(true    );
+            }
         }
 
         public void HidePanelNotification()
