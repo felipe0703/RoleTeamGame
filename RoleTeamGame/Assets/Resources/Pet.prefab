@@ -284,6 +284,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 1024
+  survivedEffect: {fileID: 7421701344717921446, guid: 89620e72432b1f2458ce4739a271e914,
+    type: 3}
 --- !u!95 &472962624625948768
 Animator:
   serializedVersion: 3

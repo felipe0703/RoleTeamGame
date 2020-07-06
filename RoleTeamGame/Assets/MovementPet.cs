@@ -8,6 +8,9 @@ namespace Com.BrumaGames.Llamaradas
     {
         public LayerMask mask;
 
+        public GameObject survivedEffect;
+        private bool survived;
+
         //Detectar los edificios adyacentes
         private Vector2[] adjacentDirections = new Vector2[]
         {
@@ -33,7 +36,6 @@ namespace Com.BrumaGames.Llamaradas
             for (int i = 0; i < adjacentDirections.Length; i++)
             {
                 RaycastHit2D hit = Physics2D.Raycast(this.transform.position, adjacentDirections[i], 1000f, mask);
-
                 if (hit.collider != null)
                 {
                     if (hit.distance < distance)
@@ -45,17 +47,25 @@ namespace Com.BrumaGames.Llamaradas
             }
 
             RaycastHit2D hit2 = Physics2D.Raycast(this.transform.position, direction, 1000f, mask);
+            if (hit2.collider != null) return hit2.collider.gameObject;
+            else return null;
+        }
 
-            if (hit2.collider != null)
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Street")) survived = collision.GetComponent<Street>().isBorder;
+            if (survived)
             {
-                //Debug.Log(hit.collider.name);
-                return hit2.collider.gameObject;
+                gameObject.GetComponent<MovementIA>().speed = 50f;
+                StartCoroutine(DestroyHabitant());
             }
-            else
-            {
-                //Debug.Log("no encontre nada");
-                return null;
-            }
+        }
+
+        IEnumerator DestroyHabitant()
+        {
+            Instantiate(survivedEffect, transform.position, transform.rotation);
+            yield return new WaitForSeconds(1.5f);
+            Destroy(gameObject);
         }
     }
 }
