@@ -244,7 +244,6 @@ namespace Com.BrumaGames.Llamaradas
             if (PhotonNetwork.IsMasterClient)
             {
                 //Debug.Log("cantidad: " + GameController.sharedInstance.populationInEdifices[idEdifice, idHabitant]);
-
                 GameController.sharedInstance.populationInEdifices[idEdifice, idHabitant]--;
                 //Debug.Log("idEdifice: " + idEdifice + " IdHabitant: " + idHabitant + " habitants: " +GameController.sharedInstance.populationInEdifices[idEdifice, idHabitant]);
             }
