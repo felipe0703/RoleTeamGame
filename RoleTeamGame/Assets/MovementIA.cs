@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using Photon.Pun;
+using System;
 
 namespace Com.BrumaGames.Llamaradas
 {
@@ -117,24 +118,34 @@ namespace Com.BrumaGames.Llamaradas
 
         public void CallSetTargetWhereToMove(GameObject target)
         {
-            Debug.Log("llamda");
+            Vector3 position = target.transform.position;
+            byte[] data = new byte[sizeof(float) * 3];
+            Buffer.BlockCopy(BitConverter.GetBytes(position.x), 0, data, 0 * sizeof(float), sizeof(float));
+            Buffer.BlockCopy(BitConverter.GetBytes(position.y), 0, data, 1 * sizeof(float), sizeof(float));
+            Buffer.BlockCopy(BitConverter.GetBytes(position.z), 0, data, 2 * sizeof(float), sizeof(float));
+
             pv = GetComponent<PhotonView>();
-            pv.RPC("SetTargetWhereToMovePun", RpcTarget.AllViaServer,1);
+            pv.RPC("SetTargetWhereToMovePun", RpcTarget.AllViaServer,data);
         }
 
         [PunRPC]
-        void SetTargetWhereToMovePun(int target)
+        void SetTargetWhereToMovePun(byte[] data)
         {
-            Debug.Log("rpc"+target);
+            byte[] position = data;
+            Vector3 vect = Vector3.zero;
+            vect.x = BitConverter.ToSingle(position, 0 * sizeof(float));
+            vect.y = BitConverter.ToSingle(position, 1 * sizeof(float));
+            vect.z = BitConverter.ToSingle(position, 2 * sizeof(float));
 
-            /*this.target = target.transform;
+            GameObject emptyGO = new GameObject();
+            emptyGO.transform.position = vect;
+            this.target = emptyGO.transform;
             reachedEndPath = false;
-            UpdatePath();*/
+            UpdatePath();
         }
 
         public void SetTargetWhereToMove(GameObject target)
         {
-            Debug.Log("rpc");
             this.target = target.transform;
             reachedEndPath = false;
             UpdatePath();
