@@ -118,14 +118,16 @@ namespace Com.BrumaGames.Llamaradas
 
         private void LateUpdate()
         {
-            if (!setCornerAndBorder)
+            if (!setCornerAndBorder && PhotonNetwork.IsMasterClient)
             {
+                Debug.Log("testtttt");
                 SetBorderAndCornerStreet();
                 setCornerAndBorder = true;
             }
 
             if (setCont && !PhotonNetwork.IsMasterClient)
             {
+                SetBorderAndCornerStreet();
                 SetIdEdifice();
                 GameController.sharedInstance.FillPopulationList(GameController.sharedInstance.listPopulationInEdifice);
                 setCont = false;
@@ -677,6 +679,7 @@ namespace Com.BrumaGames.Llamaradas
                 GameObject[] streets = GameObject.FindGameObjectsWithTag("Street");
                 int a = 13, c = 13;
                 int b = 7, d = 7;
+                Debug.Log("calles: " + streets.Length);
                 for (int i = 0; i < streets.Length; i++)
                 {
                     streets[i].GetComponent<Street>().isCorner = false;

@@ -13,13 +13,10 @@ namespace Com.BrumaGames.Llamaradas
         public bool survived;
         public int idHabitant;
         int scoreHabitant = 0;
-        
-
 
         private void Update()
         {
-            if (detected)
-                Debug.Log("me detectaron");
+            if (detected) Debug.Log("me detectaron");
         }
 
         public void ActivateHabitantButtont()

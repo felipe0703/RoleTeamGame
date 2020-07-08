@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-
+using Photon.Pun;
 
 namespace Com.BrumaGames.Llamaradas
 {
@@ -27,6 +27,7 @@ namespace Com.BrumaGames.Llamaradas
         Seeker seeker;
         [SerializeField]
         Rigidbody2D rb;
+        PhotonView pv;
 
 
         // Start is called before the first frame update
@@ -35,6 +36,7 @@ namespace Com.BrumaGames.Llamaradas
             seeker = GetComponent<Seeker>();
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            
             //InvokeRepeating("UpdatePath", 0f,0.5f);
             //UpdatePath();
         }
@@ -112,13 +114,32 @@ namespace Com.BrumaGames.Llamaradas
 
         }
 
+
+        public void CallSetTargetWhereToMove(GameObject target)
+        {
+            Debug.Log("llamda");
+            pv = GetComponent<PhotonView>();
+            pv.RPC("SetTargetWhereToMovePun", RpcTarget.AllViaServer,1);
+        }
+
+        [PunRPC]
+        void SetTargetWhereToMovePun(int target)
+        {
+            Debug.Log("rpc"+target);
+
+            /*this.target = target.transform;
+            reachedEndPath = false;
+            UpdatePath();*/
+        }
+
         public void SetTargetWhereToMove(GameObject target)
         {
+            Debug.Log("rpc");
             this.target = target.transform;
-
             reachedEndPath = false;
             UpdatePath();
         }
+
         private void StopAnim()
         {
             animator.SetBool("isMoving", false);
