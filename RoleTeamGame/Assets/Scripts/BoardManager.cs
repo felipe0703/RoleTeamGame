@@ -45,6 +45,7 @@ namespace Com.BrumaGames.Llamaradas
         public int maxPark = 6;
         public int cont = 0;
         public bool setCont = false;
+        private bool setCornerAndBorder = false;
 
 
         [Space(10)]
@@ -117,11 +118,12 @@ namespace Com.BrumaGames.Llamaradas
 
         private void LateUpdate()
         {
-            if(setCont && PhotonNetwork.IsMasterClient)
+            if (!setCornerAndBorder)
             {
                 SetBorderAndCornerStreet();
-                setCont = false;
+                setCornerAndBorder = true;
             }
+
             if (setCont && !PhotonNetwork.IsMasterClient)
             {
                 SetIdEdifice();
