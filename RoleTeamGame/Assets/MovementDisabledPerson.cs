@@ -26,7 +26,7 @@ namespace Com.BrumaGames.Llamaradas
 
                     if (goTarget1)
                     {                     
-                        gameObject.GetComponent<MovementIA>().SetTargetWhereToMove(controller.target.gameObject);
+                        gameObject.GetComponent<MovementIA>().CallSetTargetWhereToMove(controller.target.gameObject);
                         goTarget1 = false;
                         goTarget2 = true;
                     }
@@ -36,7 +36,7 @@ namespace Com.BrumaGames.Llamaradas
                     if(goTarget2 && distance < dist)
                     {
                         Debug.Log("4");
-                        gameObject.GetComponent<MovementIA>().SetTargetWhereToMove(controller.target2.gameObject);
+                        gameObject.GetComponent<MovementIA>().CallSetTargetWhereToMove(controller.target2.gameObject);
                         goTarget2 = false;
                         disabledPersonMove = false;
                         // controller.speed = 10f;
@@ -60,7 +60,7 @@ namespace Com.BrumaGames.Llamaradas
         {
             Debug.Log("1");
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            gameObject.GetComponent<MovementIA>().SetTargetWhereToMove(player);
+            gameObject.GetComponent<MovementIA>().CallSetTargetWhereToMove(player);
             //gameObject.transform.SetParent(player.transform);
             player.GetComponent<PlayerController>().disabledPersonArrivedAtDestination = false;
         }
