@@ -340,12 +340,27 @@ namespace Com.BrumaGames.Llamaradas
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.GetComponent<ActivatingDectectionZone>().DeactivateZone();
             }
-            player.GetComponent<ActivatingDectectionZone>().DeactivateZone();
+            player.GetComponent<ActivatingDectectionZone>().DeactivateZone();     
+            
+            if(cam1 && master)
+            {
+                vCam1.SetActive(cam1);
+                vCamMaster.SetActive(false);
+                StartCoroutine(SetOrthographic());
+                return;
+            }
+
             vCam1.SetActive(cam1);
             vCam2.SetActive(cam2);
             vCamMaster.SetActive(master);
             if (cam1 || cam2) camera.GetComponent<Camera>().orthographic = true;            
             if (master) camera.GetComponent<Camera>().orthographic = false;
+        }
+
+        IEnumerator SetOrthographic()
+        {
+            yield return new WaitForSeconds(1f);
+            camera.GetComponent<Camera>().orthographic = true;
         }
 
         public void ChangeCam()
@@ -360,7 +375,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public void ZoomIn()
         {
-            ActivateDeactivateCams(true, false, false);
+            ActivateDeactivateCams(true, false, true);
         }
         public void ZoomOut()
         {
