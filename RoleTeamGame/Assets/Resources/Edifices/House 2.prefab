@@ -31,7 +31,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7454316667304136101}
-  - {fileID: 399567551304589656}
+  - {fileID: 5628194782258924275}
   - {fileID: 5099255422680397507}
   - {fileID: 4345261042440809160}
   - {fileID: 8704603426244929669}
@@ -453,9 +453,9 @@ MonoBehaviour:
   level3: {fileID: 6619247279676531772}
   level4: {fileID: 3057939917838076083}
   habitants:
-  - {fileID: 4319766903287520507}
-  - {fileID: 968055444096377537}
-  - {fileID: 3486422371017103077}
+  - {fileID: 5628194782258923323}
+  - {fileID: 5628194782258923588}
+  - {fileID: 5628194782258923329}
   imageHabitants:
   - {fileID: 21300002, guid: db4784abf9a92094781bb398c24ea94c, type: 3}
   - {fileID: 21300004, guid: db4784abf9a92094781bb398c24ea94c, type: 3}
@@ -1563,7 +1563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 975ae314c14b20b4e9c0e8b5a920272f, type: 3}
---- !u!114 &3486422371017103077 stripped
+--- !u!114 &5628194782258923329 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9113350477184178664, guid: 975ae314c14b20b4e9c0e8b5a920272f,
     type: 3}
@@ -1575,7 +1575,7 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &968055444096377537 stripped
+--- !u!114 &5628194782258923588 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4860619960260455884, guid: 975ae314c14b20b4e9c0e8b5a920272f,
     type: 3}
@@ -1587,7 +1587,7 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4319766903287520507 stripped
+--- !u!114 &5628194782258923323 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8496524796852507638, guid: 975ae314c14b20b4e9c0e8b5a920272f,
     type: 3}
@@ -1599,7 +1599,7 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &399567551304589656 stripped
+--- !u!224 &5628194782258924275 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5445082605945384533, guid: 975ae314c14b20b4e9c0e8b5a920272f,
     type: 3}

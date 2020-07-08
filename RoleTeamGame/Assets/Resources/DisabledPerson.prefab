@@ -2524,6 +2524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  personMove: 0
   speed: 800
   nextWaypointDistance: 3
   reachedEndPath: 0

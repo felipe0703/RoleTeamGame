@@ -12,6 +12,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public Transform target;
 
+        public bool personMove = false;
         public float speed = 200f;
         public float nextWaypointDistance = 3f;
 
@@ -46,11 +47,7 @@ namespace Com.BrumaGames.Llamaradas
         void FixedUpdate()
         {
 
-            if (path == null)
-            {
-                //Debug.Log("no encuentro la ruta");
-                return;
-            }
+            if (path == null) return;
 
             //si los puntos necesarios para llegar son mayor a los que faltan, es porque llegué
             if (currentWaypoint >= path.vectorPath.Count)
@@ -75,14 +72,11 @@ namespace Com.BrumaGames.Llamaradas
 
             animator.SetBool("isMoving", true);
             animator.SetFloat("MoveX", force.x);
-            animator.SetFloat("MoveY", force.y);
-            //Debug.Log("x = "+force.x+", y = "+force.y);
-            
+            animator.SetFloat("MoveY", force.y);           
 
             float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
-            if (distance < nextWaypointDistance)
-                currentWaypoint++;
+            if (distance < nextWaypointDistance) currentWaypoint++;
         }
 
         // se llama cuando se completa la ruta
@@ -126,6 +120,12 @@ namespace Com.BrumaGames.Llamaradas
 
             pv = GetComponent<PhotonView>();
             pv.RPC("SetTargetWhereToMovePun", RpcTarget.AllViaServer,data);
+            if (personMove)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                PlayerController controller = player.GetComponent<PlayerController>();
+                controller.UpdateActions();
+            } 
         }
 
         [PunRPC]

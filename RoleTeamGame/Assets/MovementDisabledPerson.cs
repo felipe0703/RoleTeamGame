@@ -19,9 +19,7 @@ namespace Com.BrumaGames.Llamaradas
                 PlayerController controller = player.GetComponent<PlayerController>();
 
                 if (controller.disabledPersonArrivedAtDestination)
-                {
-                    //gameObject.transform.SetParent(null);
-                    
+                {                    
                     controller.speed = 5f;
 
                     if (goTarget1)
@@ -31,11 +29,9 @@ namespace Com.BrumaGames.Llamaradas
                         goTarget2 = true;
                     }
                     float distance = Vector2.Distance(controller.target.transform.position, gameObject.transform.position);
-                    Debug.Log("distance: " + distance);
 
                     if(goTarget2 && distance < dist)
                     {
-                        Debug.Log("4");
                         gameObject.GetComponent<MovementIA>().CallSetTargetWhereToMove(controller.target2.gameObject);
                         goTarget2 = false;
                         disabledPersonMove = false;
@@ -48,7 +44,6 @@ namespace Com.BrumaGames.Llamaradas
         {
             DisabledPersonMove();
             goTarget1 = true;
-            Debug.Log("2");
             //Movimiento del player
             UIManagerGame.sharedInstance.ShowPanelMove();            
             UIManagerGame.sharedInstance.CallDetectEdificeToMove();
@@ -58,7 +53,6 @@ namespace Com.BrumaGames.Llamaradas
 
         void DisabledPersonMove()
         {
-            Debug.Log("1");
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             gameObject.GetComponent<MovementIA>().CallSetTargetWhereToMove(player);
             //gameObject.transform.SetParent(player.transform);
