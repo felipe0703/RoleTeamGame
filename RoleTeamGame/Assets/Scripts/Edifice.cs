@@ -210,15 +210,17 @@ namespace Com.BrumaGames.Llamaradas
                         {
                             //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
+                            Debug.Log("test 1");
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
                             if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2) controller.UpdateActions();
                             return;
                         }
-                        if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
+                        else if ((idPositionEdifice == 1 || idPositionEdifice == 2) && i > 2)
                         {
                             //Instantiate(habitant, controller.street.transform.GetChild(i).transform);
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
+                            Debug.Log("test 2");
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
                             ScriptEfectos.PlayDoorFx(id);
                             if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2) controller.UpdateActions();
@@ -269,21 +271,18 @@ namespace Com.BrumaGames.Llamaradas
         // rellena los sprite de los habitantes en el edificio
         void FillHabitant()
         {
-            //Debug.Log("fill habitant");
             int disabledPerson = 0;
             int person = 0;
             int pet = 0;
-            //TODO: buscar los contadores de cada edificio y asignarlos
+
             if (PhotonNetwork.IsMasterClient)
             {
-                //Debug.Log("boton fill");
                 disabledPerson = GameController.sharedInstance.populationInEdifices[id, 0];
                 person = GameController.sharedInstance.populationInEdifices[id, 1];
                 pet = GameController.sharedInstance.populationInEdifices[id, 2];
             }
             else
             {
-                //Debug.Log("no soy el master");
                 disabledPerson = GameController.sharedInstance.populationInEdificesClient[id, 0];
                 person = GameController.sharedInstance.populationInEdificesClient[id, 1];
                 pet = GameController.sharedInstance.populationInEdificesClient[id, 2];
@@ -318,8 +317,7 @@ namespace Com.BrumaGames.Llamaradas
                     PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
                     controller.GetComponent<DetectEdifice>().DetectPetInEdifice();
                     //saco al perro
-                    IsSelectedTakeOut(i);
-                   // Debug.Log("hay un perro, posicion: " + i);
+                    if(!PhotonNetwork.IsMasterClient) IsSelectedTakeOut(i);
                 }
 
                 // habitants[i].preserveAspect = true;
