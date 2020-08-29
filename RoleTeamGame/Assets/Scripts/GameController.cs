@@ -241,7 +241,8 @@ namespace Com.BrumaGames.Llamaradas
 
         void Update()
         {
-            if(totalBurnedEdifice >= 5)
+            /* Edifice burned limit removed */
+            /* if(totalBurnedEdifice >= 5)
             {
                 //Debug.Log("Juego terminado");
                 GameOver();
@@ -250,7 +251,7 @@ namespace Com.BrumaGames.Llamaradas
             else
             {
                 //Debug.Log("aun no termina");
-            }
+            } */
 
 
             /*if (!estaPausado)
