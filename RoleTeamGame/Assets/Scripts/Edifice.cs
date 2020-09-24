@@ -69,12 +69,8 @@ namespace Com.BrumaGames.Llamaradas
         public bool isSelectedOutHabitant = false;
         public int idPositionEdifice = -1;
 
-        //AUDIO
-        private AudioSource edificeAudio;
-        [Space(10)]
-        [Header("Audio")]
-        public AudioClip[] clips;
-        SfxControl ScriptEfectos;
+
+        SfxControl ScriptEfectosSonido;
 
 
         //TEST
@@ -93,9 +89,8 @@ namespace Com.BrumaGames.Llamaradas
         public void Start()
         {
 
-            edificeAudio = gameObject.GetComponent<AudioSource>();
-            edificeAudio.pitch = 1.36f;
-            ScriptEfectos = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
+            ScriptEfectosSonido = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
+
 
             int disabledPerson = GameController.totalDisabledPerson;
             int person = GameController.totalPerson;
@@ -186,6 +181,7 @@ namespace Com.BrumaGames.Llamaradas
                     habitant = GameController.sharedInstance.pet;
                     int scoreHabitant = 1;
                     controller.UpdateScoreSaved(scoreHabitant);
+                    ScriptEfectosSonido.PlayPoint1Sound();
                 }
 
                 pv = GetComponent<PhotonView>();
@@ -212,7 +208,7 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             Debug.Log("test 1");
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
-                            ScriptEfectos.PlayDoorFx(id);
+                            ScriptEfectosSonido.PlayDoorFx();
                             if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2) controller.UpdateActions();
                             return;
                         }
@@ -222,7 +218,7 @@ namespace Com.BrumaGames.Llamaradas
                             PhotonNetwork.Instantiate(habitant.name, controller.street.transform.GetChild(i).position, Quaternion.identity);
                             Debug.Log("test 2");
                             controller.street.GetComponent<HabitantsInTheStreet>().positions[i] = true;
-                            ScriptEfectos.PlayDoorFx(id);
+                            ScriptEfectosSonido.PlayDoorFx();
                             if (habitants[id].GetComponent<ButtonHabitant>().idHabitant != 2) controller.UpdateActions();
                             return;
                         }
@@ -265,7 +261,7 @@ namespace Com.BrumaGames.Llamaradas
 
         public void PlayClickSound()
         {
-            edificeAudio.PlayOneShot(clips[0]);
+            ScriptEfectosSonido.PlayClickSound();
         }
 
         // rellena los sprite de los habitantes en el edificio
@@ -511,6 +507,7 @@ namespace Com.BrumaGames.Llamaradas
                 controller.UpdateScoreDead(TotalScoreDeadHabitant());
                 ChangeSprite();
                 BurnedEdifice = true;
+                ScriptEfectosSonido.PlayDeathSound();
                 GameController.sharedInstance.UpdateTotalBurnedEdifice();
             }
 

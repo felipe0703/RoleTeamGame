@@ -4,82 +4,62 @@ using UnityEngine;
 
 public class SfxControl : MonoBehaviour
 {
-
-    public AudioClip gateFx;
-    public AudioClip doorFx;
-    public AudioClip communicationsFx;
-    public AudioClip clickSound;
-    public AudioClip hiClickSound;
     public AudioClip fireTurnSound;
     public AudioClip playerTurnSound;
+    public AudioClip windTurnSound;
+    public AudioClip clickSound;
+    public AudioClip hiClickSound;
+    public AudioClip doorFx;
+    public AudioClip Point1Sound;
+    public AudioClip Point2Sound;
+    public AudioClip Point3Sound;
+    public AudioClip DeathSound;
+    public AudioClip[] stepSoundEffects;
+    public float lowPitchRange = 0.95f;
+    public float highPitchRange = 1.05f;
     private AudioSource fxAudio;
-    int edificeType;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         fxAudio = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // SONIDO PASOS JUGADOR
+
+    public void PlayOneStepSound()
     {
-        
+        int randomIndex = Random.Range(0, stepSoundEffects.Length);
+        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+        fxAudio.pitch = randomPitch;
+        fxAudio.PlayOneShot(stepSoundEffects[randomIndex]);
+        fxAudio.pitch = 1.0f;
     }
 
-    public void PlayTurnFireSound()
-    {
-        fxAudio.PlayOneShot(fireTurnSound);
-    }
-    public void PlayTurnPlayerSound()
-    {
-        fxAudio.PlayOneShot(playerTurnSound);
-    }
+    // SONIDOS TURNOS
 
-    public void PlayClickSound()
-    {
-        fxAudio.PlayOneShot(clickSound);
-    }
+    public void PlayTurnFireSound() => fxAudio.PlayOneShot(fireTurnSound);
 
-    public void PlayHiClickSound()
-    {
-        fxAudio.PlayOneShot(hiClickSound);
-    }
+    public void PlayTurnPlayerSound() => fxAudio.PlayOneShot(playerTurnSound);
 
-    public void PlayCommunicationsFx()
-    {
-        fxAudio.PlayOneShot(communicationsFx, 0.3f);
-    }
+    public void PlayTurnWindSound() => fxAudio.PlayOneShot(windTurnSound);
 
-    public void PlayDoorFx(int id)
-    {
-        fxAudio.PlayOneShot(doorFx, 0.3f);
-        /*
-        if (id < 3)
-        {
-            fxAudio.PlayOneShot(clips[0], 0.5f);
-            return;
-        }
-        if (id == 3)
-        {
-            fxAudio.PlayOneShot(clips[1], 0.5f);
-            return;
-        }*/
-    }
-    /*
-    public void DetectEdifice(GameObject edifice)
-    {
-        if (edifice.GetComponent<Edifice>().id != 3)
-        {
-            edificeType = 1;
-            return;
-        }
-        else
-        {
-            edificeType = 2;
-            return;
-        }
-    }
-    */
+    //SONIDOS UI
+
+    public void PlayClickSound() => fxAudio.PlayOneShot(clickSound);
+
+    public void PlayHiClickSound() => fxAudio.PlayOneShot(hiClickSound);
+
+    public void PlayDoorFx() => fxAudio.PlayOneShot(doorFx, 0.08f);
+
+    //SONIDOS PUNTAJES
+
+    public void PlayPoint1Sound() => fxAudio.PlayOneShot(Point1Sound);
+
+    public void PlayPoint2Sound() => fxAudio.PlayOneShot(Point2Sound);
+
+    public void PlayPoint3Sound() => fxAudio.PlayOneShot(Point3Sound);
+
+    public void PlayDeathSound() => fxAudio.PlayOneShot(DeathSound);
 
 }

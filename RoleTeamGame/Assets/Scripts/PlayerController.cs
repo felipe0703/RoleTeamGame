@@ -95,10 +95,7 @@ namespace Com.BrumaGames.Llamaradas
         GameObject bufferNvlFgo;
         GameObject fireGmObj;
 
-        [Space(10)]
-        [Header("Audio")]
-        public FireSoundControl FireSound;
-        public SfxControl ScriptEfectos;
+        SfxControl ScriptEfectosSonido;
 
 
         public bool isMyTurn = false;
@@ -132,6 +129,7 @@ namespace Com.BrumaGames.Llamaradas
 
         void Start()
         {
+            ScriptEfectosSonido = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
             gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
             pv = GetComponent<PhotonView>();
             animator = GetComponent<Animator>();
@@ -429,7 +427,7 @@ namespace Com.BrumaGames.Llamaradas
 
         void PlayStepSound()
         {
-            gm.PlayOneStepSound();
+            ScriptEfectosSonido.PlayOneStepSound();
         }
 
 
