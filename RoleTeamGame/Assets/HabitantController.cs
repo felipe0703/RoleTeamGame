@@ -13,6 +13,12 @@ namespace Com.BrumaGames.Llamaradas
         public bool survived;
         public int idHabitant;
         int scoreHabitant = 0;
+        SfxControl ScriptEfectosSonido;
+
+        private void Start()
+        {
+            ScriptEfectosSonido = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
+        }
 
         private void Update()
         {
@@ -37,8 +43,8 @@ namespace Com.BrumaGames.Llamaradas
 
             if (survived)
             {
-                if (idHabitant == 0) scoreHabitant = 3;
-                else  if(idHabitant == 1) scoreHabitant = 2;
+                if (idHabitant == 0) { scoreHabitant = 3; ScriptEfectosSonido.PlayPoint3Sound(); }
+                else if (idHabitant == 1) { scoreHabitant = 2; ScriptEfectosSonido.PlayPoint2Sound(); }
 
                 PlayerController controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
