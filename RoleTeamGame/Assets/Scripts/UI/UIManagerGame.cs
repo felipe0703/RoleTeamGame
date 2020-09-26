@@ -99,6 +99,7 @@ namespace Com.BrumaGames.Llamaradas
         bool setNamePlayer = false;
         int contSetName = 0;
         public bool showMove = false;
+        SfxControl ScriptEfectosSonido;
         #endregion
 
         // ########################################
@@ -115,6 +116,7 @@ namespace Com.BrumaGames.Llamaradas
 
         private void Start()
         {
+            ScriptEfectosSonido = GameObject.Find("Sound/Efectos interaccion").GetComponent<SfxControl>();
             pvUI = GetComponent<PhotonView>();
             camera = Camera.main;
             firtTurn = true;
@@ -474,6 +476,7 @@ namespace Com.BrumaGames.Llamaradas
             yield return new WaitForSeconds(.2f);
             panelChangeTurn.gameObject.SetActive(true);
             panelChangeTurn.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            ScriptEfectosSonido.PlayTurnPlayerSound();
             StartCoroutine(MoveOutPanelChangeTurn(panelChangeTurn));
         }
 
@@ -518,6 +521,7 @@ namespace Com.BrumaGames.Llamaradas
             yield return new WaitForSeconds(1.8f);
             panelAdvanceOfFire.gameObject.SetActive(true);
             panelAdvanceOfFire.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            ScriptEfectosSonido.PlayTurnFireSound();
             StartCoroutine(MoveOutPanelAdvanceOfFire(panelAdvanceOfFire));
         }
 
@@ -556,6 +560,7 @@ namespace Com.BrumaGames.Llamaradas
             yield return new WaitForSeconds(.3f);
             panelChangeWind.gameObject.SetActive(true);
             panelChangeWind.PlayInAnims(GUIAnimSystemFREE.eGUIMove.Self);
+            ScriptEfectosSonido.PlayTurnWindSound();
             StartCoroutine(MoveOutPanelChangeWind(panelChangeWind));
         }
 
