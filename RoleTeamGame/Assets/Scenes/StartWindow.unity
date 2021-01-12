@@ -289,7 +289,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 233141390}
-        m_MethodName: PlayClickSound
+        m_MethodName: PlaySpecialClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -413,7 +413,7 @@ MonoBehaviour:
     Time: 2
     Delay: 0.1
     Sounds:
-      m_Begin: {fileID: 0}
+      m_Begin: {fileID: 8300000, guid: fc9952cb033982949baa1c91b158c492, type: 3}
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_FadeIn:
@@ -558,13 +558,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2707d6c0d346348b4169bf484b0bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gateFx: {fileID: 8300000, guid: f2dbd5e90e0e34549a6e42247613b33d, type: 3}
-  doorFx: {fileID: 8300000, guid: 32e444bffbdcd9d4a9acfd364d5a177d, type: 3}
-  communicationsFx: {fileID: 8300000, guid: 93e797a168de9c84aa2dd1ab915a7b50, type: 3}
+  fireTurnSound: {fileID: 8300000, guid: 0853c66299082494fb7815d9f034e1ab, type: 3}
+  playerTurnSound: {fileID: 8300000, guid: 03f096507155bbd44b6b69ebb6ae499a, type: 3}
+  windTurnSound: {fileID: 8300000, guid: b0fa955ffddb579478a00a607c35a656, type: 3}
   clickSound: {fileID: 8300000, guid: 070dc1abee0156444ba6e3dbdc538592, type: 3}
   hiClickSound: {fileID: 8300000, guid: 98cf34f3909154b4da6120c60a0c86cc, type: 3}
-  fireTurnSound: {fileID: 8300000, guid: fa2b0a9d77d0d774e990b66e66d4b3e3, type: 3}
-  playerTurnSound: {fileID: 8300000, guid: c9625def6ec15e94aa965c008a219ba7, type: 3}
+  specialClickSound: {fileID: 8300000, guid: 8d9d4d0480ae3284395a6505ff6fe197, type: 3}
+  doorFx: {fileID: 8300000, guid: 32e444bffbdcd9d4a9acfd364d5a177d, type: 3}
+  Point1Sound: {fileID: 8300000, guid: 977b6a04e0cfdbb418a34d09ccc184d0, type: 3}
+  Point2Sound: {fileID: 8300000, guid: a8b90eb61946bb246aa80f550ab13a73, type: 3}
+  Point3Sound: {fileID: 8300000, guid: ce20dcd7f768a71438c5818f7215521c, type: 3}
+  DeathSound: {fileID: 8300000, guid: 6ab812ede56a4c0439631b9b25c3e539, type: 3}
+  stepSoundEffects:
+  - {fileID: 8300000, guid: 8c6217d206b2a5e4b8ad6b679ffff0bd, type: 3}
+  - {fileID: 8300000, guid: e609f1927bf05494d8e9874bd0967bbb, type: 3}
+  lowPitchRange: 0.95
+  highPitchRange: 1.05
 --- !u!82 &233141391
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2463,7 +2472,7 @@ MonoBehaviour:
     Time: 1
     Delay: 0.5
     Sounds:
-      m_Begin: {fileID: 0}
+      m_Begin: {fileID: 8300000, guid: 545bb51f1dbbbb2438adc468f5a38324, type: 3}
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_FadeIn:
@@ -3313,7 +3322,7 @@ MonoBehaviour:
     Time: 2
     Delay: 0.1
     Sounds:
-      m_Begin: {fileID: 0}
+      m_Begin: {fileID: 8300000, guid: f82da2a7b775d824ebe5fcf3e5d3d89d, type: 3}
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_RotationIn:
@@ -3435,7 +3444,7 @@ MonoBehaviour:
     Time: 2
     Delay: 0
     Sounds:
-      m_Begin: {fileID: 0}
+      m_Begin: {fileID: 8300000, guid: 93672ea63a37b864db8d62adacdc0032, type: 3}
       m_AfterDelay: {fileID: 0}
       m_End: {fileID: 0}
   m_FadeOut:

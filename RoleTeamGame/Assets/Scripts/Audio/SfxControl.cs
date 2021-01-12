@@ -9,6 +9,7 @@ public class SfxControl : MonoBehaviour
     public AudioClip windTurnSound;
     public AudioClip clickSound;
     public AudioClip hiClickSound;
+    public AudioClip specialClickSound;
     public AudioClip doorFx;
     public AudioClip Point1Sound;
     public AudioClip Point2Sound;
@@ -49,6 +50,8 @@ public class SfxControl : MonoBehaviour
     public void PlayClickSound() => fxAudio.PlayOneShot(clickSound);
 
     public void PlayHiClickSound() => fxAudio.PlayOneShot(hiClickSound);
+
+    public void PlaySpecialClickSound() => fxAudio.PlayOneShot(specialClickSound);
 
     public void PlayDoorFx() => fxAudio.PlayOneShot(doorFx, 0.08f);
 
