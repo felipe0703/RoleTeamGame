@@ -10,7 +10,7 @@ public class MusicControl : MonoBehaviour
     public float minDelay;
     public float maxDelay;
     bool resetTimer = true;
-    int lastSong;
+    int lastSong = 90;
 
 
     // Start is called before the first frame update
