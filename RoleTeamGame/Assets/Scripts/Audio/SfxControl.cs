@@ -53,7 +53,7 @@ public class SfxControl : MonoBehaviour
 
     public void PlaySpecialClickSound() => fxAudio.PlayOneShot(specialClickSound);
 
-    public void PlayDoorFx() => fxAudio.PlayOneShot(doorFx, 0.08f);
+    public void PlayDoorFx() => fxAudio.PlayOneShot(doorFx, 0.05f);
 
     //SONIDOS PUNTAJES
 

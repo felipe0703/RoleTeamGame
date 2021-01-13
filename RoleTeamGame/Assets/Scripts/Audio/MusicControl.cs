@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class MusicControl : MonoBehaviour
 {
-    public grumbleAMP musicScript;
+    public AudioClip[] musicTracks;
     private AudioSource musicSrc;
     float timeLeft = 1.0f;
     public float minDelay;
     public float maxDelay;
     bool resetTimer = true;
+    int lastSong;
 
 
     // Start is called before the first frame update
     void Start()
     {
         musicSrc = gameObject.GetComponent<AudioSource>();
-        StartCoroutine(IdleMusicTimer());
-
         timeLeft = UnityEngine.Random.Range(minDelay, maxDelay);
+        StartCoroutine(IdleMusicTimer());
 
     }
 
@@ -32,7 +32,7 @@ public class MusicControl : MonoBehaviour
     {
         while (true)
         {
-            if (!musicScript.isPlaying())
+            if (!musicSrc.isPlaying)
             {
                 timeLeft -= Time.deltaTime;
                 if (timeLeft < 0)
@@ -43,7 +43,7 @@ public class MusicControl : MonoBehaviour
 
             }
 
-            if (musicScript.isPlaying() && resetTimer)
+            if (musicSrc.isPlaying && resetTimer)
             {
                 timeLeft = UnityEngine.Random.Range(minDelay, maxDelay);
                 resetTimer = false;
@@ -54,8 +54,10 @@ public class MusicControl : MonoBehaviour
 
     void PlayIdleMusic()
     {
-        int song = UnityEngine.Random.Range(0, 4);
-        //Debug.Log("Reproduciendo música de reposo");
-        musicScript.PlaySong(song, 0, 0);
+        int song = UnityEngine.Random.Range(0, musicTracks.Length-1);
+        while (song == lastSong) {song = UnityEngine.Random.Range(0, musicTracks.Length - 1); }
+        musicSrc.clip = musicTracks[song];
+        musicSrc.Play();
+        lastSong = song;
     }
 }
